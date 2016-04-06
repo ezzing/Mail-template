@@ -230,7 +230,6 @@ gulp.task('dev', function () {
 
 
 //Enabling sourcemaps
-
 gulp.task('usesources', function () {
     useSourceMaps = true;
 });
@@ -287,7 +286,7 @@ function replaceEnvironmentVars() {
 
 /*
  |--------------------------------------------------------------------------|
- | DEVELOPMENT TASKS                                                          |
+ | DEVELOPMENT TASKS                                                        |
  |--------------------------------------------------------------------------|
  */
 

@@ -185,7 +185,7 @@ gulp.task('templates:index', function () {
     util.log('Building index...');
     return gulp.src(source.templates.index)
         .pipe(changed(build.templates.index, {extension: '.html'}))
-        .pipe(jade())
+        .pipe(jade({pretty:true}))
         .on('error', handleError)
         .pipe(gulp.dest(build.templates.index));
 });
@@ -197,7 +197,7 @@ gulp.task('templates:views', function () {
     util.log('Building views...');
     return gulp.src(source.templates.views)
         .pipe(changed(build.templates.views, {extension: '.html'}))
-        .pipe(jade())
+        .pipe(jade({pretty:true}))
         .on('error', handleError)
         .pipe(gulp.dest(build.templates.views));
 });
@@ -230,7 +230,6 @@ gulp.task('dev', function () {
 
 
 //Enabling sourcemaps
-
 gulp.task('usesources', function () {
     useSourceMaps = true;
 });
@@ -287,7 +286,7 @@ function replaceEnvironmentVars() {
 
 /*
  |--------------------------------------------------------------------------|
- | DEVELOPMENT TASKS                                                          |
+ | DEVELOPMENT TASKS                                                        |
  |--------------------------------------------------------------------------|
  */
 
