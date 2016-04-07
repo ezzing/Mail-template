@@ -1,5 +1,38 @@
-#templateGenerator {
-  background-color: blueviolet;
+#templateGenerator .btn {
+  white-space: normal !important;
+  word-wrap: break-word;
+}
+#templateGenerator #templateGeneratorHeader {
+  border: 1px solid grey;
+  min-height: 10vh;
+  background-color: #e6e6e6;
+}
+#templateGenerator #templateGeneratorHeader button {
+  margin-top: 25px;
+}
+#templateGenerator #templateGeneratorHeader ul li {
+  display: inline-block;
+}
+#templateGenerator #templateGeneratorHeader h3 {
+  padding-left: 8%;
+}
+#templateGenerator #templateGeneratorToolbar {
+  border: 2px solid grey;
+  min-height: 90vh;
+  background-color: #e6e6e6;
+}
+#templateGenerator #templateGeneratorToolbar ul li {
+  list-style: none;
+  margin: 20% 0;
+}
+#templateGenerator #templateGeneratorToolbar ul li button {
+  width: 100%;
+}
+#templateGenerator #templateGeneratorBody {
+  border: 1px solid grey;
+  min-height: 90vh;
+  padding: 0px;
+  background-color: #f2f2f2;
 }
 
 #mailGenerator {
