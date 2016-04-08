@@ -1,7 +1,3 @@
-#templateGenerator .btn {
-  white-space: normal !important;
-  word-wrap: break-word;
-}
 #templateGenerator #templateGeneratorHeader {
   border: 1px solid grey;
   min-height: 10vh;
@@ -9,6 +5,8 @@
 }
 #templateGenerator #templateGeneratorHeader button {
   margin-top: 25px;
+  white-space: normal;
+  white-space: nowrap;
 }
 #templateGenerator #templateGeneratorHeader ul li {
   display: inline-block;
@@ -20,13 +18,40 @@
   border: 2px solid grey;
   min-height: 90vh;
   background-color: #e6e6e6;
+  padding-left: 5px;
 }
-#templateGenerator #templateGeneratorToolbar ul li {
+#templateGenerator #templateGeneratorToolbar ul#desktopList {
+  padding-left: 20px;
+}
+@media screen and (max-width: 767px) {
+  #templateGenerator #templateGeneratorToolbar ul#desktopList {
+    display: none;
+  }
+}
+#templateGenerator #templateGeneratorToolbar ul#desktopList li {
   list-style: none;
   margin: 20% 0;
 }
-#templateGenerator #templateGeneratorToolbar ul li button {
+#templateGenerator #templateGeneratorToolbar ul#desktopList li button {
   width: 100%;
+}
+#templateGenerator #templateGeneratorToolbar ul#mobileList {
+  padding: 0px;
+}
+@media screen and (min-width: 767px) {
+  #templateGenerator #templateGeneratorToolbar ul#mobileList {
+    display: none;
+  }
+}
+#templateGenerator #templateGeneratorToolbar ul#mobileList li {
+  list-style: none;
+  margin: 20% 0;
+}
+#templateGenerator #templateGeneratorToolbar ul#mobileList li button {
+  height: 45px;
+  width: 45px;
+  padding: 0px;
+  background-size: cover;
 }
 #templateGenerator #templateGeneratorBody {
   border: 1px solid grey;
