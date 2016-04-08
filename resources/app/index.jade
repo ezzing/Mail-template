@@ -3,12 +3,13 @@ html(lang="en", ng-app="mailTemplate")
     head
         meta(charset= 'utf-8')
         meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
-        title Mail template generator
+        title Mail generator
         link(rel='stylesheet', href='app/css/main.css')
+        link(rel='stylesheet', href='app/css/styles/Bootstrap/css/bootstrap.css')
     body
         #app
             section
-                .wrapper(ui-view="")
+                .wrapper(ui-view="").container-fluid
         script(src='app/js/base.js')
         script(src='app/js/app.js')
         
