@@ -60,6 +60,116 @@
   background-color: #f2f2f2;
 }
 
-#mailGenerator {
-  background-color: greenyellow;
+#emailGenerator .btn {
+  white-space: normal !important;
+  word-wrap: break-word;
+}
+#emailGenerator #emailGeneratorHeader {
+  border: 1px solid grey;
+  min-height: 10vh;
+  background-color: #e6e6e6;
+}
+#emailGenerator #emailGeneratorHeader button {
+  margin-top: 25px;
+}
+#emailGenerator #emailGeneratorHeader ul li {
+  display: inline-block;
+}
+#emailGenerator #emailGeneratorToolbar {
+  border: 2px solid grey;
+  min-height: 90vh;
+  background-color: #e6e6e6;
+  position: relative;
+  padding: 0;
+  padding-left: 1%;
+  font-size: 0.9em;
+}
+#emailGenerator #emailGeneratorToolbar table {
+  height: 100%;
+}
+#emailGenerator #emailGeneratorToolbar .icono {
+  height: 100%;
+}
+@media screen and (max-width: 767px) {
+  #emailGenerator #emailGeneratorToolbar {
+    display: none;
+  }
+}
+#emailGenerator #emailGeneratorToolbarButton {
+  float: left;
+  margin: 0px;
+  padding: 0px;
+}
+#emailGenerator #templatesButton {
+  background-color: #e6e6e6;
+  border: 1px solid grey;
+  color: black;
+  min-width: 100%;
+}
+#emailGenerator #scroolTool {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: scroll;
+  height: 82.5%;
+}
+@media screen and (max-width: 767px) {
+  #emailGenerator #scroolTool {
+    height: 200px;
+    padding-left: 28px;
+    position: inherit;
+  }
+}
+#emailGenerator .templateSelector {
+  color: black;
+  border: 2px solid #925E5E;
+  height: 100px;
+  margin-bottom: 1%;
+}
+#emailGenerator .templateSelector .textTemplSel {
+  padding-top: 5%;
+}
+@media screen and (max-width: 767px) {
+  #emailGenerator .textTemplSel {
+    padding-left: 40px;
+    padding-top: 13px;
+    padding-left: 18px;
+  }
+}
+#emailGenerator #createTemplate {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: black;
+  border: 2px solid #925E5E;
+  height: 17%;
+  margin-bottom: 1%;
+}
+#emailGenerator #emailGeneratorBody {
+  border: 1px solid grey;
+  min-height: 90vh;
+  padding: 0px;
+  background-color: #f2f2f2;
+}
+@media screen and (max-width: 767px) {
+  #emailGenerator #variables {
+    padding: 0px;
+  }
+}
+#emailGenerator #variablesButton {
+  background-color: #e6e6e6;
+  border: 1px solid grey;
+  color: black;
+  min-width: 100%;
+}
+#emailGenerator #variablesForm {
+  min-width: 100%;
+  padding: 2%;
+}
+#emailGenerator #variablesForm input {
+  margin-bottom: 1%;
+}
+#emailGenerator #mailContent {
+  width: 100%;
 }
