@@ -26,7 +26,7 @@
 
 
     function mailGeneratorCtrl ($scope) {
-        console.log('It works, you can start coding!');
+        console.log('It works, you can start coding in mailGenerator Controller!');
     }
     
     
@@ -43,7 +43,7 @@
 
 
     function templateGeneratorCtrl ($scope) {
-        console.log('It works, you can start coding!');
+        console.log('It works, you can start coding in templateGenerator Controller!');
     }
     
     

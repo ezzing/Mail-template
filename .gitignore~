@@ -4,5 +4,4 @@
 /nbproject
 /.env
 /config.json
-
-/nbproject/private/
+/package.json

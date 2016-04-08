@@ -4,3 +4,5 @@
 /nbproject
 /.env
 /config.json
+/package.json
+/.gitignore
