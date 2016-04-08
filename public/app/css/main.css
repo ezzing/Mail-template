@@ -5,7 +5,6 @@
 }
 #templateGenerator #templateGeneratorHeader button {
   margin-top: 25px;
-  white-space: normal;
   white-space: nowrap;
 }
 #templateGenerator #templateGeneratorHeader ul li {
@@ -64,6 +63,9 @@
   white-space: normal !important;
   word-wrap: break-word;
 }
+#emailGenerator h3 {
+  padding-left: 8%;
+}
 #emailGenerator #emailGeneratorHeader {
   border: 1px solid grey;
   min-height: 10vh;
@@ -71,6 +73,7 @@
 }
 #emailGenerator #emailGeneratorHeader button {
   margin-top: 25px;
+  white-space: nowrap;
 }
 #emailGenerator #emailGeneratorHeader ul li {
   display: inline-block;
@@ -99,6 +102,7 @@
   float: left;
   margin: 0px;
   padding: 0px;
+  border: none;
 }
 #emailGenerator #templatesButton {
   background-color: #e6e6e6;
