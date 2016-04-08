@@ -1,7 +1,7 @@
 #emailGenerator
     .row
       #emailGeneratorHeader.col-xs-12.rown
-        button(type='button').btn.btn-success.col-xs-1  Back
+        .col-xs-1
         h3.col-xs-6.col-xs-offset-3 Mail Generator
         button(type='button').btn.btn-success.col-xs-1.col-xs-offset-1 Save
     .row
@@ -87,7 +87,7 @@
                         br
                         |Fecha de creación: 00/00/0000
 
-        a(href='#')
+        a(href='#/templateGenerator')
             #createTemplate.col-xs-12.templateSelector
                 .col-xs-5
                     img.img-responsive(src='/app/img/plantilla.png')
@@ -117,11 +117,9 @@
                           |Plantilla nº3
                           br
                           |Fecha de creación: 00/00/0000
-                    a(href='#')
+                    a(href='#/templateGenerator')
                       .col-xs-12.textTemplSel.templateSelector
-                          |Plantilla nº4
-                          br
-                          |Fecha de creación: 00/00/0000
+                          |Create a new Template
             //Dropdown menu for VARIABLES
             .dropdown.col-lg-12.col-md-12.col-sm-12.col-xs-9#variables
                 button.btn.btn-primary.dropdown-toggle#variablesButton(type='button', data-toggle='dropdown') Variables

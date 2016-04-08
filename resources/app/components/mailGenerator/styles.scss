@@ -6,12 +6,17 @@
     word-wrap:break-word; 
 }
 
+    h3 {
+      padding-left: 8%;
+    }
+
     #emailGeneratorHeader {
         border: 1px solid grey; 
        min-height:  10vh;
        background-color: #e6e6e6;       
        button {
            margin-top: 25px;
+            white-space: nowrap;
        }
        ul {
            li {
@@ -43,6 +48,7 @@
       float: left;
       margin: 0px;
       padding: 0px;
+      border: none;
     }
 
   #templatesButton {
