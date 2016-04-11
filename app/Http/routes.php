@@ -11,6 +11,27 @@
 |
 */
 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Input;
+
 Route::get('/', function () {
     return view('welcome');
 });
+/*
+ * This route is used to send emails. It recovers the json object with all the data needed
+ * to configure the mail sending, and then it sends it using Mail facade.
+ */
+Route::post('/mail', function() {
+    
+    // Recovering mail data object
+    $mailData= json_decode(Input::get('mailData'));
+    
+    // Sending email using info received
+   Mail::send([], [], function($message)  use ($mailData){
+       $message->to($mailData->email, $mailData->name);
+        $message->subject($mailData->subject);
+        $message->setBody($mailData->htmlContent, 'text/html');
+   });
+   
+});
+ 
