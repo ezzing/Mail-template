@@ -16,7 +16,8 @@
          * @returns {Boolean}
          */
         $scope.validateForm = function () {
-            if (!($scope.sendMailForm.name.$valid &&
+            if (!(
+                 $scope.sendMailForm.name.$valid &&
                  $scope.sendMailForm.email.$valid &&
                  $scope.sendMailForm.subject.$valid)) {
                     return true;
@@ -36,12 +37,21 @@
             };
             // Parsing js object to string!
             mailData = JSON.stringify(mailData);
-            
+            console.log(mailData);
             // Sending mail!
             $http.post('mail', {
                 "mailData": mailData
-            }).then(function() {
+            }).then(function(response) {
+                if (response.data === 'invalidData') {
+                   swal({
+                        title: 'error!',
+                        text: 'server could not validate your data!',
+                        type: 'error',
+                        confirmButtomText: 'close'
+                     });
+                }
                 
+                else {
                 // This function is call on success
                 swal({
                     title: 'success!',
@@ -60,12 +70,13 @@
                 
                 // This removes the has-error class added when the input data was removed setting the form state to pristine
                 $scope.sendMailForm.$setPristine();
+                }    
                 
             }, function () {
                 // This function is call on failure
                 swal({
                     title: 'error!',
-                    text: 'server could not validate your data!',
+                    text: 'Something is wrong with the server, please try again latter',
                     type: 'error',
                     confirmButtomText: 'close'
                 });
