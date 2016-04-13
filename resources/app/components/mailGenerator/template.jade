@@ -1,92 +1,25 @@
 #emailGenerator
     .row
+      // Header of the template
       #emailGeneratorHeader.col-xs-12.rown
         .col-xs-1
         h3.col-xs-6.col-xs-offset-3 Mail Generator
         button(type='button'  data-toggle='modal' data-target='#sendMail').btn.btn-success.col-xs-1.col-xs-offset-1 Send
     .row
-      //Toolbar for template selector
-      //Only for Tablet and desktop
+      // Toolbar for template selector in tablet and desktop versions
       #emailGeneratorToolbar.col-lg-3.col-md-3.col-sm-3.col-xs-3
         .scroolTool
-            a(href='#')
-                #example1.templateSelector.col-xs-12(ng-click='loadTemplate("example1")')
+            a(href='#' ng-repeat='template in templateList')
+                #example1.templateSelector.col-xs-12(ng-click='loadTemplate(template.id_template)')
                     .col-xs-5.icono
                         table
                             tr
                                 td
-                                    img.img-responsive(src='/app/img/plantilla.png')
+                                    img.img-responsive(src='{{template.icon}}')
                     .col-xs-7.textTemplSel
-                        |Plantilla nº1
+                        |Template nº{{template.id_template}}
                         br
-                        |Fecha de creación: 00/00/0000
-            a(href='#')
-                .templateSelector.col-xs-12#2
-                    .col-xs-5.icono
-                        table
-                            tr
-                                td
-                                    img.img-responsive(src='/app/img/plantilla.png')
-                    .col-xs-7.textTemplSel
-                        |Plantilla nº1
-                        br
-                        |Fecha de creación: 00/00/0000
-            a(href='#')
-                .templateSelector.col-xs-12#3
-                    .col-xs-5.icono
-                        table
-                            tr
-                                td
-                                    img.img-responsive(src='/app/img/plantilla.png')
-                    .col-xs-7.textTemplSel
-                        |Plantilla nº1
-                        br
-                        |Fecha de creación: 00/00/0000
-            a(href='#')
-                .templateSelector.col-xs-12#4
-                    .col-xs-5.icono
-                        table
-                            tr
-                                td
-                                    img.img-responsive(src='/app/img/plantilla.png')
-                    .col-xs-7.textTemplSel
-                        |Plantilla nº1
-                        br
-                        |Fecha de creación: 0000-00-00
-            a(href='#')
-                .templateSelector.col-xs-12#5
-                    .col-xs-5.icono
-                        table
-                            tr
-                                td
-                                    img.img-responsive(src='/app/img/plantilla.png')
-                    .col-xs-7.textTemplSel
-                        |Plantilla nº1
-                        br
-                        |Fecha de creación: 0000-00-00
-            a(href='#')
-                .templateSelector.col-xs-12#6
-                    .col-xs-5.icono
-                        table
-                            tr
-                                td
-                                    img.img-responsive(src='/app/img/plantilla.png')
-                    .col-xs-7.textTemplSel
-                        |Plantilla nº1
-                        br
-                        |Fecha de creación: 0000-00-00
-            a(href='#')
-                .templateSelector.col-xs-12#7
-                    .col-xs-5.icono
-                        table
-                            tr
-                                td
-                                    img.img-responsive(src='/app/img/plantilla.png')
-                    .col-xs-7.textTemplSel
-                        |Plantilla nº1
-                        br
-                        |Fecha de creación: 0000-00-00
-
+                        |Date: {{template.created_at}}
         a#refTemplateGenerator(href='#/templateGenerator')
             #createTemplate.col-xs-12.templateSelector
                 .col-xs-5.icono
@@ -97,60 +30,39 @@
                 .col-xs-7.textTemplSel
                     |Create a new Template
 
+      // Toolbar for template selector in mobile versions
       #emailGeneratorBody.col-lg-9.col-md-9.col-sm-9.col-xs-12
         .row
-            //Toolbar for template selector for MOBILE
             #emailGeneratorToolbarButton.navbar-toggle.collapsed.col-xs-3
                 .dropdown
                   button.btn.btn-primary.dropdown-toggle#templatesButton(type='button', data-toggle='dropdown') Templates
                       span.caret
                   .scroolTool.dropdown-menu
-                    a(href='#')
-                      .col-xs-12.textTemplSel.templateSelector(ng-click='loadTemplate("example1")')
-                          |Plantilla nº1
+                    a(href='#'  ng-repeat='template in templateList')
+                      .col-xs-12.textTemplSel.templateSelector(ng-click='loadTemplate(template.id_template)')
+                          |{{template.id_template}}
                           br
-                          |Fecha de creación:
+                          |Date:
                           br
-                          |0000-00-00
-                    a(href='#')
-                      .col-xs-12.textTemplSel.templateSelector
-                          |Plantilla nº2
-                          br
-                          |Fecha de creación:
-                          br
-                          |0000-00-00
-                    a(href='#')
-                      .col-xs-12.textTemplSel.templateSelector
-                          |Plantilla nº3
-                          br
-                          |Fecha de creación:
-                          br
-                          |0000-00-00
+                          |{{template.created_at}}
                     a(href='#/templateGenerator')
                       .col-xs-12.textTemplSel.templateSelector
                           |Create a new Template
-            //Dropdown menu for VARIABLES
+                          
+            //Dropdown menu for variables
             .dropdown.col-lg-12.col-md-12.col-sm-12.col-xs-9#variables
                 button.btn.btn-primary.dropdown-toggle#variablesButton(type='button', data-toggle='dropdown') Variables
                     span.caret
-                form#variablesForm.dropdown-menu
-                    label.col-xs-12.formLabel(for='name') Name:
-                    input.col-xs-12.form-control(type='text', id='name', placeholder='Name', ng-model='name')
-                    label.col-xs-12.formLabel(for='surname') Surname:
-                    input.col-xs-12.form-control(type='text', id='surname', placeholder='Surname', ng-model='surname')
-                    label.col-xs-12.formLabel(for='email') Email:
-                    input.col-xs-12.form-control(type='text', id='email', placeholder='Email', ng-model='email')
-                    label.col-xs-12.formLabel(for='mailContent') Contenido del Email:
-                    textarea#mailContent(rows='6', placeholder='Your mail content')
+                form#variablesForm.dropdown-menu.form-horizontal
+                    div.form-group(ng-repeat='variable in templateVariables')
+                        label.col-xs-2.control-label(for='{{variable}}') {{variable}}
+                        div.col-xs-10
+                            input.form-control(ng-model='variable')
+                    
+        // Div that contains the preview of the email
         #actualTemplate
-            | Name: {{name}}
-            br
-            | Surname: {{surname}}
-            br
-            | Email: {{email}}
                 
 // Modal window for sending an email
- 
 div#sendMail.modal.fade
     div.modal-dialog.modal-lg
         div.modal-content

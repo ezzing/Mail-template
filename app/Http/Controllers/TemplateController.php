@@ -29,8 +29,9 @@ class TemplateController extends Controller
     public function getTemplate($id)
     {
         $selectedHtml = DB::table('templates')->where('id_template', '=', $id)->pluck('html');
+
         return response()->json([
-            'templates' => $selectedHtml
+            'templates' => $selectedHtml[0]
         ], 200);
     }
 }
