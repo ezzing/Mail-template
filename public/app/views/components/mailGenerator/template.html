@@ -11,13 +11,8 @@
     <!--Toolbar for template selector-->
     <!--Only for Tablet and desktop-->
     <div id="emailGeneratorToolbar" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-<<<<<<< HEAD
-      <div id="scroolTool"><a href="#">
-          <div id="example1" ng-click="loadTemplate(&quot;example1&quot;)" class="templateSelector col-xs-12">
-=======
       <div class="scroolTool"><a href="#">
-          <div id="1" class="templateSelector col-xs-12">
->>>>>>> feature-DB
+          <div id="example1" ng-click="loadTemplate(&quot;example1&quot;)" class="templateSelector col-xs-12">
             <div class="col-xs-5 icono">
               <table>
                 <tr>
@@ -104,17 +99,10 @@
         <div id="emailGeneratorToolbarButton" class="navbar-toggle collapsed col-xs-3">
           <div class="dropdown">
             <button id="templatesButton" type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Templates<span class="caret"></span></button>
-<<<<<<< HEAD
-            <div id="scroolTool" class="dropdown-menu"><a href="#">
-                <div ng-click="loadTemplate(&quot;example1&quot;)" class="col-xs-12 textTemplSel templateSelector">Plantilla nº1<br/>Fecha de creación: 00/00/0000</div></a><a href="#">
-                <div class="col-xs-12 textTemplSel templateSelector">Plantilla nº2<br/>Fecha de creación: 00/00/0000</div></a><a href="#">
-                <div class="col-xs-12 textTemplSel templateSelector">Plantilla nº3<br/>Fecha de creación: 00/00/0000</div></a><a href="#/templateGenerator">
-=======
             <div class="scroolTool dropdown-menu"><a href="#">
-                <div class="col-xs-12 textTemplSel templateSelector">Plantilla nº1<br/>Fecha de creación:<br/>0000-00-00</div></a><a href="#">
+                <div ng-click="loadTemplate(&quot;example1&quot;)" class="col-xs-12 textTemplSel templateSelector">Plantilla nº1<br/>Fecha de creación:<br/>0000-00-00</div></a><a href="#">
                 <div class="col-xs-12 textTemplSel templateSelector">Plantilla nº2<br/>Fecha de creación:<br/>0000-00-00</div></a><a href="#">
                 <div class="col-xs-12 textTemplSel templateSelector">Plantilla nº3<br/>Fecha de creación:<br/>0000-00-00</div></a><a href="#/templateGenerator">
->>>>>>> feature-DB
                 <div class="col-xs-12 textTemplSel templateSelector">Create a new Template</div></a></div>
           </div>
         </div>
@@ -133,11 +121,7 @@
           </form>
         </div>
       </div>
-<<<<<<< HEAD
-      <div id="actualTemplate">
-        <h1>This is the first template in mail history!</h1>
-        <p>And it just has a simple paragraph which is autoreferential<br/>which is sad : (</p>
-      </div>
+      <div id="actualTemplate">Name: {{name}}<br/>Surname: {{surname}}<br/>Email: {{email}}</div>
     </div>
   </div>
 </div>
@@ -158,7 +142,7 @@
           </div>
         </div>
         <div ng-class=" { 'has-error' : sendMailForm.subject.$invalid &amp;&amp; sendMailForm.subject.$dirty, 'has-success': sendMailForm.subject.$valid} " class="form-group has-feedback">
-          <label for="subject" class="col-sm-2 control-label">Subject:</label>
+          <label for="subjectInput" class="col-sm-2 control-label">Subject:</label>
           <div class="col-sm-8">
             <input id="subjectInput" type="text" ng-model="subject" placeholder="subject" name="subject" ng-pattern="/^[a-zA-ZáéíóúÁÉÍÓÚñÑ1-9][a-zA-ZáéíóúÁÉÍÓÚñÑ1-9 ]{3,50}$/" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : sendMailForm.subject.$valid, 'glyphicon-remove' : sendMailForm.subject.$invalid &amp;&amp; sendMailForm.subject.$dirty}" class="glyphicon form-control-feedback"></span>
           </div>
@@ -168,9 +152,6 @@
         <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
         <button type="button" ng-click="sendMail()" ng-disabled="validateForm()" class="btn btn-success">Send</button>
       </div>
-=======
-      <div id="actualTemplate">Name: {{name}}<br/>Surname: {{surname}}<br/>Email: {{email}}</div>
->>>>>>> feature-DB
     </div>
   </div>
 </div>

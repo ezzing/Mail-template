@@ -17,30 +17,28 @@
 
 
 (function () {
-    
+
     'use strict';
-    
+
     angular.module('mailTemplate').controller('mailGeneratorCtrl', mailGeneratorCtrl);
 
     mailGeneratorCtrl.$inject = ['$scope', '$http'];
 
     var variables = new Array;// Array with the names of the variables of the selected templates
-    var allTemplates = new Array;// ARRAY DE PRUEBA
+    
+    function mailGeneratorCtrl($scope, $http) {
 
-<<<<<<< HEAD
-    function mailGeneratorCtrl ($scope, $http) {
-        
         /*
          * This function loads the clicked template in the email view in order to be sent
          */
         $scope.loadTemplate = function (id) {
-            $http.get('getTemplate/'+id).then(function (response) {
+            $http.get('getTemplate/' + id).then(function (response) {
                 //This is the way template would we recover once we merge front with back
-               var htmlTemplate = response.templates || '<h1> No template received </h1>';
-               $('#actualTemplate').html(htmlTemplate);
+                var htmlTemplate = response.templates || '<h1> No template received </h1>';
+                $('#actualTemplate').html(htmlTemplate);
             });
         };
-        
+
         /*
          * This function validates both fields in the mail sending form
          * @returns {Boolean}
@@ -48,62 +46,62 @@
         $scope.validateForm = function () {
             // If any of the required fields are invalid...
             if (
-                 $scope.sendMailForm.email.$invalid ||
-                 $scope.sendMailForm.subject.$invalid) {
-                     return true;
-                 }
-             };
-             
-             
+                $scope.sendMailForm.email.$invalid ||
+                $scope.sendMailForm.subject.$invalid) {
+                return true;
+            }
+        };
+
+
         /*
          * This function send the email when button in header is clicked
          */
         $scope.sendMail = function () {
-            
+
             // Getting mail data
             var mailData = {
-               'email' : $scope.email,
-               'subject': $scope.subject, // why this is not working here??? $scope.sendMailForm.subject and it does upsters!;
-               'htmlContent' : document.getElementById('actualTemplate').innerHTML
+                'email': $scope.email,
+                'subject': $scope.subject, // why this is not working here??? $scope.sendMailForm.subject and it does upsters!;
+                'htmlContent': document.getElementById('actualTemplate').innerHTML
             };
-            
+
             // Parsing js object to string
             mailData = JSON.stringify(mailData);
             console.log(mailData);
-            
+
             // Sending mail
             $http.post('mail', {
                 "mailData": mailData
-            }).then(function(response) {
+            }).then(function (response) {
                 // This function is call on success
                 if (response.data === 'invalidData') {
-                   swal({
+                    swal({
                         title: 'error!',
                         text: 'server could not validate your data!',
                         type: 'error',
                         confirmButtomText: 'close'
-                     });
+                    });
                 }
                 else {
-                swal({
-                    title: 'success!',
-                    text: 'All your emails were sended!',
-                    type: 'success',
-                    confirmButtomText: 'cool'
-                });
-                
-                // Hide the modal
-                $('#sendMail').modal("hide");
-                
-                // Clear the modal data
-                $scope.name = '';
-                $scope.email = '';
-                $scope.subject = '';
-                
-                // This removes the has-error class added when the input data was removed setting the form state to pristine
-                $scope.sendMailForm.$setPristine();
-                }    
-                
+                    swal({
+                        title: 'success!',
+                        text: 'All your emails were sended!',
+                        type: 'success',
+                        confirmButtomText: 'cool'
+                    });
+
+                    // Hide the modal
+                    $('#sendMail').modal("hide");
+
+                    // Clear the modal data
+                    $scope.name = '';
+                    $scope.email = '';
+                    $scope.subject = '';
+
+                    // This removes the has-error class added when the input data was removed setting the form state to pristine
+                    $scope.sendMailForm.$setPristine();
+                }
+
             }, function () {
                 // This function is call on failure
                 swal({
@@ -114,10 +112,6 @@
                 });
             });
         };
-=======
-    function mailGeneratorCtrl ($scope) {
-        console.log('It works, you can start coding in mailGenerator Controller!');
-
         // Call the function that includes the templates in the scrool toolbar
         //getScroolTemplates();
 
@@ -128,7 +122,7 @@
         //introduceVar();
 
         // Function that activates when click on a templated
-        $(".templateSelector").click(function (){
+        $(".templateSelector").click(function () {
             //Extract the id_template
             var id = this.id;
             // Extract the tables of the templates
@@ -145,8 +139,7 @@
     }
 
     // Function that get all the templates at the database and show at the scrool tool bar
-    function getScroolTemplates ()
-    {
+    function getScroolTemplates() {
         // Get all the templates located at table templates at the database
         $.get("/getCreatedTemplates", function (data, status) {
             // Define the variables html and htmlMob that includes the html code in the html global page
@@ -177,13 +170,13 @@
     }
 
     // Function that extract the variables of the selected template and introduce it in the Array 'variables'
-    function extractVar (str){
+    function extractVar(str) {
         variables = [];
         var n;// start of the variable
         var m;// end of the variable
 
         // If the template has any variables, we extract them to manage
-        if (str.search("{{") != -1){
+        if (str.search("{{") != -1) {
             do {
                 n = str.search("{{");
                 m = str.search("}}");
@@ -201,17 +194,16 @@
     }
 
     // Function that introduce the variables of the Array 'variables' in the dropdown menu to introduce the text
-    function introduceVar (){
+    function introduceVar() {
         var html = "";// HTML to introduce in the dropdown menu
         var type = "text";
-        variables.forEach(function (element){
+        variables.forEach(function (element) {
             html += "<label for=" + element + " class='col-xs-12 formLabel'>" + element + ":</label>" +
-            "<input type=" + type + " id=" + element + " placeholder=" + element + " ng-model=" +element + " class='col-xs-12 form-control'>";
+                "<input type=" + type + " id=" + element + " placeholder=" + element + " ng-model=" + element + " class='col-xs-12 form-control'>";
         });
         $("#variablesForm").html(html);
->>>>>>> feature-DB
     }
-})();
+} )();
 
 
 (function () {
