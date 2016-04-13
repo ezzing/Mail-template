@@ -10,7 +10,7 @@
       #emailGeneratorToolbar.col-lg-3.col-md-3.col-sm-3.col-xs-3
         #scroolTool
             a(href='#')
-                .templateSelector.col-xs-12
+                #example1.templateSelector.col-xs-12(ng-click='loadTemplate("example1")')
                     .col-xs-5.icono
                         table
                             tr
@@ -103,7 +103,7 @@
                       span.caret
                   #scroolTool.dropdown-menu
                     a(href='#')
-                      .col-xs-12.textTemplSel.templateSelector
+                      .col-xs-12.textTemplSel.templateSelector(ng-click='loadTemplate("example1")')
                           |Plantilla nº1
                           br
                           |Fecha de creación: 00/00/0000

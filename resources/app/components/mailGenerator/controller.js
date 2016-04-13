@@ -8,25 +8,21 @@
 
 
     function mailGeneratorCtrl ($scope, $http) {
-
-        /*
-         * This function validates the form and its called by ng-disabled to enable or disabled 'send' button
-         * @returns {Boolean}
-         */
         
         /*
-             
-                    var amountOfNames = $scope.name.split(',').length;
-                    var amountOfMails = $scope.email.split(',').length;
-                    if (amountOfMails === amountOfNames) {
-                        console.log ('misma cantidad');
-                        return true;
-                    }
-                    else {
-                        console.log ('distinta cantidad');
-                        amountOfMails > amountOfNames?  $scope.sendMailForm.name.$invalid === true : $scope.sendMailForm.email.$invalid === true;
-                        return false;
-                    }
+         * This function loads the clicked template in the email view in order to be sent
+         */
+        $scope.loadTemplate = function (id) {
+            $http.get('getTemplate/'+id).then(function (response) {
+                //This is the way template would we recover once we merge front with back
+               var htmlTemplate = response.templates || '<h1> No template received </h1>';
+               $('#actualTemplate').html(htmlTemplate);
+            });
+        };
+        
+        /*
+         * This function validates both fields in the mail sending form
+         * @returns {Boolean}
          */
         $scope.validateForm = function () {
             // If any of the required fields are invalid...
@@ -35,27 +31,30 @@
                  $scope.sendMailForm.subject.$invalid) {
                      return true;
                  }
-
              };
+             
+             
         /*
          * This function send the email when button in header is clicked
          */
         $scope.sendMail = function () {
             
-            // Getting mail data!
+            // Getting mail data
             var mailData = {
                'email' : $scope.email,
                'subject': $scope.subject, // why this is not working here??? $scope.sendMailForm.subject and it does upsters!;
                'htmlContent' : document.getElementById('actualTemplate').innerHTML
             };
-            // Parsing js object to string!
+            
+            // Parsing js object to string
             mailData = JSON.stringify(mailData);
             console.log(mailData);
             
-            // Sending mail!
+            // Sending mail
             $http.post('mail', {
                 "mailData": mailData
             }).then(function(response) {
+                // This function is call on success
                 if (response.data === 'invalidData') {
                    swal({
                         title: 'error!',
@@ -64,9 +63,7 @@
                         confirmButtomText: 'close'
                      });
                 }
-                
                 else {
-                // This function is call on success
                 swal({
                     title: 'success!',
                     text: 'All your emails were sended!',

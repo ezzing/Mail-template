@@ -12,7 +12,7 @@
     <!--Only for Tablet and desktop-->
     <div id="emailGeneratorToolbar" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
       <div id="scroolTool"><a href="#">
-          <div class="templateSelector col-xs-12">
+          <div id="example1" ng-click="loadTemplate(&quot;example1&quot;)" class="templateSelector col-xs-12">
             <div class="col-xs-5 icono">
               <table>
                 <tr>
@@ -94,7 +94,7 @@
           <div class="dropdown">
             <button id="templatesButton" type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Templates<span class="caret"></span></button>
             <div id="scroolTool" class="dropdown-menu"><a href="#">
-                <div class="col-xs-12 textTemplSel templateSelector">Plantilla nº1<br/>Fecha de creación: 00/00/0000</div></a><a href="#">
+                <div ng-click="loadTemplate(&quot;example1&quot;)" class="col-xs-12 textTemplSel templateSelector">Plantilla nº1<br/>Fecha de creación: 00/00/0000</div></a><a href="#">
                 <div class="col-xs-12 textTemplSel templateSelector">Plantilla nº2<br/>Fecha de creación: 00/00/0000</div></a><a href="#">
                 <div class="col-xs-12 textTemplSel templateSelector">Plantilla nº3<br/>Fecha de creación: 00/00/0000</div></a><a href="#/templateGenerator">
                 <div class="col-xs-12 textTemplSel templateSelector">Create a new Template</div></a></div>
