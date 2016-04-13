@@ -8,9 +8,9 @@
       //Toolbar for template selector
       //Only for Tablet and desktop
       #emailGeneratorToolbar.col-lg-3.col-md-3.col-sm-3.col-xs-3
-        #scroolTool
+        .scroolTool
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#1
                     .col-xs-5.icono
                         table
                             tr
@@ -21,7 +21,7 @@
                         br
                         |Fecha de creación: 00/00/0000
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#2
                     .col-xs-5.icono
                         table
                             tr
@@ -32,7 +32,7 @@
                         br
                         |Fecha de creación: 00/00/0000
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#3
                     .col-xs-5.icono
                         table
                             tr
@@ -43,7 +43,7 @@
                         br
                         |Fecha de creación: 00/00/0000
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#4
                     .col-xs-5.icono
                         table
                             tr
@@ -52,9 +52,9 @@
                     .col-xs-7.textTemplSel
                         |Plantilla nº1
                         br
-                        |Fecha de creación: 00/00/0000
+                        |Fecha de creación: 0000-00-00
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#5
                     .col-xs-5.icono
                         table
                             tr
@@ -63,9 +63,9 @@
                     .col-xs-7.textTemplSel
                         |Plantilla nº1
                         br
-                        |Fecha de creación: 00/00/0000
+                        |Fecha de creación: 0000-00-00
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#6
                     .col-xs-5.icono
                         table
                             tr
@@ -74,9 +74,9 @@
                     .col-xs-7.textTemplSel
                         |Plantilla nº1
                         br
-                        |Fecha de creación: 00/00/0000
+                        |Fecha de creación: 0000-00-00
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#7
                     .col-xs-5.icono
                         table
                             tr
@@ -85,9 +85,9 @@
                     .col-xs-7.textTemplSel
                         |Plantilla nº1
                         br
-                        |Fecha de creación: 00/00/0000
+                        |Fecha de creación: 0000-00-00
 
-        a(href='#/templateGenerator')
+        a#refTemplateGenerator(href='#/templateGenerator')
             #createTemplate.col-xs-12.templateSelector
                 .col-xs-5.icono
                     table
@@ -104,22 +104,28 @@
                 .dropdown
                   button.btn.btn-primary.dropdown-toggle#templatesButton(type='button', data-toggle='dropdown') Templates
                       span.caret
-                  #scroolTool.dropdown-menu
+                  .scroolTool.dropdown-menu
                     a(href='#')
                       .col-xs-12.textTemplSel.templateSelector
                           |Plantilla nº1
                           br
-                          |Fecha de creación: 00/00/0000
+                          |Fecha de creación:
+                          br
+                          |0000-00-00
                     a(href='#')
                       .col-xs-12.textTemplSel.templateSelector
                           |Plantilla nº2
                           br
-                          |Fecha de creación: 00/00/0000
+                          |Fecha de creación:
+                          br
+                          |0000-00-00
                     a(href='#')
                       .col-xs-12.textTemplSel.templateSelector
                           |Plantilla nº3
                           br
-                          |Fecha de creación: 00/00/0000
+                          |Fecha de creación:
+                          br
+                          |0000-00-00
                     a(href='#/templateGenerator')
                       .col-xs-12.textTemplSel.templateSelector
                           |Create a new Template
@@ -129,10 +135,16 @@
                     span.caret
                 form#variablesForm.dropdown-menu
                     label.col-xs-12.formLabel(for='name') Name:
-                    input.col-xs-12.form-control(type='text', id='name', placeholder='Name')
+                    input.col-xs-12.form-control(type='text', id='name', placeholder='Name', ng-model='name')
                     label.col-xs-12.formLabel(for='surname') Surname:
-                    input.col-xs-12.form-control(type='text', id='surname', placeholder='Surname')
+                    input.col-xs-12.form-control(type='text', id='surname', placeholder='Surname', ng-model='surname')
                     label.col-xs-12.formLabel(for='email') Email:
-                    input.col-xs-12.form-control(type='text', id='email', placeholder='Email')
+                    input.col-xs-12.form-control(type='text', id='email', placeholder='Email', ng-model='email')
                     label.col-xs-12.formLabel(for='mailContent') Contenido del Email:
                     textarea#mailContent(rows='6', placeholder='Your mail content')
+        #actualTemplate
+            |Name: {{name}}
+            br
+            |Surname: {{surname}}
+            br
+            |Email: {{email}}

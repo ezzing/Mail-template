@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/getAllTemplates', 'TemplateController@getAllTemplates');
+
+Route::get('/getCreatedTemplates', 'TemplateController@getCreatedTemplates');
+
+Route::get('/getTemplate/{id}', 'TemplateController@getTemplate');
