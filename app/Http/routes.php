@@ -19,4 +19,9 @@ Route::get('/', function () {
  * to configure the mail sending, and then it sends it using Mail facade.
  */
 Route::post('/mail', 'MailController@sendEmail');
- 
+
+Route::get('/getAllTemplates', 'TemplateController@getAllTemplates');
+
+Route::get('/getCreatedTemplates', 'TemplateController@getCreatedTemplates');
+
+Route::get('/getTemplate/{id}', 'TemplateController@getTemplate');

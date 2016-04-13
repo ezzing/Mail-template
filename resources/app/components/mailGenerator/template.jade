@@ -8,7 +8,7 @@
       //Toolbar for template selector
       //Only for Tablet and desktop
       #emailGeneratorToolbar.col-lg-3.col-md-3.col-sm-3.col-xs-3
-        #scroolTool
+        .scroolTool
             a(href='#')
                 #example1.templateSelector.col-xs-12(ng-click='loadTemplate("example1")')
                     .col-xs-5.icono
@@ -21,7 +21,7 @@
                         br
                         |Fecha de creación: 00/00/0000
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#2
                     .col-xs-5.icono
                         table
                             tr
@@ -32,7 +32,7 @@
                         br
                         |Fecha de creación: 00/00/0000
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#3
                     .col-xs-5.icono
                         table
                             tr
@@ -43,7 +43,7 @@
                         br
                         |Fecha de creación: 00/00/0000
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#4
                     .col-xs-5.icono
                         table
                             tr
@@ -52,9 +52,9 @@
                     .col-xs-7.textTemplSel
                         |Plantilla nº1
                         br
-                        |Fecha de creación: 00/00/0000
+                        |Fecha de creación: 0000-00-00
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#5
                     .col-xs-5.icono
                         table
                             tr
@@ -63,9 +63,9 @@
                     .col-xs-7.textTemplSel
                         |Plantilla nº1
                         br
-                        |Fecha de creación: 00/00/0000
+                        |Fecha de creación: 0000-00-00
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#6
                     .col-xs-5.icono
                         table
                             tr
@@ -74,9 +74,9 @@
                     .col-xs-7.textTemplSel
                         |Plantilla nº1
                         br
-                        |Fecha de creación: 00/00/0000
+                        |Fecha de creación: 0000-00-00
             a(href='#')
-                .templateSelector.col-xs-12
+                .templateSelector.col-xs-12#7
                     .col-xs-5.icono
                         table
                             tr
@@ -85,9 +85,9 @@
                     .col-xs-7.textTemplSel
                         |Plantilla nº1
                         br
-                        |Fecha de creación: 00/00/0000
+                        |Fecha de creación: 0000-00-00
 
-        a(href='#/templateGenerator')
+        a#refTemplateGenerator(href='#/templateGenerator')
             #createTemplate.col-xs-12.templateSelector
                 .col-xs-5.icono
                     table
@@ -104,22 +104,28 @@
                 .dropdown
                   button.btn.btn-primary.dropdown-toggle#templatesButton(type='button', data-toggle='dropdown') Templates
                       span.caret
-                  #scroolTool.dropdown-menu
+                  .scroolTool.dropdown-menu
                     a(href='#')
                       .col-xs-12.textTemplSel.templateSelector(ng-click='loadTemplate("example1")')
                           |Plantilla nº1
                           br
-                          |Fecha de creación: 00/00/0000
+                          |Fecha de creación:
+                          br
+                          |0000-00-00
                     a(href='#')
                       .col-xs-12.textTemplSel.templateSelector
                           |Plantilla nº2
                           br
-                          |Fecha de creación: 00/00/0000
+                          |Fecha de creación:
+                          br
+                          |0000-00-00
                     a(href='#')
                       .col-xs-12.textTemplSel.templateSelector
                           |Plantilla nº3
                           br
-                          |Fecha de creación: 00/00/0000
+                          |Fecha de creación:
+                          br
+                          |0000-00-00
                     a(href='#/templateGenerator')
                       .col-xs-12.textTemplSel.templateSelector
                           |Create a new Template
@@ -129,19 +135,19 @@
                     span.caret
                 form#variablesForm.dropdown-menu
                     label.col-xs-12.formLabel(for='name') Name:
-                    input.col-xs-12.form-control(type='text', id='name', placeholder='Name')
+                    input.col-xs-12.form-control(type='text', id='name', placeholder='Name', ng-model='name')
                     label.col-xs-12.formLabel(for='surname') Surname:
-                    input.col-xs-12.form-control(type='text', id='surname', placeholder='Surname')
+                    input.col-xs-12.form-control(type='text', id='surname', placeholder='Surname', ng-model='surname')
                     label.col-xs-12.formLabel(for='email') Email:
-                    input.col-xs-12.form-control(type='text', id='email', placeholder='Email')
+                    input.col-xs-12.form-control(type='text', id='email', placeholder='Email', ng-model='email')
                     label.col-xs-12.formLabel(for='mailContent') Contenido del Email:
                     textarea#mailContent(rows='6', placeholder='Your mail content')
         #actualTemplate
-            h1 This is the first template in mail history!
-            p
-                |And it just has a simple paragraph which is autoreferential
-                br
-                | which is sad : (
+            | Name: {{name}}
+            br
+            | Surname: {{surname}}
+            br
+            | Email: {{email}}
                 
 // Modal window for sending an email
  
@@ -160,11 +166,10 @@ div#sendMail.modal.fade
                         input#emailInput.form-control(type='text' ng-model='email' name='email'  placeholder='<name>mail@example.com,<name>other@example.com' ng-pattern='/^((<[a-z]+>)?[\.a-zA-ZáéíóúÁÉÍÓÚñÑ_1-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12})(,((<[a-z]+>)?[\.a-zA-ZáéíóúÁÉÍÓÚñÑ_1-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12}))*$/' required)
                         span.glyphicon.form-control-feedback(ng-class="{'glyphicon-ok' : sendMailForm.email.$valid, 'glyphicon-remove' : sendMailForm.email.$invalid && sendMailForm.email.$dirty}")
                 div.form-group.has-feedback(ng-class=" { 'has-error' : sendMailForm.subject.$invalid && sendMailForm.subject.$dirty, 'has-success': sendMailForm.subject.$valid} ")
-                    label.col-sm-2.control-label(for='subject') Subject:
+                    label.col-sm-2.control-label(for='subjectInput') Subject:
                     div.col-sm-8
                         input#subjectInput.form-control(type='text' ng-model='subject'  placeholder='subject' name='subject' ng-pattern='/^[a-zA-ZáéíóúÁÉÍÓÚñÑ1-9][a-zA-ZáéíóúÁÉÍÓÚñÑ1-9 ]{3,50}$/' required)                        
                         span.glyphicon.form-control-feedback(ng-class="{'glyphicon-ok' : sendMailForm.subject.$valid, 'glyphicon-remove' : sendMailForm.subject.$invalid && sendMailForm.subject.$dirty}")
             div.modal-footer
                 button.btn.btn-warning(type='button' data-dismiss='modal') Close
                 button.btn.btn-success(type='button' ng-click='sendMail()' ng-disabled='validateForm()') Send
- 
