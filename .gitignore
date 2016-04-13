@@ -6,3 +6,6 @@
 /config.json
 /package.json
 /.gitignore
+/.sass-cache
+*~
+
