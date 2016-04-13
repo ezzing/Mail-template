@@ -26,21 +26,35 @@
 
 
     function mailGeneratorCtrl ($scope, $http) {
-        // Just for testing
-        console.log('It works, you can start coding in mailGenerator Controller!');
-        
+
         /*
          * This function validates the form and its called by ng-disabled to enable or disabled 'send' button
          * @returns {Boolean}
          */
+        
+        /*
+             
+                    var amountOfNames = $scope.name.split(',').length;
+                    var amountOfMails = $scope.email.split(',').length;
+                    if (amountOfMails === amountOfNames) {
+                        console.log ('misma cantidad');
+                        return true;
+                    }
+                    else {
+                        console.log ('distinta cantidad');
+                        amountOfMails > amountOfNames?  $scope.sendMailForm.name.$invalid === true : $scope.sendMailForm.email.$invalid === true;
+                        return false;
+                    }
+         */
         $scope.validateForm = function () {
-            if (!(
-                 $scope.sendMailForm.name.$valid &&
-                 $scope.sendMailForm.email.$valid &&
-                 $scope.sendMailForm.subject.$valid)) {
-                    return true;
-                 };
-        };
+            // If any of the required fields are invalid...
+            if (
+                 $scope.sendMailForm.email.$invalid ||
+                 $scope.sendMailForm.subject.$invalid) {
+                     return true;
+                 }
+
+             };
         /*
          * This function send the email when button in header is clicked
          */
@@ -48,7 +62,6 @@
             
             // Getting mail data!
             var mailData = {
-               'name' : $scope.name,
                'email' : $scope.email,
                'subject': $scope.subject, // why this is not working here??? $scope.sendMailForm.subject and it does upsters!;
                'htmlContent' : document.getElementById('actualTemplate').innerHTML
@@ -56,6 +69,7 @@
             // Parsing js object to string!
             mailData = JSON.stringify(mailData);
             console.log(mailData);
+            
             // Sending mail!
             $http.post('mail', {
                 "mailData": mailData
