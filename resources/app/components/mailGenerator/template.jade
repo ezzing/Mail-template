@@ -55,9 +55,9 @@
                     span.caret
                 form#variablesForm.dropdown-menu.form-horizontal
                     div.form-group(ng-repeat='variable in templateVariables')
-                        label.col-xs-2.control-label(for='{{variable}}') {{variable}}
+                        label.col-xs-2.control-label(for='{{variable[0]}}') {{variable[0]}}
                         div.col-xs-10
-                            input.form-control(ng-model='variable')
+                            input.form-control(ng-model='variable[1]' id='{{variable[0]}}')
                     
         // Div that contains the preview of the email
         #actualTemplate

@@ -44,7 +44,6 @@
         
         function loadTemplate (id) {
             $http.get('getTemplate/' + id).then(function (response) {
-                $scope.templateVariables = [];
                 // Getting new template
                 var htmlTemplate = response.data.templates || '<h1> No template received from server</h1>';
                 
@@ -58,10 +57,13 @@
                 if (htmlTemplate.search('{{') !== -1) {
                     var startOfVariable = null;
                     var endOfVariable = null;
+                    var variable = null;
+                    $scope.templateVariables = [];
                     do {
                         startOfVariable = htmlTemplate.search('{{');
                         endOfVariable = htmlTemplate.search('}}');
-                        $scope.templateVariables.push(htmlTemplate.substring(startOfVariable + 2, endOfVariable));
+                        variable = htmlTemplate.substring(startOfVariable + 2, endOfVariable);
+                        $scope.templateVariables.push([variable, variable]);
                         htmlTemplate = htmlTemplate.substring(0, startOfVariable) +
                             '<b>Variable</b>' +
                             htmlTemplate.substring(endOfVariable + 2, htmlTemplate.length);
