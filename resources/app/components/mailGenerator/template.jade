@@ -50,7 +50,7 @@
                           |Create a new Template
                           
             //Dropdown menu for variables
-            .dropdown.col-lg-12.col-md-12.col-sm-12.col-xs-9#variables
+            #variables.dropdown.col-lg-12.col-md-12.col-sm-12.col-xs-9(ng-keydown='closeDropdown($event)')
                 button.btn.btn-primary.dropdown-toggle#variablesButton(type='button', data-toggle='dropdown') Variables
                     span.caret
                 form#variablesForm.dropdown-menu.form-horizontal

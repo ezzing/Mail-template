@@ -37,6 +37,10 @@
        
         $scope.sendMail = sendMail;
         
+        $scope.changeVariables = changeVariables;
+        
+        $scope.closeDropdown = closeDropdown;
+        
         /*
          * This function loads clicked template on #actualTemplate container, checks for variables on it, and loads them on dropdown menu
          * @param {type} id
@@ -150,7 +154,7 @@
         /*
          * This function set the variables of the template when the user change it on the form
          */
-        $scope.changeVariables = function () {
+        function changeVariables () {
 
             // Getting the name of the variable and the value
             var NameVariable = this.variable[0];
@@ -166,6 +170,13 @@
                 }
             }
 
+        }
+        
+        /*
+         * This function close the dropdown variables menu when hit enter
+         */
+        function closeDropdown (event) {
+            (event.keyCode === 13) ? $('div#variables').removeClass('open') : '';
         }
     }
 })();
