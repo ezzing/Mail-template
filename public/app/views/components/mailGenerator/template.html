@@ -51,7 +51,7 @@
             <div ng-repeat="variable in templateVariables" class="form-group">
               <label for="{{variable[0]}}" class="col-xs-2 control-label">{{variable[0]}}</label>
               <div class="col-xs-10">
-                <input ng-model="variable[1]" id="{{variable[0]}}" class="form-control"/>
+                <input ng-model="variable[1]" id="{{variable[0]}}" ng-change="changeVariables()" class="form-control"/>
               </div>
             </div>
           </form>
