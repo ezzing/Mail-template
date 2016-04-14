@@ -57,7 +57,7 @@
                     div.form-group(ng-repeat='variable in templateVariables')
                         label.col-xs-2.control-label(for='{{variable[0]}}') {{variable[0]}}
                         div.col-xs-10
-                            input.form-control(ng-model='variable[1]' id='{{variable[0]}}')
+                            input.form-control(ng-model='variable[1]' id='{{variable[0]}}', ng-change='changeVariables()')
                     
         // Div that contains the preview of the email
         #actualTemplate
