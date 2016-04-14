@@ -17,23 +17,6 @@
 
 
 (function () {
-    
-    'use strict';
-    
-    angular.module('mailTemplate').controller('templateGeneratorCtrl', templateGeneratorCtrl);
-
-    templateGeneratorCtrl.$inject = ['$scope'];
-
-
-    function templateGeneratorCtrl ($scope) {
-        console.log('It works, you can start coding in templateGenerator Controller!');
-    }
-    
-    
-})();
-
-
-(function () {
 
     'use strict';
     
@@ -63,13 +46,7 @@
             $http.get('getTemplate/' + id).then(function (response) {
                 // Getting new template
                 var htmlTemplate = response.data.templates || '<h1> No template received from server</h1>';
-                
-                // Injecting new template in DOM
-                //$('#actualTemplate').html(htmlTemplate);
-                
-                // Compiling the new DOM content to enable angular on it
-                //$compile($('#actualTemplate').contents())($scope);
-                
+
                 // If there is some '{{' string on template
                 if (htmlTemplate.search('{{') !== -1) {
                     var startOfVariable = null;
@@ -174,11 +151,14 @@
          * This function set the variables of the template when the user change it on the form
          */
         $scope.changeVariables = function () {
+
             // Getting the name of the variable and the value
             var NameVariable = this.variable[0];
             var ValueVariable = this.variable[1];
+
             // Getting the labels of the html
             var labels = angular.element(document).find("label");
+            
             // Search and modify the label that the is modifing
             for (var i = 0; i < labels.length; i++){
                 if (labels[i].getAttribute("for") === NameVariable && labels[i].getAttribute("class") === "variables"){
@@ -188,6 +168,23 @@
 
         }
     }
+})();
+
+
+(function () {
+    
+    'use strict';
+    
+    angular.module('mailTemplate').controller('templateGeneratorCtrl', templateGeneratorCtrl);
+
+    templateGeneratorCtrl.$inject = ['$scope'];
+
+
+    function templateGeneratorCtrl ($scope) {
+        console.log('It works, you can start coding in templateGenerator Controller!');
+    }
+    
+    
 })();
 
 
