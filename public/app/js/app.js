@@ -46,13 +46,7 @@
             $http.get('getTemplate/' + id).then(function (response) {
                 // Getting new template
                 var htmlTemplate = response.data.templates || '<h1> No template received from server</h1>';
-                
-                // Injecting new template in DOM
-                $('#actualTemplate').html(htmlTemplate);
-                
-                // Compiling the new DOM content to enable angular on it
-                $compile($('#actualTemplate').contents())($scope);
-                
+
                 // If there is some '{{' string on template
                 if (htmlTemplate.search('{{') !== -1) {
                     var startOfVariable = null;
@@ -65,9 +59,15 @@
                         variable = htmlTemplate.substring(startOfVariable + 2, endOfVariable);
                         $scope.templateVariables.push([variable, variable]);
                         htmlTemplate = htmlTemplate.substring(0, startOfVariable) +
-                            '<b>Variable</b>' +
+                            "<label for=" + variable +" class='variables'>" + variable +"</label>" +
                             htmlTemplate.substring(endOfVariable + 2, htmlTemplate.length);
                     } while (htmlTemplate.search('{{') !== -1);
+
+                    // Injecting new template in DOM
+                    $('#actualTemplate').html(htmlTemplate);
+
+                    // Compiling the new DOM content to enable angular on it
+                    $compile($('#actualTemplate').contents())($scope);
                 }
             });
         }
@@ -145,6 +145,27 @@
                     'confirmButtomText': 'close'
                 });
             });
+        }
+
+        /*
+         * This function set the variables of the template when the user change it on the form
+         */
+        $scope.changeVariables = function () {
+
+            // Getting the name of the variable and the value
+            var NameVariable = this.variable[0];
+            var ValueVariable = this.variable[1];
+
+            // Getting the labels of the html
+            var labels = angular.element(document).find("label");
+            
+            // Search and modify the label that the is modifing
+            for (var i = 0; i < labels.length; i++){
+                if (labels[i].getAttribute("for") === NameVariable && labels[i].getAttribute("class") === "variables"){
+                    labels[i].innerHTML = ValueVariable;
+                }
+            }
+
         }
     }
 })();
