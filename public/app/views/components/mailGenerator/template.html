@@ -1,119 +1,93 @@
 
 <div id="emailGenerator">
   <div class="row">
+    <!-- Header of the template-->
     <div id="emailGeneratorHeader" class="col-xs-12 rown">
       <div class="col-xs-1"></div>
       <h3 class="col-xs-6 col-xs-offset-3">Mail Generator</h3>
-      <button type="button" class="btn btn-success col-xs-1 col-xs-offset-1">Save</button>
+      <button type="button" data-toggle="modal" data-target="#sendMail" class="btn btn-success col-xs-1 col-xs-offset-1">Send</button>
     </div>
   </div>
   <div class="row">
-    <!--Toolbar for template selector-->
-    <!--Only for Tablet and desktop-->
+    <!-- Toolbar for template selector in tablet and desktop versions-->
     <div id="emailGeneratorToolbar" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-      <div id="scroolTool"><a href="#">
-          <div class="templateSelector col-xs-12">
+      <div class="scroolTool"><a href="#" ng-repeat="template in templateList">
+          <div id="example1" ng-click="loadTemplate(template.id_template)" class="templateSelector col-xs-12">
             <div class="col-xs-5 icono">
               <table>
                 <tr>
-                  <td><img src="/app/img/plantilla.png" class="img-responsive"/></td>
+                  <td><img src="{{template.icon}}" class="img-responsive"/></td>
                 </tr>
               </table>
             </div>
-            <div class="col-xs-7 textTemplSel">Plantilla nº1<br/>Fecha de creación: 00/00/0000</div>
-          </div></a><a href="#">
-          <div class="templateSelector col-xs-12">
-            <div class="col-xs-5 icono">
-              <table>
-                <tr>
-                  <td><img src="/app/img/plantilla.png" class="img-responsive"/></td>
-                </tr>
-              </table>
-            </div>
-            <div class="col-xs-7 textTemplSel">Plantilla nº1<br/>Fecha de creación: 00/00/0000</div>
-          </div></a><a href="#">
-          <div class="templateSelector col-xs-12">
-            <div class="col-xs-5 icono">
-              <table>
-                <tr>
-                  <td><img src="/app/img/plantilla.png" class="img-responsive"/></td>
-                </tr>
-              </table>
-            </div>
-            <div class="col-xs-7 textTemplSel">Plantilla nº1<br/>Fecha de creación: 00/00/0000</div>
-          </div></a><a href="#">
-          <div class="templateSelector col-xs-12">
-            <div class="col-xs-5 icono">
-              <table>
-                <tr>
-                  <td><img src="/app/img/plantilla.png" class="img-responsive"/></td>
-                </tr>
-              </table>
-            </div>
-            <div class="col-xs-7 textTemplSel">Plantilla nº1<br/>Fecha de creación: 00/00/0000</div>
-          </div></a><a href="#">
-          <div class="templateSelector col-xs-12">
-            <div class="col-xs-5 icono">
-              <table>
-                <tr>
-                  <td><img src="/app/img/plantilla.png" class="img-responsive"/></td>
-                </tr>
-              </table>
-            </div>
-            <div class="col-xs-7 textTemplSel">Plantilla nº1<br/>Fecha de creación: 00/00/0000</div>
-          </div></a><a href="#">
-          <div class="templateSelector col-xs-12">
-            <div class="col-xs-5 icono">
-              <table>
-                <tr>
-                  <td><img src="/app/img/plantilla.png" class="img-responsive"/></td>
-                </tr>
-              </table>
-            </div>
-            <div class="col-xs-7 textTemplSel">Plantilla nº1<br/>Fecha de creación: 00/00/0000</div>
-          </div></a><a href="#">
-          <div class="templateSelector col-xs-12">
-            <div class="col-xs-5 icono">
-              <table>
-                <tr>
-                  <td><img src="/app/img/plantilla.png" class="img-responsive"/></td>
-                </tr>
-              </table>
-            </div>
-            <div class="col-xs-7 textTemplSel">Plantilla nº1<br/>Fecha de creación: 00/00/0000</div>
-          </div></a></div><a href="#/templateGenerator">
+            <div class="col-xs-7 textTemplSel">Template nº{{template.id_template}}<br/>Date: {{template.created_at}}</div>
+          </div></a></div><a id="refTemplateGenerator" href="#/templateGenerator">
         <div id="createTemplate" class="col-xs-12 templateSelector">
-          <div class="col-xs-5"><img src="/app/img/plantilla.png" class="img-responsive"/></div>
+          <div class="col-xs-5 icono">
+            <table>
+              <tr>
+                <td><img src="/app/img/plantilla.png" class="img-responsive"/></td>
+              </tr>
+            </table>
+          </div>
           <div class="col-xs-7 textTemplSel">Create a new Template</div>
         </div></a>
     </div>
+    <!-- Toolbar for template selector in mobile versions-->
     <div id="emailGeneratorBody" class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
       <div class="row">
-        <!--Toolbar for template selector for MOBILE-->
         <div id="emailGeneratorToolbarButton" class="navbar-toggle collapsed col-xs-3">
           <div class="dropdown">
             <button id="templatesButton" type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Templates<span class="caret"></span></button>
-            <div id="scroolTool" class="dropdown-menu"><a href="#">
-                <div class="col-xs-12 textTemplSel templateSelector">Plantilla nº1<br/>Fecha de creación: 00/00/0000</div></a><a href="#">
-                <div class="col-xs-12 textTemplSel templateSelector">Plantilla nº2<br/>Fecha de creación: 00/00/0000</div></a><a href="#">
-                <div class="col-xs-12 textTemplSel templateSelector">Plantilla nº3<br/>Fecha de creación: 00/00/0000</div></a><a href="#/templateGenerator">
+            <div class="scroolTool dropdown-menu"><a href="#" ng-repeat="template in templateList">
+                <div ng-click="loadTemplate(template.id_template)" class="col-xs-12 textTemplSel templateSelector">{{template.id_template}}<br/>Date:<br/>{{template.created_at}}</div></a><a href="#/templateGenerator">
                 <div class="col-xs-12 textTemplSel templateSelector">Create a new Template</div></a></div>
           </div>
         </div>
-        <!--Dropdown menu for VARIABLES-->
+        <!--Dropdown menu for variables-->
         <div id="variables" class="dropdown col-lg-12 col-md-12 col-sm-12 col-xs-9">
           <button id="variablesButton" type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Variables<span class="caret"></span></button>
-          <form id="variablesForm" class="dropdown-menu">
-            <label for="name" class="col-xs-12 formLabel">Name:</label>
-            <input type="text" id="name" placeholder="Name" class="col-xs-12 form-control"/>
-            <label for="surname" class="col-xs-12 formLabel">Surname:</label>
-            <input type="text" id="surname" placeholder="Surname" class="col-xs-12 form-control"/>
-            <label for="email" class="col-xs-12 formLabel">Email:</label>
-            <input type="text" id="email" placeholder="Email" class="col-xs-12 form-control"/>
-            <label for="mailContent" class="col-xs-12 formLabel">Contenido del Email:</label>
-            <textarea id="mailContent" rows="6" placeholder="Your mail content"></textarea>
+          <form id="variablesForm" class="dropdown-menu form-horizontal">
+            <div ng-repeat="variable in templateVariables" class="form-group">
+              <label for="{{variable[0]}}" class="col-xs-2 control-label">{{variable[0]}}</label>
+              <div class="col-xs-10">
+                <input ng-model="variable[1]" id="{{variable[0]}}" ng-change="changeVariables()" class="form-control"/>
+              </div>
+            </div>
           </form>
         </div>
+      </div>
+      <!-- Div that contains the preview of the email-->
+      <div id="actualTemplate"></div>
+    </div>
+  </div>
+</div>
+<!-- Modal window for sending an email-->
+<div id="sendMail" class="modal fade">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Email settings</h4>
+      </div>
+      <div class="modal-body"></div>
+      <form name="sendMailForm" class="form-horizontal">
+        <div ng-class=" { 'has-error' : sendMailForm.email.$invalid &amp;&amp; sendMailForm.email.$dirty, 'has-success' : sendMailForm.email.$valid} " class="form-group has-feedback">
+          <label for="email" class="col-sm-2 control-label">Email:</label>
+          <div class="col-sm-8">
+            <input id="emailInput" type="text" ng-model="email" name="email" placeholder="&lt;name&gt;mail@example.com,&lt;name&gt;other@example.com" ng-pattern="/^((&lt;[a-z]+&gt;)?[.a-zA-ZáéíóúÁÉÍÓÚñÑ_1-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12})(,((&lt;[a-z]+&gt;)?[.a-zA-ZáéíóúÁÉÍÓÚñÑ_1-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12}))*$/" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : sendMailForm.email.$valid, 'glyphicon-remove' : sendMailForm.email.$invalid &amp;&amp; sendMailForm.email.$dirty}" class="glyphicon form-control-feedback"></span>
+          </div>
+        </div>
+        <div ng-class=" { 'has-error' : sendMailForm.subject.$invalid &amp;&amp; sendMailForm.subject.$dirty, 'has-success': sendMailForm.subject.$valid} " class="form-group has-feedback">
+          <label for="subjectInput" class="col-sm-2 control-label">Subject:</label>
+          <div class="col-sm-8">
+            <input id="subjectInput" type="text" ng-model="subject" placeholder="subject" name="subject" ng-pattern="/^[a-zA-ZáéíóúÁÉÍÓÚñÑ1-9][a-zA-ZáéíóúÁÉÍÓÚñÑ1-9 ]{3,50}$/" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : sendMailForm.subject.$valid, 'glyphicon-remove' : sendMailForm.subject.$invalid &amp;&amp; sendMailForm.subject.$dirty}" class="glyphicon form-control-feedback"></span>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
+        <button type="button" ng-click="sendMail()" ng-disabled="validateForm()" class="btn btn-success">Send</button>
       </div>
     </div>
   </div>
