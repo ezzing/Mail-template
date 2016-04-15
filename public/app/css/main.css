@@ -110,7 +110,7 @@
   color: black;
   min-width: 100%;
 }
-#emailGenerator #scroolTool {
+#emailGenerator .scroolTool {
   position: absolute;
   top: 0;
   left: 0;
@@ -118,7 +118,7 @@
   height: 82.5%;
 }
 @media screen and (max-width: 767px) {
-  #emailGenerator #scroolTool {
+  #emailGenerator .scroolTool {
     height: 200px;
     padding-left: 28px;
     position: inherit;
@@ -170,6 +170,7 @@
 #emailGenerator #variablesForm {
   min-width: 100%;
   padding: 2%;
+  padding-right: 5%;
 }
 #emailGenerator #variablesForm input {
   margin-bottom: 1%;

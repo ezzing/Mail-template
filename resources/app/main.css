@@ -129,7 +129,8 @@
   min-width: 100%; }
 #emailGenerator #variablesForm {
   min-width: 100%;
-  padding: 2%; }
+  padding: 2%;
+  padding-right: 5%; }
   #emailGenerator #variablesForm input {
     margin-bottom: 1%; }
 #emailGenerator #mailContent {
