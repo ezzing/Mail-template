@@ -6,3 +6,9 @@
 /config.json
 /package.json
 /.gitignore
+/.sass-cache
+/public/app/js
+/public/app/views
+/public/app/css/main.css
+*~
+

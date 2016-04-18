@@ -58,7 +58,7 @@
     min-width: 100%;
   }
 
-    #scroolTool {
+    .scroolTool {
       position: absolute;
       top: 0;
       left: 0;
@@ -121,8 +121,8 @@
 
   #variablesForm {
       min-width: 100%;
-
       padding: 2%;
+    padding-right: 5%;
       input {
         margin-bottom: 1%;
       }
@@ -131,6 +131,6 @@
   #mailContent{
     width: 100%;
   }
-    
+ 
 }
 
