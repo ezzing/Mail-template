@@ -50,14 +50,14 @@
                           |Create a new Template
                           
             //Dropdown menu for variables
-            .dropdown.col-lg-12.col-md-12.col-sm-12.col-xs-9#variables
+            #variables.dropdown.col-lg-12.col-md-12.col-sm-12.col-xs-9(ng-keydown='closeDropdown($event)')
                 button.btn.btn-primary.dropdown-toggle#variablesButton(type='button', data-toggle='dropdown') Variables
                     span.caret
                 form#variablesForm.dropdown-menu.form-horizontal
                     div.form-group(ng-repeat='variable in templateVariables')
-                        label.col-xs-2.control-label(for='{{variable}}') {{variable}}
+                        label.col-xs-2.control-label(for='{{variable[0]}}') {{variable[0]}}
                         div.col-xs-10
-                            input.form-control(ng-model='variable')
+                            input.form-control(ng-model='variable[1]' id='{{variable[0]}}', ng-change='changeVariables()')
                     
         // Div that contains the preview of the email
         #actualTemplate

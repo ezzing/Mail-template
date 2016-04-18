@@ -19,28 +19,8 @@
   background-color: #e6e6e6;
   padding-left: 5px;
 }
-#templateGenerator #templateGeneratorToolbar ul#desktopList {
-  padding-left: 20px;
-}
-@media screen and (max-width: 767px) {
-  #templateGenerator #templateGeneratorToolbar ul#desktopList {
-    display: none;
-  }
-}
-#templateGenerator #templateGeneratorToolbar ul#desktopList li {
-  list-style: none;
-  margin: 20% 0;
-}
-#templateGenerator #templateGeneratorToolbar ul#desktopList li button {
-  width: 100%;
-}
 #templateGenerator #templateGeneratorToolbar ul#mobileList {
   padding: 0px;
-}
-@media screen and (min-width: 767px) {
-  #templateGenerator #templateGeneratorToolbar ul#mobileList {
-    display: none;
-  }
 }
 #templateGenerator #templateGeneratorToolbar ul#mobileList li {
   list-style: none;

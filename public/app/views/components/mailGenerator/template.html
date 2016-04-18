@@ -45,13 +45,13 @@
           </div>
         </div>
         <!--Dropdown menu for variables-->
-        <div id="variables" class="dropdown col-lg-12 col-md-12 col-sm-12 col-xs-9">
+        <div id="variables" ng-keydown="closeDropdown($event)" class="dropdown col-lg-12 col-md-12 col-sm-12 col-xs-9">
           <button id="variablesButton" type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Variables<span class="caret"></span></button>
           <form id="variablesForm" class="dropdown-menu form-horizontal">
             <div ng-repeat="variable in templateVariables" class="form-group">
-              <label for="{{variable}}" class="col-xs-2 control-label">{{variable}}</label>
+              <label for="{{variable[0]}}" class="col-xs-2 control-label">{{variable[0]}}</label>
               <div class="col-xs-10">
-                <input ng-model="variable" class="form-control"/>
+                <input ng-model="variable[1]" id="{{variable[0]}}" ng-change="changeVariables()" class="form-control"/>
               </div>
             </div>
           </form>
