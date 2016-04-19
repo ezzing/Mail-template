@@ -32,7 +32,7 @@
             $http.get('getTemplate/' + id).then(function (response) {
                 // Getting new template
                 var htmlTemplate = response.data.templates || '<h1> No template received from server</h1>';
-
+                console.log('loading...' + id);
                 // If there is some '{{' string on template
                 if (htmlTemplate.search('{{') !== -1) {
                     var startOfVariable = null;
@@ -45,16 +45,15 @@
                         variable = htmlTemplate.substring(startOfVariable + 2, endOfVariable);
                         $scope.templateVariables.push([variable, variable]);
                         htmlTemplate = htmlTemplate.substring(0, startOfVariable) +
-                            '<label for=' + variable + 'class="variables">' + variable + '</label>' +
+                            '<label for=' + variable + ' ' + 'class="variables">' + variable + '</label>' +
                             htmlTemplate.substring(endOfVariable + 2, htmlTemplate.length);
                     } while (htmlTemplate.search('{{') !== -1);
-
+                }
                     // Injecting new template in DOM
                     $('#actualTemplate').html(htmlTemplate);
 
                     // Compiling the new DOM content to enable angular on it
                     $compile($('#actualTemplate').contents())($scope);
-                }
             });
         }
         

@@ -11,25 +11,88 @@
     <div id="templateGeneratorToolbar" class="col-xs-1">
       <ul id="mobileList">
         <li>
-          <button type="button" style="background-image: url(app/img/icons/h1.png)"></button>
+          <button type="button" style="background-image: url(app/img/icons/h1.png)" ng-click="createTextElement(&quot;h1&quot;)"></button>
         </li>
         <li>
-          <button type="button" style="background-image: url(app/img/icons/h2.png)"></button>
+          <button type="button" style="background-image: url(app/img/icons/h2.png)" ng-click="createTextElement(&quot;h2&quot;)"></button>
         </li>
         <li>
-          <button type="button" style="background-image: url(app/img/icons/h3.png)"></button>
+          <button type="button" style="background-image: url(app/img/icons/h3.png)" ng-click="createTextElement(&quot;h3&quot;)"></button>
         </li>
         <li>
-          <button type="button" style="background-image: url(app/img/icons/text.png)"></button>
+          <button type="button" style="background-image: url(app/img/icons/text.png)" ng-click="createTextElement(&quot;p&quot;)"></button>
         </li>
         <li>
-          <button type="button" style="background-image: url(app/img/icons/link.png)"></button>
+          <button type="button" style="background-image: url(app/img/icons/link.png)" onclick="$('#askForLink').modal('show')"></button>
         </li>
         <li>
-          <button type="button" style="background-image: url(app/img/icons/img.png)"></button>
+          <button type="button" style="background-image: url(app/img/icons/img.png)" onclick="$('#askForImg').modal('show')"></button>
         </li>
       </ul>
     </div>
-    <div id="templateGeneratorBody" class="col-xs-11"></div>
+    <div id="templateGeneratorBody" gridster="gridsterOpts" class="col-xs-11">
+      <ul>
+        <li gridster-item="element" ng-repeat="element in elementList" ng-switch="ng-switch" on="element.type"><span ng-click="deleteItem($index)" class="fa fa-trash widgetIcon"></span>
+          <h1 ng-if="element.type === &quot;h1&quot;" class="widgetContent">Big title</h1>
+          <h2 ng-if="element.type === &quot;h2&quot;" class="widgetContent">Middle title</h2>
+          <h3 ng-if="element.type === &quot;h3&quot;" class="widgetContent">Small title</h3>
+          <p ng-if="element.type === &quot;p&quot;" class="widgetContent">Paragraph</p><img ng-if="element.type === &quot;img&quot;" class="widgetContent"/><a ng-if="element.type === &quot;a&quot;" ng-href="{{element.href}}" class="widgetContent">{{element.text}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- Modal window for asking for a link-->
+<div id="askForLink" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Link settings</h4>
+      </div>
+      <div class="modal-body"></div>
+      <form name="linkSettingsForm" class="form-horizontal">
+        <div ng-class=" { 'has-error' : linkSettingsForm.link.$invalid &amp;&amp; linkSettingsForm.link.$dirty, 'has-success' : linkSettingsForm.link.$valid} " class="form-group has-feedback">
+          <label for="link" class="col-sm-2 control-label">Target:</label>
+          <div class="col-sm-8">
+            <input id="link" type="text" ng-model="link" name="link" ng-pattern="/(^http://|www).+/" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : linkSettingsForm.link.$valid, 'glyphicon-remove' : linkSettingsForm.link.$invalid &amp;&amp; linkSettingsForm.link.$dirty}" class="glyphicon form-control-feedback"></span>
+          </div>
+        </div>
+        <div ng-class=" { 'has-error' : linkSettingsForm.linkText.$invalid &amp;&amp; linkSettingsForm.linkText.$dirty, 'has-success': linkSettingsForm.linkText.$valid} " class="form-group has-feedback">
+          <label for="linkText" class="col-sm-2 control-label">Text:</label>
+          <div class="col-sm-8">
+            <input id="linkText" type="text" ng-model="linkText" placeholder="text for the link" name="linkText" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : linkSettingsForm.linkText.$valid, 'glyphicon-remove' : linkSettingsForm.linkText.$invalid &amp;&amp; linkSettingsForm.linkText.$dirty}" class="glyphicon form-control-feedback"></span>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
+        <button type="button" ng-click="createLink(link, linkText)" ng-disabled="validateForm()" class="btn btn-success">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal window for asking for a image-->
+<div id="askForImg" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Image settings</h4>
+      </div>
+      <div class="modal-body"></div>
+      <form name="ImgSettingsForm" class="form-horizontal">
+        <div class="form-group">
+          <label for="img" class="col-sm-2 control-label">Select your image:</label>
+          <div class="col-sm-8">
+            <input id="img" type="file" name="img" required="required" class="form-control"/>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
+        <button type="button" ng-click="createLink(link, linkText)" ng-disabled="validateForm()" class="btn btn-success">Send</button>
+      </div>
+    </div>
   </div>
 </div>

@@ -4,7 +4,8 @@
         .module('mailTemplate', [
             'ui.router',
             'ngRoute',
-            'ngLodash'
+            'ngLodash',
+            'gridster',
         ])
         .run(['$rootScope', '$state', '$stateParams', '$window',
             function ($rootScope, $state, $stateParams, $window) {
