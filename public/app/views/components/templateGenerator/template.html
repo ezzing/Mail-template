@@ -32,11 +32,11 @@
     </div>
     <div id="templateGeneratorBody" gridster="gridsterOpts" class="col-xs-11">
       <ul>
-        <li gridster-item="element" ng-repeat="element in elementList" ng-switch="ng-switch" on="element.type"><span ng-click="deleteItem($index)" class="fa fa-trash widgetIcon"></span>
+        <li gridster-item="element" ng-repeat="element in elementList" ng-switch="ng-switch" on="element.type" class="widgetContainer"><span ng-click="deleteItem($index)" class="fa fa-trash trashIcon"></span><span ng-mousedown="gridsterOpts.draggable.enabled = true" ng-mouseup="gridsterOpts.draggable.enabled = false" class="fa fa-arrows fa-2x arrowIcon"></span>
           <h1 ng-if="element.type === &quot;h1&quot;" class="widgetContent">Big title</h1>
           <h2 ng-if="element.type === &quot;h2&quot;" class="widgetContent">Middle title</h2>
           <h3 ng-if="element.type === &quot;h3&quot;" class="widgetContent">Small title</h3>
-          <p ng-if="element.type === &quot;p&quot;" class="widgetContent">Paragraph</p><img ng-if="element.type === &quot;img&quot;" class="widgetContent"/><a ng-if="element.type === &quot;a&quot;" ng-href="{{element.href}}" class="widgetContent">{{element.text}}</a>
+          <p ng-if="element.type === &quot;p&quot;" class="widgetContent">Paragraph</p><img ng-if="element.type === &quot;img&quot;" style="background-image: url({{element.src}});" class="widgetContent imageOnWidget"/><a ng-if="element.type === &quot;a&quot;" ng-href="{{element.href}}" class="widgetContent">{{element.text}}</a>
         </li>
       </ul>
     </div>
@@ -80,18 +80,11 @@
         <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Image settings</h4>
       </div>
-      <div class="modal-body"></div>
-      <form name="ImgSettingsForm" class="form-horizontal">
-        <div class="form-group">
-          <label for="img" class="col-sm-2 control-label">Select your image:</label>
-          <div class="col-sm-8">
-            <input id="img" type="file" name="img" required="required" class="form-control"/>
-          </div>
-        </div>
-      </form>
+      <div class="modal-body">
+        <div ng-file-reader="ng-file-reader" on-readed="onReaded(event, file)" read-method="readMethod" multiple="multiple"></div>
+      </div>
       <div class="modal-footer">
         <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
-        <button type="button" ng-click="createLink(link, linkText)" ng-disabled="validateForm()" class="btn btn-success">Send</button>
       </div>
     </div>
   </div>

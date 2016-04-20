@@ -6,6 +6,7 @@
             'ngRoute',
             'ngLodash',
             'gridster',
+            'ngFileReader'
         ])
         .run(['$rootScope', '$state', '$stateParams', '$window',
             function ($rootScope, $state, $stateParams, $window) {

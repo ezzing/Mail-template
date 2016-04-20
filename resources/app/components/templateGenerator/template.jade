@@ -24,13 +24,14 @@
 
       #templateGeneratorBody.col-xs-11(gridster = "gridsterOpts")
         ul
-           li(gridster-item='element' ng-repeat='element in elementList' ng-switch on='element.type')
-                span.fa.fa-trash.widgetIcon(ng-click='deleteItem($index)')
+           li.widgetContainer(gridster-item='element' ng-repeat='element in elementList' ng-switch on='element.type')
+                span.fa.fa-trash.trashIcon(ng-click='deleteItem($index)')
+                span.fa.fa-arrows.fa-2x.arrowIcon(ng-mousedown='gridsterOpts.draggable.enabled = true' ng-mouseup='gridsterOpts.draggable.enabled = false')
                 h1.widgetContent(ng-if='element.type === "h1"') Big title
                 h2.widgetContent(ng-if='element.type === "h2"') Middle title
                 h3.widgetContent(ng-if='element.type === "h3"') Small title
                 p.widgetContent(ng-if='element.type === "p"') Paragraph
-                img.widgetContent(ng-if='element.type === "img"')
+                img.widgetContent.imageOnWidget(ng-if='element.type === "img"'  style='background-image: url({{element.src}});') 
                 a.widgetContent(ng-if='element.type === "a"' ng-href="{{element.href}}") {{element.text}}
                     
       
@@ -68,11 +69,6 @@ div#askForImg.modal.fade
                     span(aria-hidden='true') &times;
                 h4.modal-title Image settings
             div.modal-body
-            form.form-horizontal(name='ImgSettingsForm')
-                div.form-group
-                    label.col-sm-2.control-label(for='img') Select your image:
-                    div.col-sm-8
-                        input#img.form-control(type='file' name='img' required)
+                div(ng-file-reader on-readed="onReaded(event, file)" read-method="readMethod"  multiple)
             div.modal-footer
                 button.btn.btn-warning(type='button' data-dismiss='modal') Close
-                button.btn.btn-success(type='button' ng-click='createLink(link, linkText)' ng-disabled='validateForm()') Send
