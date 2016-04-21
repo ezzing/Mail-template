@@ -6,5 +6,14 @@
   "bower_components/angular-cookies/angular-cookies.js",
   "bower_components/ng-lodash/build/ng-lodash.js",
   "bower_components/bootstrap/dist/js/bootstrap.js",
-  "bower_components/sweetalert/dist/sweetalert.min.js"
+  "bower_components/sweetalert/dist/sweetalert.min.js",
+  "bower_components/tinymce-dist/tinymce.js",
+  "bower_components/tinymce-dist/themes/modern/theme.js",
+  "bower_components/angular/angular.js",
+  "bower_components/angular-ui-tinymce/src/tinymce.js",
+  "bower_components/tinymce/plugins/image/plugin.js",
+  "bower_components/tinymce/plugins/imagetools/plugin.js",
+  "bower_components/tinymce/plugins/autolink/plugin.js",
+  "bower_components/tinymce/plugins/link/plugin.js",
+  "bower_components/tinymce/plugins/textcolor/plugin.js"
 ]

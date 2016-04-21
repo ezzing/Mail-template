@@ -14,13 +14,25 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/foo/bar', function () {
+    return 'Hello World';
+});
+
+Route::put('foo/bar', function () {
+    //
+});
+
+Route::delete('foo/bar', function () {
+    //
+});
 /*
  * This route is used to send emails. It recovers the json object with all the data needed
  * to configure the mail sending, and then it sends it using Mail facade.
  */
 Route::post('/mail', 'MailController@sendEmail');
 
-Route::get('/getAllTemplates', 'TemplateController@getAllTemplates');
+Route::post('/saveTemplate', 'TemplateController@SaveTemplate');
 
 Route::get('/getCreatedTemplates', 'TemplateController@getCreatedTemplates');
 
