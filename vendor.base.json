@@ -16,5 +16,9 @@
   "bower_components/tinymce/plugins/autolink/plugin.js",
   "bower_components/tinymce/plugins/link/plugin.js",
   "bower_components/tinymce/plugins/textcolor/plugin.js",
-  "bower_components/html2canvas/build/html2canvas.js"
+  "bower_components/html2canvas/build/html2canvas.js",
+  "bower_components/angular-gridster/src/angular-gridster.js",
+  "bower_components/javascript-detect-element-resize/jquery.resize.js",
+  "bower_components/ngFileReader/src/ngFileReader.js",
+  "resources/app/libs/fileReader/jquery.fileReader.js"
 ]

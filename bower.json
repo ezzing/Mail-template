@@ -30,6 +30,9 @@
   },
   "devDependencies": {
     "angular-ui-tinymce": "^0.0.15",
-    "tinymce": "^4.3.10"
+    "tinymce": "^4.3.10",
+    "angular-gridster": "^0.13.5",
+    "components-font-awesome": "^4.5.0",
+    "ngFileReader": "^0.0.7"
   }
 }
