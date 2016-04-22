@@ -38,7 +38,51 @@
   padding: 0px;
   background-color: #f2f2f2;
 }
-
+#templateGenerator #templateGeneratorBody .trashIcon {
+  font-size: 20px;
+  position: absolute;
+  right: 0px;
+  cursor: pointer;
+}
+#templateGenerator #templateGeneratorBody .arrowIcon {
+  position: absolute;
+  cursor: pointer;
+  left: 45%;
+  top: 45%;
+  opacity: 0;
+}
+#templateGenerator #templateGeneratorBody .widgetContent {
+  margin-top: 20px;
+}
+#templateGenerator #templateGeneratorBody .imageOnWidget {
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+}
+#templateGenerator #templateGeneratorBody .widgetContainer {
+  border: 1px dotted #009ecd;
+}
+#templateGenerator #templateGeneratorBody .widgetContainer:hover .arrowIcon {
+  animation-name: makeArrowVisible;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  color: grey;
+}
+#templateGenerator .gridster-item-resizable-handler, #templateGenerator .handle-se {
+  border-color: transparent transparent black;
+}
+@keyframes makeArrowVisible {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 #emailGenerator .btn {
   white-space: normal !important;
   word-wrap: break-word;

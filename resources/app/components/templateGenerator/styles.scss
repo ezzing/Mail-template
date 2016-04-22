@@ -47,7 +47,56 @@
         min-height:  90vh;
         padding: 0px;   
        background-color:  #f2f2f2;
+       
+       .trashIcon {
+           font-size: 20px;
+           position: absolute;
+          right: 0px;
+           cursor: pointer;
+       }
+       
+       .arrowIcon {           
+           position: absolute;
+           cursor: pointer;
+           left: 45%;
+           top: 45%;
+           opacity: 0;
+       }
+       
+       .widgetContent {
+        margin-top:  20px;
+       }
+       .imageOnWidget {
+           margin: 0px;
+           width: 100%;
+           height: 100%;
+           background-size:  cover;
+           //background-repeat:  no-repeat;   
+       }
+       
+       .widgetContainer {
+           border: 1px dotted #009ecd;
+       }
+       
+       .widgetContainer:hover {
+           .arrowIcon {
+               animation-name: makeArrowVisible;
+               animation-duration: 1s;
+               animation-fill-mode:  forwards;
+               color: grey;
+           }
+       }
     }
     
+    
+    .gridster-item-resizable-handler, .handle-se  {
+        border-color: transparent transparent black;
+    }
+    
+    @keyframes makeArrowVisible {
+        0% {opacity: 0;}
+        50% {opacity: 0.5;}
+        100% {opacity: 1;}
+    }
 }
 
