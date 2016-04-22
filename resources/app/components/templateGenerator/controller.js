@@ -14,6 +14,19 @@
         $scope.createLink = createLink;
         $scope.deleteItem = deleteItem;
         $scope.onReaded = onReaded;
+        $scope.implementTinymce = implementTinymce;
+        $scope.destroyTinyMce = function (event) {
+            // This destroys tinymce widget, we need to trigger it when we want...
+            tinymce.remove();
+            
+        };
+        $scope.selectMe = function (event) {
+            // This creates a tinymcewidget on widget clicked
+            console.log(event.target);
+            $(event.target).addClass('tinymceWidget');
+            tinymce.init($scope.tinyMceTextOpts);
+            tinymce.activeEditor.focus();
+        };
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -85,6 +98,46 @@
                 // 'stop': function (event, $element, widget) {}
             }
         };
+        $scope.tinyMceTextOpts = {
+            'selector': '.tinymceWidget',
+            'inline': true,
+            'resize': true,
+            'plugins': [
+                'link autolink image',
+                'textcolor imagetools',
+                'colorpicker'
+            ],
+            'menubar': false,
+            'toolbar1': 'fontsizeselect fontselect | alignleft aligncenter alignright alignjustify | subscript superscript ',
+            'toolbar2': 'undo redo | bold italic underline forecolor backcolor | mybutton | image  link unlink',
+            'setup': function (editor) {
+                editor.addButton('mybutton', {
+                    'text': 'Variable',
+                    'icon': false,
+                    'onclick': function () {
+                        editor.insertContent('<span class="variables" style="color: red; background: yellow; font-weight: bold">' +
+                            '<span class="uneditable" contenteditable="false">{{</span>Variable<span class="uneditable" contenteditable="false">}}' +
+                            '</span></span>');
+                    }
+                });
+            },
+            'file_browser_callback': myFileBrowser,
+            'fontsize_formats': '8pt 10pt 12pt 14pt 18pt 24pt 36pt 42pt 72pt',
+            'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
+        };
+        $scope.tinyMceImgOpts = {
+            'selector': '.imageExample',
+            'inline': true,
+            'resize': true,
+            'plugins': [
+                'image',
+                'imagetools'
+            ],
+            'menubar': false,
+            'toolbar': 'undo redo | image | alignleft aligncenter alignright',
+            'file_browser_callback': myFileBrowser,
+            'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
+        };
 
 
         /*
@@ -152,49 +205,9 @@
             });
         }
 
-        // TinyMCE image selector
-        tinymce.init({
-            'selector': '.imageExample',
-            'inline': true,
-            'resize': true,
-            'plugins': [
-                'image',
-                'imagetools'
-            ],
-            'menubar': false,
-            'toolbar': 'undo redo | image | alignleft aligncenter alignright',
-            'file_browser_callback': myFileBrowser,
-            'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
-        });
-
-        //TinyMCE  text selector
-        tinymce.init({
-            'selector': '.tinymceWidget',
-            'inline': true,
-            'resize': true,
-            'plugins': [
-                'link autolink image',
-                'textcolor imagetools',
-                'colorpicker'
-            ],
-            'menubar': false,
-            'toolbar1': 'fontsizeselect fontselect | alignleft aligncenter alignright alignjustify | subscript superscript ',
-            'toolbar2': 'undo redo | bold italic underline forecolor backcolor | mybutton | image  link unlink',
-            'setup': function (editor) {
-                editor.addButton('mybutton', {
-                    'text': 'Variable',
-                    'icon': false,
-                    'onclick': function () {
-                        editor.insertContent('<span class="variables" style="color: red; background: yellow; font-weight: bold">' +
-                            '<span class="uneditable" contenteditable="false">{{</span>Variable<span class="uneditable" contenteditable="false">}}' +
-                            '</span></span>');
-                    }
-                });
-            },
-            'file_browser_callback': myFileBrowser,
-            'fontsize_formats': '8pt 10pt 12pt 14pt 18pt 24pt 36pt 42pt 72pt',
-            'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
-        });
+        function implementTinymce (config) {
+            tinymce.init(config);
+        }
 
         /*
         * This Function extract the url of the insert image
