@@ -60,7 +60,7 @@ class TemplateAppSeeder extends Seeder {
             Template::create(array(
                 'name_template' => 'Template 3',
                 'html'          => '<h1>Template nº3</h1><h2>I am the first template</h2><p>This are my variables:<br>Name: {{name3}}<br>Surname: {{surname3}}<br>Email: {{email3}}</p>',
-                'icon'          => '/app/img/plantilla.png'
+                'icon'          => '/app/img/template.png'
             ));
 
             // show information in the command line after templates are created

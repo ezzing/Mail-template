@@ -1,3 +1,19 @@
+#templateGenerator {
+  @keyframes makeArrowVisible {
+    0% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+
+    100% {
+      opacity: 1;
+    }
+}
+
+}
 #templateGenerator #templateGeneratorHeader {
   border: 1px solid grey;
   min-height: 10vh;
@@ -72,6 +88,7 @@
 #templateGenerator .gridster-item-resizable-handler, #templateGenerator .handle-se {
   border-color: transparent transparent black;
 }
+<<<<<<< HEAD
 @keyframes makeArrowVisible {
   0% {
     opacity: 0;
@@ -83,6 +100,9 @@
     opacity: 1;
   }
 }
+=======
+
+>>>>>>> feature-tinymce-implementation
 #emailGenerator .btn {
   white-space: normal !important;
   word-wrap: break-word;
