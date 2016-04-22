@@ -45,7 +45,7 @@
                         variable = htmlTemplate.substring(startOfVariable + 2, endOfVariable);
                         $scope.templateVariables.push([variable, variable]);
                         htmlTemplate = htmlTemplate.substring(0, startOfVariable) +
-                            '<label for=' + variable + 'class="variables">' + variable + '</label>' +
+                            '<label for=' + variable + ' ' + 'class="variables">' + variable + '</label>' +
                             htmlTemplate.substring(endOfVariable + 2, htmlTemplate.length);
                     } while (htmlTemplate.search('{{') !== -1);
 
