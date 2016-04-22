@@ -190,17 +190,66 @@
 
     templateGeneratorCtrl.$inject = ['$scope', '$http'];
 
+
     function templateGeneratorCtrl ($scope, $http) {
+
+        eventFire(document.getElementById("comprobar"), 'click');
+
+        function eventFire(el, etype){
+            if (el.fireEvent) {
+                console.log("ff");
+                el.fireEvent('on' + etype);
+            } else {
+                var evObj = document.createEvent('Events');
+                evObj.initEvent(etype, true, false);
+                el.dispatchEvent(evObj);
+            }
+        }
+        
+        function comprueba(){
+            console.log("comprueba");
+        }
+
+        $("#comprobar").click(function () {
+            var screeshot = document.getElementById("templateGeneratorBody");
+            html2canvas(screeshot, {
+                onrendered: function (canvas) {
+                    canvas.id = "canvas";
+                    document.body.appendChild(canvas);
+                    var link = document.getElementById("download");
+                    console.log(link);
+                    downloadCanvas(link, canvas, "test.png");
+                    //var link = document.getElementById("download");
+                    //downloadCanvas(link, 'canvas', 'template1.png');
+                }
+            })
+        });
+
+        document.getElementById('download').addEventListener('click', function() {
+            var link = document.getElementById("download");
+            downloadCanvas(link, 'canvas', 'test.png');
+        }, false);
+
+        /**
+         * This is the function that will take care of image extracting and
+         * setting proper filename for the download.
+         * IMPORTANT: Call it from within a onclick event.
+         */
+        function downloadCanvas(link, canvas, filename) {
+            link.href = canvas.toDataURL();
+            link.download = filename;
+            $("#download").trigger('click');
+        }
 
         $scope.saveTemplate = saveTemplate;
 
         $scope.validateTemForm = validateTemForm;
-        
+
         $scope.icon_list = [{'name': 'icon1', 'url': '/app/img/plantilla.png'},
             {'name': 'icon2', 'url': '/app/img/template.png'},
             {'name': 'icon3', 'url': '/app/img/plantilla.png'},
             {'name': 'icon4', 'url': '/app/img/template.png'}];
-        
+
         /*
          * This function validates the fields in the mail sending form
          * @returns {Boolean}
@@ -351,6 +400,8 @@
             win.document.getElementById(field_name).value = 'Without file';
         }
     }
+
+
 
 
     
