@@ -9,36 +9,32 @@
       #templateGeneratorToolbar.col-xs-1
         ul#mobileList
             li
-                button(type='button' style='background-image: url(app/img/icons/h1.png)')
+                button(type='button' style='background-image: url(app/img/icons/h1.png)' ng-click='createTextElement("h1")')
             li
-                button(type='button' style='background-image: url(app/img/icons/h2.png)')
+                button(type='button' style='background-image: url(app/img/icons/h2.png)' ng-click='createTextElement("h2")')
             li
-                button(type='button' style='background-image: url(app/img/icons/h3.png)')
+                button(type='button' style='background-image: url(app/img/icons/h3.png)' ng-click='createTextElement("h3")')
             li
-                button(type='button' style='background-image: url(app/img/icons/text.png)')
+                button(type='button' style='background-image: url(app/img/icons/text.png)' ng-click='createTextElement("p")')
             li
-                button(type='button' style='background-image: url(app/img/icons/link.png)')
+                button(type='button' style='background-image: url(app/img/icons/link.png)' onclick="$('#askForLink').modal('show')")
             li
-                button(type='button' style='background-image: url(app/img/icons/img.png)')
+                button(type='button' style='background-image: url(app/img/icons/img.png)' onclick="$('#askForImg').modal('show')")
 
-      #templateGeneratorBody.col-xs-11
-          br
-          br
-          .textExample
-              | Text example. Click me to edit.
-          .imageExample#image1
-              | Upload your image 1
-          .textExample
-              | Ejemplo de text
-          .imageExample#image2
-              | Upload your image 2
-          .imageExample#image3
-              | Upload your image 3
-          #comprobar
-              | Comprueba valores
-          input#img(type='file', style='display: none;')
-          a#download
-            |Download
+      #templateGeneratorBody.col-xs-11(gridster = "gridsterOpts")
+        input#img(type='file', style='display: none;')
+        ul
+            li.widgetContainer(gridster-item='element' ng-repeat='element in elementList' ng-switch on='element.type')
+                span.fa.fa-trash.trashIcon(ng-click='deleteItem($index)')
+                span.fa.fa-arrows.fa-2x.arrowIcon(ng-mousedown='gridsterOpts.draggable.enabled = true' ng-mouseup='gridsterOpts.draggable.enabled = false')
+                h1.widgetContent(ng-if='element.type === "h1"') Big title
+                h2.widgetContent(ng-if='element.type === "h2"') Middle title
+                h3.widgetContent(ng-if='element.type === "h3"') Small title
+                p.widgetContent(ng-if='element.type === "p"') Paragraph
+                img.widgetContent.imageOnWidget(ng-if='element.type === "img"'  style='background-image: url({{element.src}});') 
+                a.widgetContent(ng-if='element.type === "a"' ng-href="{{element.href}}") {{element.text}}
+                img.widgetContent.imageOnWidget(ng-if='element.type === "img"'  style='background-image: url({{element.src}});')
+                a.widgetContent(ng-if='element.type === "a"' ng-href="{{element.href}}") {{element.text}}
 
 // Modal window for save a template
 div#saveTemplate.modal.fade
@@ -55,12 +51,45 @@ div#saveTemplate.modal.fade
                     div.col-sm-8
                         input#nameTemplate.form-control(type='text' ng-model='name_template' name='name_template'  placeholder='Name of the Template' ng-pattern='/^[a-zA-ZáéíóúÁÉÍÓÚñÑ1-9][a-zA-ZáéíóúÁÉÍÓÚñÑ1-9 ]{3,50}$/' required)
                         span.glyphicon.form-control-feedback(ng-class="{'glyphicon-ok' : saveTemplateForm.name_template.$valid, 'glyphicon-remove' : saveTemplateForm.name_template.$invalid && saveTemplateForm.name_template.$dirty}")
-                div.form-group.has-feedback(ng-class=" { 'has-error' : saveTemplateForm.name_template.$invalid && saveTemplateForm.name_template.$dirty, 'has-success' : saveTemplateForm.name_template.$valid} ")
-                    label.col-sm-2.control-label(for='iconTemplate') Template icon:
-                    div.col-sm-8
-                        select#iconTemplate.form-control(ng-model='icon_template' name='icon_template' required)
-                            option(ng-repeat='icon in icon_list', data-image='{{icon.url}}') {{icon.name}}
 
             div.modal-footer
                 button.btn.btn-warning(type='button' data-dismiss='modal') Close
                 button.btn.btn-success(type='button' ng-click='saveTemplate()' ng-disabled='validateTemForm()') Save
+      
+// Modal window for asking for a link
+div#askForLink.modal.fade
+    div.modal-dialog
+        div.modal-content
+            div.modal-header
+                button.close(type='button' data-dismiss='modal' aria-label='close')
+                    span(aria-hidden='true') &times;
+                h4.modal-title Link settings
+            div.modal-body
+            form.form-horizontal(name='linkSettingsForm')
+                div.form-group.has-feedback(ng-class=" { 'has-error' : linkSettingsForm.link.$invalid && linkSettingsForm.link.$dirty, 'has-success' : linkSettingsForm.link.$valid} ")
+                    label.col-sm-2.control-label(for='link') Target:
+                    div.col-sm-8
+                        input#link.form-control(type='text' ng-model='link' name='link'  ng-pattern='/(^http:\/\/|www).+/' required)
+                        span.glyphicon.form-control-feedback(ng-class="{'glyphicon-ok' : linkSettingsForm.link.$valid, 'glyphicon-remove' : linkSettingsForm.link.$invalid && linkSettingsForm.link.$dirty}")
+                div.form-group.has-feedback(ng-class=" { 'has-error' : linkSettingsForm.linkText.$invalid && linkSettingsForm.linkText.$dirty, 'has-success': linkSettingsForm.linkText.$valid} ")
+                    label.col-sm-2.control-label(for='linkText') Text:
+                    div.col-sm-8
+                        input#linkText.form-control(type='text' ng-model='linkText'  placeholder='text for the link' name='linkText' required)                        
+                        span.glyphicon.form-control-feedback(ng-class="{'glyphicon-ok' : linkSettingsForm.linkText.$valid, 'glyphicon-remove' : linkSettingsForm.linkText.$invalid && linkSettingsForm.linkText.$dirty}")
+            div.modal-footer
+                button.btn.btn-warning(type='button' data-dismiss='modal') Close
+                button.btn.btn-success(type='button' ng-click='createLink(link, linkText)' ng-disabled='validateForm()') Send
+
+// Modal window for asking for a image
+div#askForImg.modal.fade
+    div.modal-dialog
+        div.modal-content
+            div.modal-header
+                button.close(type='button' data-dismiss='modal' aria-label='close')
+                    span(aria-hidden='true') &times;
+                h4.modal-title Image settings
+            div.modal-body
+                div(ng-file-reader on-readed="onReaded(event, file)" read-method="readMethod"  multiple)
+            div.modal-footer
+                button.btn.btn-warning(type='button' data-dismiss='modal') Close
+                button.btn.btn-warning(type='button' data-dismiss='modal') Close

@@ -61873,6 +61873,8 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 !function(e,t,n){"use strict";!function o(e,t,n){function a(s,l){if(!t[s]){if(!e[s]){var i="function"==typeof require&&require;if(!l&&i)return i(s,!0);if(r)return r(s,!0);var u=new Error("Cannot find module '"+s+"'");throw u.code="MODULE_NOT_FOUND",u}var c=t[s]={exports:{}};e[s][0].call(c.exports,function(t){var n=e[s][1][t];return a(n?n:t)},c,c.exports,o,e,t,n)}return t[s].exports}for(var r="function"==typeof require&&require,s=0;s<n.length;s++)a(n[s]);return a}({1:[function(o,a,r){var s=function(e){return e&&e.__esModule?e:{"default":e}};Object.defineProperty(r,"__esModule",{value:!0});var l,i,u,c,d=o("./modules/handle-dom"),f=o("./modules/utils"),p=o("./modules/handle-swal-dom"),m=o("./modules/handle-click"),v=o("./modules/handle-key"),y=s(v),h=o("./modules/default-params"),b=s(h),g=o("./modules/set-params"),w=s(g);r["default"]=u=c=function(){function o(e){var t=a;return t[e]===n?b["default"][e]:t[e]}var a=arguments[0];if(d.addClass(t.body,"stop-scrolling"),p.resetInput(),a===n)return f.logStr("SweetAlert expects at least 1 attribute!"),!1;var r=f.extend({},b["default"]);switch(typeof a){case"string":r.title=a,r.text=arguments[1]||"",r.type=arguments[2]||"";break;case"object":if(a.title===n)return f.logStr('Missing "title" argument!'),!1;r.title=a.title;for(var s in b["default"])r[s]=o(s);r.confirmButtonText=r.showCancelButton?"Confirm":b["default"].confirmButtonText,r.confirmButtonText=o("confirmButtonText"),r.doneFunction=arguments[1]||null;break;default:return f.logStr('Unexpected type of argument! Expected "string" or "object", got '+typeof a),!1}w["default"](r),p.fixVerticalPosition(),p.openModal(arguments[1]);for(var u=p.getModal(),v=u.querySelectorAll("button"),h=["onclick","onmouseover","onmouseout","onmousedown","onmouseup","onfocus"],g=function(e){return m.handleButton(e,r,u)},C=0;C<v.length;C++)for(var S=0;S<h.length;S++){var x=h[S];v[C][x]=g}p.getOverlay().onclick=g,l=e.onkeydown;var k=function(e){return y["default"](e,r,u)};e.onkeydown=k,e.onfocus=function(){setTimeout(function(){i!==n&&(i.focus(),i=n)},0)},c.enableButtons()},u.setDefaults=c.setDefaults=function(e){if(!e)throw new Error("userParams is required");if("object"!=typeof e)throw new Error("userParams has to be a object");f.extend(b["default"],e)},u.close=c.close=function(){var o=p.getModal();d.fadeOut(p.getOverlay(),5),d.fadeOut(o,5),d.removeClass(o,"showSweetAlert"),d.addClass(o,"hideSweetAlert"),d.removeClass(o,"visible");var a=o.querySelector(".sa-icon.sa-success");d.removeClass(a,"animate"),d.removeClass(a.querySelector(".sa-tip"),"animateSuccessTip"),d.removeClass(a.querySelector(".sa-long"),"animateSuccessLong");var r=o.querySelector(".sa-icon.sa-error");d.removeClass(r,"animateErrorIcon"),d.removeClass(r.querySelector(".sa-x-mark"),"animateXMark");var s=o.querySelector(".sa-icon.sa-warning");return d.removeClass(s,"pulseWarning"),d.removeClass(s.querySelector(".sa-body"),"pulseWarningIns"),d.removeClass(s.querySelector(".sa-dot"),"pulseWarningIns"),setTimeout(function(){var e=o.getAttribute("data-custom-class");d.removeClass(o,e)},300),d.removeClass(t.body,"stop-scrolling"),e.onkeydown=l,e.previousActiveElement&&e.previousActiveElement.focus(),i=n,clearTimeout(o.timeout),!0},u.showInputError=c.showInputError=function(e){var t=p.getModal(),n=t.querySelector(".sa-input-error");d.addClass(n,"show");var o=t.querySelector(".sa-error-container");d.addClass(o,"show"),o.querySelector("p").innerHTML=e,setTimeout(function(){u.enableButtons()},1),t.querySelector("input").focus()},u.resetInputError=c.resetInputError=function(e){if(e&&13===e.keyCode)return!1;var t=p.getModal(),n=t.querySelector(".sa-input-error");d.removeClass(n,"show");var o=t.querySelector(".sa-error-container");d.removeClass(o,"show")},u.disableButtons=c.disableButtons=function(){var e=p.getModal(),t=e.querySelector("button.confirm"),n=e.querySelector("button.cancel");t.disabled=!0,n.disabled=!0},u.enableButtons=c.enableButtons=function(){var e=p.getModal(),t=e.querySelector("button.confirm"),n=e.querySelector("button.cancel");t.disabled=!1,n.disabled=!1},"undefined"!=typeof e?e.sweetAlert=e.swal=u:f.logStr("SweetAlert is a frontend module!"),a.exports=r["default"]},{"./modules/default-params":2,"./modules/handle-click":3,"./modules/handle-dom":4,"./modules/handle-key":5,"./modules/handle-swal-dom":6,"./modules/set-params":8,"./modules/utils":9}],2:[function(e,t,n){Object.defineProperty(n,"__esModule",{value:!0});var o={title:"",text:"",type:null,allowOutsideClick:!1,showConfirmButton:!0,showCancelButton:!1,closeOnConfirm:!0,closeOnCancel:!0,confirmButtonText:"OK",confirmButtonColor:"#8CD4F5",cancelButtonText:"Cancel",imageUrl:null,imageSize:null,timer:null,customClass:"",html:!1,animation:!0,allowEscapeKey:!0,inputType:"text",inputPlaceholder:"",inputValue:"",showLoaderOnConfirm:!1};n["default"]=o,t.exports=n["default"]},{}],3:[function(t,n,o){Object.defineProperty(o,"__esModule",{value:!0});var a=t("./utils"),r=(t("./handle-swal-dom"),t("./handle-dom")),s=function(t,n,o){function s(e){m&&n.confirmButtonColor&&(p.style.backgroundColor=e)}var u,c,d,f=t||e.event,p=f.target||f.srcElement,m=-1!==p.className.indexOf("confirm"),v=-1!==p.className.indexOf("sweet-overlay"),y=r.hasClass(o,"visible"),h=n.doneFunction&&"true"===o.getAttribute("data-has-done-function");switch(m&&n.confirmButtonColor&&(u=n.confirmButtonColor,c=a.colorLuminance(u,-.04),d=a.colorLuminance(u,-.14)),f.type){case"mouseover":s(c);break;case"mouseout":s(u);break;case"mousedown":s(d);break;case"mouseup":s(c);break;case"focus":var b=o.querySelector("button.confirm"),g=o.querySelector("button.cancel");m?g.style.boxShadow="none":b.style.boxShadow="none";break;case"click":var w=o===p,C=r.isDescendant(o,p);if(!w&&!C&&y&&!n.allowOutsideClick)break;m&&h&&y?l(o,n):h&&y||v?i(o,n):r.isDescendant(o,p)&&"BUTTON"===p.tagName&&sweetAlert.close()}},l=function(e,t){var n=!0;r.hasClass(e,"show-input")&&(n=e.querySelector("input").value,n||(n="")),t.doneFunction(n),t.closeOnConfirm&&sweetAlert.close(),t.showLoaderOnConfirm&&sweetAlert.disableButtons()},i=function(e,t){var n=String(t.doneFunction).replace(/\s/g,""),o="function("===n.substring(0,9)&&")"!==n.substring(9,10);o&&t.doneFunction(!1),t.closeOnCancel&&sweetAlert.close()};o["default"]={handleButton:s,handleConfirm:l,handleCancel:i},n.exports=o["default"]},{"./handle-dom":4,"./handle-swal-dom":6,"./utils":9}],4:[function(n,o,a){Object.defineProperty(a,"__esModule",{value:!0});var r=function(e,t){return new RegExp(" "+t+" ").test(" "+e.className+" ")},s=function(e,t){r(e,t)||(e.className+=" "+t)},l=function(e,t){var n=" "+e.className.replace(/[\t\r\n]/g," ")+" ";if(r(e,t)){for(;n.indexOf(" "+t+" ")>=0;)n=n.replace(" "+t+" "," ");e.className=n.replace(/^\s+|\s+$/g,"")}},i=function(e){var n=t.createElement("div");return n.appendChild(t.createTextNode(e)),n.innerHTML},u=function(e){e.style.opacity="",e.style.display="block"},c=function(e){if(e&&!e.length)return u(e);for(var t=0;t<e.length;++t)u(e[t])},d=function(e){e.style.opacity="",e.style.display="none"},f=function(e){if(e&&!e.length)return d(e);for(var t=0;t<e.length;++t)d(e[t])},p=function(e,t){for(var n=t.parentNode;null!==n;){if(n===e)return!0;n=n.parentNode}return!1},m=function(e){e.style.left="-9999px",e.style.display="block";var t,n=e.clientHeight;return t="undefined"!=typeof getComputedStyle?parseInt(getComputedStyle(e).getPropertyValue("padding-top"),10):parseInt(e.currentStyle.padding),e.style.left="",e.style.display="none","-"+parseInt((n+t)/2)+"px"},v=function(e,t){if(+e.style.opacity<1){t=t||16,e.style.opacity=0,e.style.display="block";var n=+new Date,o=function(e){function t(){return e.apply(this,arguments)}return t.toString=function(){return e.toString()},t}(function(){e.style.opacity=+e.style.opacity+(new Date-n)/100,n=+new Date,+e.style.opacity<1&&setTimeout(o,t)});o()}e.style.display="block"},y=function(e,t){t=t||16,e.style.opacity=1;var n=+new Date,o=function(e){function t(){return e.apply(this,arguments)}return t.toString=function(){return e.toString()},t}(function(){e.style.opacity=+e.style.opacity-(new Date-n)/100,n=+new Date,+e.style.opacity>0?setTimeout(o,t):e.style.display="none"});o()},h=function(n){if("function"==typeof MouseEvent){var o=new MouseEvent("click",{view:e,bubbles:!1,cancelable:!0});n.dispatchEvent(o)}else if(t.createEvent){var a=t.createEvent("MouseEvents");a.initEvent("click",!1,!1),n.dispatchEvent(a)}else t.createEventObject?n.fireEvent("onclick"):"function"==typeof n.onclick&&n.onclick()},b=function(t){"function"==typeof t.stopPropagation?(t.stopPropagation(),t.preventDefault()):e.event&&e.event.hasOwnProperty("cancelBubble")&&(e.event.cancelBubble=!0)};a.hasClass=r,a.addClass=s,a.removeClass=l,a.escapeHtml=i,a._show=u,a.show=c,a._hide=d,a.hide=f,a.isDescendant=p,a.getTopMargin=m,a.fadeIn=v,a.fadeOut=y,a.fireClick=h,a.stopEventPropagation=b},{}],5:[function(t,o,a){Object.defineProperty(a,"__esModule",{value:!0});var r=t("./handle-dom"),s=t("./handle-swal-dom"),l=function(t,o,a){var l=t||e.event,i=l.keyCode||l.which,u=a.querySelector("button.confirm"),c=a.querySelector("button.cancel"),d=a.querySelectorAll("button[tabindex]");if(-1!==[9,13,32,27].indexOf(i)){for(var f=l.target||l.srcElement,p=-1,m=0;m<d.length;m++)if(f===d[m]){p=m;break}9===i?(f=-1===p?u:p===d.length-1?d[0]:d[p+1],r.stopEventPropagation(l),f.focus(),o.confirmButtonColor&&s.setFocusStyle(f,o.confirmButtonColor)):13===i?("INPUT"===f.tagName&&(f=u,u.focus()),f=-1===p?u:n):27===i&&o.allowEscapeKey===!0?(f=c,r.fireClick(f,l)):f=n}};a["default"]=l,o.exports=a["default"]},{"./handle-dom":4,"./handle-swal-dom":6}],6:[function(n,o,a){var r=function(e){return e&&e.__esModule?e:{"default":e}};Object.defineProperty(a,"__esModule",{value:!0});var s=n("./utils"),l=n("./handle-dom"),i=n("./default-params"),u=r(i),c=n("./injected-html"),d=r(c),f=".sweet-alert",p=".sweet-overlay",m=function(){var e=t.createElement("div");for(e.innerHTML=d["default"];e.firstChild;)t.body.appendChild(e.firstChild)},v=function(e){function t(){return e.apply(this,arguments)}return t.toString=function(){return e.toString()},t}(function(){var e=t.querySelector(f);return e||(m(),e=v()),e}),y=function(){var e=v();return e?e.querySelector("input"):void 0},h=function(){return t.querySelector(p)},b=function(e,t){var n=s.hexToRgb(t);e.style.boxShadow="0 0 2px rgba("+n+", 0.8), inset 0 0 0 1px rgba(0, 0, 0, 0.05)"},g=function(n){var o=v();l.fadeIn(h(),10),l.show(o),l.addClass(o,"showSweetAlert"),l.removeClass(o,"hideSweetAlert"),e.previousActiveElement=t.activeElement;var a=o.querySelector("button.confirm");a.focus(),setTimeout(function(){l.addClass(o,"visible")},500);var r=o.getAttribute("data-timer");if("null"!==r&&""!==r){var s=n;o.timeout=setTimeout(function(){var e=(s||null)&&"true"===o.getAttribute("data-has-done-function");e?s(null):sweetAlert.close()},r)}},w=function(){var e=v(),t=y();l.removeClass(e,"show-input"),t.value=u["default"].inputValue,t.setAttribute("type",u["default"].inputType),t.setAttribute("placeholder",u["default"].inputPlaceholder),C()},C=function(e){if(e&&13===e.keyCode)return!1;var t=v(),n=t.querySelector(".sa-input-error");l.removeClass(n,"show");var o=t.querySelector(".sa-error-container");l.removeClass(o,"show")},S=function(){var e=v();e.style.marginTop=l.getTopMargin(v())};a.sweetAlertInitialize=m,a.getModal=v,a.getOverlay=h,a.getInput=y,a.setFocusStyle=b,a.openModal=g,a.resetInput=w,a.resetInputError=C,a.fixVerticalPosition=S},{"./default-params":2,"./handle-dom":4,"./injected-html":7,"./utils":9}],7:[function(e,t,n){Object.defineProperty(n,"__esModule",{value:!0});var o='<div class="sweet-overlay" tabIndex="-1"></div><div class="sweet-alert"><div class="sa-icon sa-error">\n      <span class="sa-x-mark">\n        <span class="sa-line sa-left"></span>\n        <span class="sa-line sa-right"></span>\n      </span>\n    </div><div class="sa-icon sa-warning">\n      <span class="sa-body"></span>\n      <span class="sa-dot"></span>\n    </div><div class="sa-icon sa-info"></div><div class="sa-icon sa-success">\n      <span class="sa-line sa-tip"></span>\n      <span class="sa-line sa-long"></span>\n\n      <div class="sa-placeholder"></div>\n      <div class="sa-fix"></div>\n    </div><div class="sa-icon sa-custom"></div><h2>Title</h2>\n    <p>Text</p>\n    <fieldset>\n      <input type="text" tabIndex="3" />\n      <div class="sa-input-error"></div>\n    </fieldset><div class="sa-error-container">\n      <div class="icon">!</div>\n      <p>Not valid!</p>\n    </div><div class="sa-button-container">\n      <button class="cancel" tabIndex="2">Cancel</button>\n      <div class="sa-confirm-button-container">\n        <button class="confirm" tabIndex="1">OK</button><div class="la-ball-fall">\n          <div></div>\n          <div></div>\n          <div></div>\n        </div>\n      </div>\n    </div></div>';n["default"]=o,t.exports=n["default"]},{}],8:[function(e,t,o){Object.defineProperty(o,"__esModule",{value:!0});var a=e("./utils"),r=e("./handle-swal-dom"),s=e("./handle-dom"),l=["error","warning","info","success","input","prompt"],i=function(e){var t=r.getModal(),o=t.querySelector("h2"),i=t.querySelector("p"),u=t.querySelector("button.cancel"),c=t.querySelector("button.confirm");if(o.innerHTML=e.html?e.title:s.escapeHtml(e.title).split("\n").join("<br>"),i.innerHTML=e.html?e.text:s.escapeHtml(e.text||"").split("\n").join("<br>"),e.text&&s.show(i),e.customClass)s.addClass(t,e.customClass),t.setAttribute("data-custom-class",e.customClass);else{var d=t.getAttribute("data-custom-class");s.removeClass(t,d),t.setAttribute("data-custom-class","")}if(s.hide(t.querySelectorAll(".sa-icon")),e.type&&!a.isIE8()){var f=function(){for(var o=!1,a=0;a<l.length;a++)if(e.type===l[a]){o=!0;break}if(!o)return logStr("Unknown alert type: "+e.type),{v:!1};var i=["success","error","warning","info"],u=n;-1!==i.indexOf(e.type)&&(u=t.querySelector(".sa-icon.sa-"+e.type),s.show(u));var c=r.getInput();switch(e.type){case"success":s.addClass(u,"animate"),s.addClass(u.querySelector(".sa-tip"),"animateSuccessTip"),s.addClass(u.querySelector(".sa-long"),"animateSuccessLong");break;case"error":s.addClass(u,"animateErrorIcon"),s.addClass(u.querySelector(".sa-x-mark"),"animateXMark");break;case"warning":s.addClass(u,"pulseWarning"),s.addClass(u.querySelector(".sa-body"),"pulseWarningIns"),s.addClass(u.querySelector(".sa-dot"),"pulseWarningIns");break;case"input":case"prompt":c.setAttribute("type",e.inputType),c.value=e.inputValue,c.setAttribute("placeholder",e.inputPlaceholder),s.addClass(t,"show-input"),setTimeout(function(){c.focus(),c.addEventListener("keyup",swal.resetInputError)},400)}}();if("object"==typeof f)return f.v}if(e.imageUrl){var p=t.querySelector(".sa-icon.sa-custom");p.style.backgroundImage="url("+e.imageUrl+")",s.show(p);var m=80,v=80;if(e.imageSize){var y=e.imageSize.toString().split("x"),h=y[0],b=y[1];h&&b?(m=h,v=b):logStr("Parameter imageSize expects value with format WIDTHxHEIGHT, got "+e.imageSize)}p.setAttribute("style",p.getAttribute("style")+"width:"+m+"px; height:"+v+"px")}t.setAttribute("data-has-cancel-button",e.showCancelButton),e.showCancelButton?u.style.display="inline-block":s.hide(u),t.setAttribute("data-has-confirm-button",e.showConfirmButton),e.showConfirmButton?c.style.display="inline-block":s.hide(c),e.cancelButtonText&&(u.innerHTML=s.escapeHtml(e.cancelButtonText)),e.confirmButtonText&&(c.innerHTML=s.escapeHtml(e.confirmButtonText)),e.confirmButtonColor&&(c.style.backgroundColor=e.confirmButtonColor,c.style.borderLeftColor=e.confirmLoadingButtonColor,c.style.borderRightColor=e.confirmLoadingButtonColor,r.setFocusStyle(c,e.confirmButtonColor)),t.setAttribute("data-allow-outside-click",e.allowOutsideClick);var g=e.doneFunction?!0:!1;t.setAttribute("data-has-done-function",g),e.animation?"string"==typeof e.animation?t.setAttribute("data-animation",e.animation):t.setAttribute("data-animation","pop"):t.setAttribute("data-animation","none"),t.setAttribute("data-timer",e.timer)};o["default"]=i,t.exports=o["default"]},{"./handle-dom":4,"./handle-swal-dom":6,"./utils":9}],9:[function(t,n,o){Object.defineProperty(o,"__esModule",{value:!0});var a=function(e,t){for(var n in t)t.hasOwnProperty(n)&&(e[n]=t[n]);return e},r=function(e){var t=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(e);return t?parseInt(t[1],16)+", "+parseInt(t[2],16)+", "+parseInt(t[3],16):null},s=function(){return e.attachEvent&&!e.addEventListener},l=function(t){e.console&&e.console.log("SweetAlert: "+t)},i=function(e,t){e=String(e).replace(/[^0-9a-f]/gi,""),e.length<6&&(e=e[0]+e[0]+e[1]+e[1]+e[2]+e[2]),t=t||0;var n,o,a="#";for(o=0;3>o;o++)n=parseInt(e.substr(2*o,2),16),n=Math.round(Math.min(Math.max(0,n+n*t),255)).toString(16),a+=("00"+n).substr(n.length);return a};o.extend=a,o.hexToRgb=r,o.isIE8=s,o.logStr=l,o.colorLuminance=i},{}]},{},[1]),"function"==typeof define&&define.amd?define(function(){return sweetAlert}):"undefined"!=typeof module&&module.exports&&(module.exports=sweetAlert)}(window,document);
+<<<<<<< HEAD
+=======
 // 4.3.10 (2016-04-12)
 
 /**
@@ -116283,3 +116285,2929 @@ _html2canvas.Renderer.Canvas = function(options) {
   };
 };
 })(window,document);
+>>>>>>> feature-tinymce-implementation
+/*global define:true*/
+(function(root, factory) {
+
+	'use strict';
+
+	if (typeof define === 'function' && define.amd) {
+		// AMD
+		define(['angular'], factory);
+	} else if (typeof exports === 'object') {
+		// CommonJS
+		module.exports = factory(require('angular'));
+	} else {
+		// Browser, nothing "exported". Only registered as a module with angular.
+		factory(root.angular);
+	}
+}(this, function(angular) {
+
+	'use strict';
+
+	// This returned angular module 'gridster' is what is exported.
+	return angular.module('gridster', [])
+
+	.constant('gridsterConfig', {
+		columns: 6, // number of columns in the grid
+		pushing: true, // whether to push other items out of the way
+		floating: true, // whether to automatically float items up so they stack
+		swapping: false, // whether or not to have items switch places instead of push down if they are the same size
+		width: 'auto', // width of the grid. "auto" will expand the grid to its parent container
+		colWidth: 'auto', // width of grid columns. "auto" will divide the width of the grid evenly among the columns
+		rowHeight: 'match', // height of grid rows. 'match' will make it the same as the column width, a numeric value will be interpreted as pixels, '/2' is half the column width, '*5' is five times the column width, etc.
+		margins: [10, 10], // margins in between grid items
+		outerMargin: true,
+		isMobile: false, // toggle mobile view
+		mobileBreakPoint: 600, // width threshold to toggle mobile mode
+		mobileModeEnabled: true, // whether or not to toggle mobile mode when screen width is less than mobileBreakPoint
+		minColumns: 1, // minimum amount of columns the grid can scale down to
+		minRows: 1, // minimum amount of rows to show if the grid is empty
+		maxRows: 100, // maximum amount of rows in the grid
+		defaultSizeX: 2, // default width of an item in columns
+		defaultSizeY: 1, // default height of an item in rows
+		minSizeX: 1, // minimum column width of an item
+		maxSizeX: null, // maximum column width of an item
+		minSizeY: 1, // minumum row height of an item
+		maxSizeY: null, // maximum row height of an item
+		saveGridItemCalculatedHeightInMobile: false, // grid item height in mobile display. true- to use the calculated height by sizeY given
+		resizable: { // options to pass to resizable handler
+			enabled: true,
+			handles: ['s', 'e', 'n', 'w', 'se', 'ne', 'sw', 'nw']
+		},
+		draggable: { // options to pass to draggable handler
+			enabled: true,
+			scrollSensitivity: 20, // Distance in pixels from the edge of the viewport after which the viewport should scroll, relative to pointer
+			scrollSpeed: 15 // Speed at which the window should scroll once the mouse pointer gets within scrollSensitivity distance
+		}
+	})
+
+	.controller('GridsterCtrl', ['gridsterConfig', '$timeout',
+		function(gridsterConfig, $timeout) {
+
+			var gridster = this;
+
+			/**
+			 * Create options from gridsterConfig constant
+			 */
+			angular.extend(this, gridsterConfig);
+
+			this.resizable = angular.extend({}, gridsterConfig.resizable || {});
+			this.draggable = angular.extend({}, gridsterConfig.draggable || {});
+
+			var flag = false;
+			this.layoutChanged = function() {
+				if (flag) {
+					return;
+				}
+				flag = true;
+				$timeout(function() {
+					flag = false;
+					if (gridster.loaded) {
+						gridster.floatItemsUp();
+					}
+					gridster.updateHeight(gridster.movingItem ? gridster.movingItem.sizeY : 0);
+				}, 30);
+			};
+
+			/**
+			 * A positional array of the items in the grid
+			 */
+			this.grid = [];
+
+			/**
+			 * Clean up after yourself
+			 */
+			this.destroy = function() {
+				// empty the grid to cut back on the possibility
+				// of circular references
+				if (this.grid) {
+					this.grid = [];
+				}
+				this.$element = null;
+			};
+
+			/**
+			 * Overrides default options
+			 *
+			 * @param {Object} options The options to override
+			 */
+			this.setOptions = function(options) {
+				if (!options) {
+					return;
+				}
+
+				options = angular.extend({}, options);
+
+				// all this to avoid using jQuery...
+				if (options.draggable) {
+					angular.extend(this.draggable, options.draggable);
+					delete(options.draggable);
+				}
+				if (options.resizable) {
+					angular.extend(this.resizable, options.resizable);
+					delete(options.resizable);
+				}
+
+				angular.extend(this, options);
+
+				if (!this.margins || this.margins.length !== 2) {
+					this.margins = [0, 0];
+				} else {
+					for (var x = 0, l = this.margins.length; x < l; ++x) {
+						this.margins[x] = parseInt(this.margins[x], 10);
+						if (isNaN(this.margins[x])) {
+							this.margins[x] = 0;
+						}
+					}
+				}
+			};
+
+			/**
+			 * Check if item can occupy a specified position in the grid
+			 *
+			 * @param {Object} item The item in question
+			 * @param {Number} row The row index
+			 * @param {Number} column The column index
+			 * @returns {Boolean} True if if item fits
+			 */
+			this.canItemOccupy = function(item, row, column) {
+				return row > -1 && column > -1 && item.sizeX + column <= this.columns && item.sizeY + row <= this.maxRows;
+			};
+
+			/**
+			 * Set the item in the first suitable position
+			 *
+			 * @param {Object} item The item to insert
+			 */
+			this.autoSetItemPosition = function(item) {
+				// walk through each row and column looking for a place it will fit
+				for (var rowIndex = 0; rowIndex < this.maxRows; ++rowIndex) {
+					for (var colIndex = 0; colIndex < this.columns; ++colIndex) {
+						// only insert if position is not already taken and it can fit
+						var items = this.getItems(rowIndex, colIndex, item.sizeX, item.sizeY, item);
+						if (items.length === 0 && this.canItemOccupy(item, rowIndex, colIndex)) {
+							this.putItem(item, rowIndex, colIndex);
+							return;
+						}
+					}
+				}
+				throw new Error('Unable to place item!');
+			};
+
+			/**
+			 * Gets items at a specific coordinate
+			 *
+			 * @param {Number} row
+			 * @param {Number} column
+			 * @param {Number} sizeX
+			 * @param {Number} sizeY
+			 * @param {Array} excludeItems An array of items to exclude from selection
+			 * @returns {Array} Items that match the criteria
+			 */
+			this.getItems = function(row, column, sizeX, sizeY, excludeItems) {
+				var items = [];
+				if (!sizeX || !sizeY) {
+					sizeX = sizeY = 1;
+				}
+				if (excludeItems && !(excludeItems instanceof Array)) {
+					excludeItems = [excludeItems];
+				}
+				for (var h = 0; h < sizeY; ++h) {
+					for (var w = 0; w < sizeX; ++w) {
+						var item = this.getItem(row + h, column + w, excludeItems);
+						if (item && (!excludeItems || excludeItems.indexOf(item) === -1) && items.indexOf(item) === -1) {
+							items.push(item);
+						}
+					}
+				}
+				return items;
+			};
+
+			/**
+			 * @param {Array} items
+			 * @returns {Object} An item that represents the bounding box of the items
+			 */
+			this.getBoundingBox = function(items) {
+
+				if (items.length === 0) {
+					return null;
+				}
+				if (items.length === 1) {
+					return {
+						row: items[0].row,
+						col: items[0].col,
+						sizeY: items[0].sizeY,
+						sizeX: items[0].sizeX
+					};
+				}
+
+				var maxRow = 0;
+				var maxCol = 0;
+				var minRow = 9999;
+				var minCol = 9999;
+
+				for (var i = 0, l = items.length; i < l; ++i) {
+					var item = items[i];
+					minRow = Math.min(item.row, minRow);
+					minCol = Math.min(item.col, minCol);
+					maxRow = Math.max(item.row + item.sizeY, maxRow);
+					maxCol = Math.max(item.col + item.sizeX, maxCol);
+				}
+
+				return {
+					row: minRow,
+					col: minCol,
+					sizeY: maxRow - minRow,
+					sizeX: maxCol - minCol
+				};
+			};
+
+
+			/**
+			 * Removes an item from the grid
+			 *
+			 * @param {Object} item
+			 */
+			this.removeItem = function(item) {
+				for (var rowIndex = 0, l = this.grid.length; rowIndex < l; ++rowIndex) {
+					var columns = this.grid[rowIndex];
+					if (!columns) {
+						continue;
+					}
+					var index = columns.indexOf(item);
+					if (index !== -1) {
+						columns[index] = null;
+						break;
+					}
+				}
+				this.layoutChanged();
+			};
+
+			/**
+			 * Returns the item at a specified coordinate
+			 *
+			 * @param {Number} row
+			 * @param {Number} column
+			 * @param {Array} excludeItems Items to exclude from selection
+			 * @returns {Object} The matched item or null
+			 */
+			this.getItem = function(row, column, excludeItems) {
+				if (excludeItems && !(excludeItems instanceof Array)) {
+					excludeItems = [excludeItems];
+				}
+				var sizeY = 1;
+				while (row > -1) {
+					var sizeX = 1,
+						col = column;
+					while (col > -1) {
+						var items = this.grid[row];
+						if (items) {
+							var item = items[col];
+							if (item && (!excludeItems || excludeItems.indexOf(item) === -1) && item.sizeX >= sizeX && item.sizeY >= sizeY) {
+								return item;
+							}
+						}
+						++sizeX;
+						--col;
+					}
+					--row;
+					++sizeY;
+				}
+				return null;
+			};
+
+			/**
+			 * Insert an array of items into the grid
+			 *
+			 * @param {Array} items An array of items to insert
+			 */
+			this.putItems = function(items) {
+				for (var i = 0, l = items.length; i < l; ++i) {
+					this.putItem(items[i]);
+				}
+			};
+
+			/**
+			 * Insert a single item into the grid
+			 *
+			 * @param {Object} item The item to insert
+			 * @param {Number} row (Optional) Specifies the items row index
+			 * @param {Number} column (Optional) Specifies the items column index
+			 * @param {Array} ignoreItems
+			 */
+			this.putItem = function(item, row, column, ignoreItems) {
+				// auto place item if no row specified
+				if (typeof row === 'undefined' || row === null) {
+					row = item.row;
+					column = item.col;
+					if (typeof row === 'undefined' || row === null) {
+						this.autoSetItemPosition(item);
+						return;
+					}
+				}
+
+				// keep item within allowed bounds
+				if (!this.canItemOccupy(item, row, column)) {
+					column = Math.min(this.columns - item.sizeX, Math.max(0, column));
+					row = Math.min(this.maxRows - item.sizeY, Math.max(0, row));
+				}
+
+				// check if item is already in grid
+				if (item.oldRow !== null && typeof item.oldRow !== 'undefined') {
+					var samePosition = item.oldRow === row && item.oldColumn === column;
+					var inGrid = this.grid[row] && this.grid[row][column] === item;
+					if (samePosition && inGrid) {
+						item.row = row;
+						item.col = column;
+						return;
+					} else {
+						// remove from old position
+						var oldRow = this.grid[item.oldRow];
+						if (oldRow && oldRow[item.oldColumn] === item) {
+							delete oldRow[item.oldColumn];
+						}
+					}
+				}
+
+				item.oldRow = item.row = row;
+				item.oldColumn = item.col = column;
+
+				this.moveOverlappingItems(item, ignoreItems);
+
+				if (!this.grid[row]) {
+					this.grid[row] = [];
+				}
+				this.grid[row][column] = item;
+
+				if (this.movingItem === item) {
+					this.floatItemUp(item);
+				}
+				this.layoutChanged();
+			};
+
+			/**
+			 * Trade row and column if item1 with item2
+			 *
+			 * @param {Object} item1
+			 * @param {Object} item2
+			 */
+			this.swapItems = function(item1, item2) {
+				this.grid[item1.row][item1.col] = item2;
+				this.grid[item2.row][item2.col] = item1;
+
+				var item1Row = item1.row;
+				var item1Col = item1.col;
+				item1.row = item2.row;
+				item1.col = item2.col;
+				item2.row = item1Row;
+				item2.col = item1Col;
+			};
+
+			/**
+			 * Prevents items from being overlapped
+			 *
+			 * @param {Object} item The item that should remain
+			 * @param {Array} ignoreItems
+			 */
+			this.moveOverlappingItems = function(item, ignoreItems) {
+				// don't move item, so ignore it
+				if (!ignoreItems) {
+					ignoreItems = [item];
+				} else if (ignoreItems.indexOf(item) === -1) {
+					ignoreItems = ignoreItems.slice(0);
+					ignoreItems.push(item);
+				}
+
+				// get the items in the space occupied by the item's coordinates
+				var overlappingItems = this.getItems(
+					item.row,
+					item.col,
+					item.sizeX,
+					item.sizeY,
+					ignoreItems
+				);
+				this.moveItemsDown(overlappingItems, item.row + item.sizeY, ignoreItems);
+			};
+
+			/**
+			 * Moves an array of items to a specified row
+			 *
+			 * @param {Array} items The items to move
+			 * @param {Number} newRow The target row
+			 * @param {Array} ignoreItems
+			 */
+			this.moveItemsDown = function(items, newRow, ignoreItems) {
+				if (!items || items.length === 0) {
+					return;
+				}
+				items.sort(function(a, b) {
+					return a.row - b.row;
+				});
+
+				ignoreItems = ignoreItems ? ignoreItems.slice(0) : [];
+				var topRows = {},
+					item, i, l;
+
+				// calculate the top rows in each column
+				for (i = 0, l = items.length; i < l; ++i) {
+					item = items[i];
+					var topRow = topRows[item.col];
+					if (typeof topRow === 'undefined' || item.row < topRow) {
+						topRows[item.col] = item.row;
+					}
+				}
+
+				// move each item down from the top row in its column to the row
+				for (i = 0, l = items.length; i < l; ++i) {
+					item = items[i];
+					var rowsToMove = newRow - topRows[item.col];
+					this.moveItemDown(item, item.row + rowsToMove, ignoreItems);
+					ignoreItems.push(item);
+				}
+			};
+
+			/**
+			 * Moves an item down to a specified row
+			 *
+			 * @param {Object} item The item to move
+			 * @param {Number} newRow The target row
+			 * @param {Array} ignoreItems
+			 */
+			this.moveItemDown = function(item, newRow, ignoreItems) {
+				if (item.row >= newRow) {
+					return;
+				}
+				while (item.row < newRow) {
+					++item.row;
+					this.moveOverlappingItems(item, ignoreItems);
+				}
+				this.putItem(item, item.row, item.col, ignoreItems);
+			};
+
+			/**
+			 * Moves all items up as much as possible
+			 */
+			this.floatItemsUp = function() {
+				if (this.floating === false) {
+					return;
+				}
+				for (var rowIndex = 0, l = this.grid.length; rowIndex < l; ++rowIndex) {
+					var columns = this.grid[rowIndex];
+					if (!columns) {
+						continue;
+					}
+					for (var colIndex = 0, len = columns.length; colIndex < len; ++colIndex) {
+						var item = columns[colIndex];
+						if (item) {
+							this.floatItemUp(item);
+						}
+					}
+				}
+			};
+
+			/**
+			 * Float an item up to the most suitable row
+			 *
+			 * @param {Object} item The item to move
+			 */
+			this.floatItemUp = function(item) {
+				if (this.floating === false) {
+					return;
+				}
+				var colIndex = item.col,
+					sizeY = item.sizeY,
+					sizeX = item.sizeX,
+					bestRow = null,
+					bestColumn = null,
+					rowIndex = item.row - 1;
+
+				while (rowIndex > -1) {
+					var items = this.getItems(rowIndex, colIndex, sizeX, sizeY, item);
+					if (items.length !== 0) {
+						break;
+					}
+					bestRow = rowIndex;
+					bestColumn = colIndex;
+					--rowIndex;
+				}
+				if (bestRow !== null) {
+					this.putItem(item, bestRow, bestColumn);
+				}
+			};
+
+			/**
+			 * Update gridsters height
+			 *
+			 * @param {Number} plus (Optional) Additional height to add
+			 */
+			this.updateHeight = function(plus) {
+				var maxHeight = this.minRows;
+				plus = plus || 0;
+				for (var rowIndex = this.grid.length; rowIndex >= 0; --rowIndex) {
+					var columns = this.grid[rowIndex];
+					if (!columns) {
+						continue;
+					}
+					for (var colIndex = 0, len = columns.length; colIndex < len; ++colIndex) {
+						if (columns[colIndex]) {
+							maxHeight = Math.max(maxHeight, rowIndex + plus + columns[colIndex].sizeY);
+						}
+					}
+				}
+				this.gridHeight = this.maxRows - maxHeight > 0 ? Math.min(this.maxRows, maxHeight) : Math.max(this.maxRows, maxHeight);
+			};
+
+			/**
+			 * Returns the number of rows that will fit in given amount of pixels
+			 *
+			 * @param {Number} pixels
+			 * @param {Boolean} ceilOrFloor (Optional) Determines rounding method
+			 */
+			this.pixelsToRows = function(pixels, ceilOrFloor) {
+				if (!this.outerMargin) {
+					pixels += this.margins[0] / 2;
+				}
+
+				if (ceilOrFloor === true) {
+					return Math.ceil(pixels / this.curRowHeight);
+				} else if (ceilOrFloor === false) {
+					return Math.floor(pixels / this.curRowHeight);
+				}
+
+				return Math.round(pixels / this.curRowHeight);
+			};
+
+			/**
+			 * Returns the number of columns that will fit in a given amount of pixels
+			 *
+			 * @param {Number} pixels
+			 * @param {Boolean} ceilOrFloor (Optional) Determines rounding method
+			 * @returns {Number} The number of columns
+			 */
+			this.pixelsToColumns = function(pixels, ceilOrFloor) {
+				if (!this.outerMargin) {
+					pixels += this.margins[1] / 2;
+				}
+
+				if (ceilOrFloor === true) {
+					return Math.ceil(pixels / this.curColWidth);
+				} else if (ceilOrFloor === false) {
+					return Math.floor(pixels / this.curColWidth);
+				}
+
+				return Math.round(pixels / this.curColWidth);
+			};
+		}
+	])
+
+	.directive('gridsterPreview', function() {
+		return {
+			replace: true,
+			scope: true,
+			require: '^gridster',
+			template: '<div ng-style="previewStyle()" class="gridster-item gridster-preview-holder"></div>',
+			link: function(scope, $el, attrs, gridster) {
+
+				/**
+				 * @returns {Object} style object for preview element
+				 */
+				scope.previewStyle = function() {
+					if (!gridster.movingItem) {
+						return {
+							display: 'none'
+						};
+					}
+
+					return {
+						display: 'block',
+						height: (gridster.movingItem.sizeY * gridster.curRowHeight - gridster.margins[0]) + 'px',
+						width: (gridster.movingItem.sizeX * gridster.curColWidth - gridster.margins[1]) + 'px',
+						top: (gridster.movingItem.row * gridster.curRowHeight + (gridster.outerMargin ? gridster.margins[0] : 0)) + 'px',
+						left: (gridster.movingItem.col * gridster.curColWidth + (gridster.outerMargin ? gridster.margins[1] : 0)) + 'px'
+					};
+				};
+			}
+		};
+	})
+
+	/**
+	 * The gridster directive
+	 *
+	 * @param {Function} $timeout
+	 * @param {Object} $window
+	 * @param {Object} $rootScope
+	 * @param {Function} gridsterDebounce
+	 */
+	.directive('gridster', ['$timeout', '$window', '$rootScope', 'gridsterDebounce',
+		function($timeout, $window, $rootScope, gridsterDebounce) {
+			return {
+				scope: true,
+				restrict: 'EAC',
+				controller: 'GridsterCtrl',
+				controllerAs: 'gridster',
+				compile: function($tplElem) {
+
+					$tplElem.prepend('<div ng-if="gridster.movingItem" gridster-preview></div>');
+
+					return function(scope, $elem, attrs, gridster) {
+						gridster.loaded = false;
+
+						gridster.$element = $elem;
+
+						scope.gridster = gridster;
+
+						$elem.addClass('gridster');
+
+						var isVisible = function(ele) {
+							return ele.style.visibility !== 'hidden' && ele.style.display !== 'none';
+						};
+
+						function refresh(config) {
+							gridster.setOptions(config);
+
+							if (!isVisible($elem[0])) {
+								return;
+							}
+
+							// resolve "auto" & "match" values
+							if (gridster.width === 'auto') {
+								gridster.curWidth = $elem[0].offsetWidth || parseInt($elem.css('width'), 10);
+							} else {
+								gridster.curWidth = gridster.width;
+							}
+
+							if (gridster.colWidth === 'auto') {
+								gridster.curColWidth = (gridster.curWidth + (gridster.outerMargin ? -gridster.margins[1] : gridster.margins[1])) / gridster.columns;
+							} else {
+								gridster.curColWidth = gridster.colWidth;
+							}
+
+							gridster.curRowHeight = gridster.rowHeight;
+							if (typeof gridster.rowHeight === 'string') {
+								if (gridster.rowHeight === 'match') {
+									gridster.curRowHeight = Math.round(gridster.curColWidth);
+								} else if (gridster.rowHeight.indexOf('*') !== -1) {
+									gridster.curRowHeight = Math.round(gridster.curColWidth * gridster.rowHeight.replace('*', '').replace(' ', ''));
+								} else if (gridster.rowHeight.indexOf('/') !== -1) {
+									gridster.curRowHeight = Math.round(gridster.curColWidth / gridster.rowHeight.replace('/', '').replace(' ', ''));
+								}
+							}
+
+							gridster.isMobile = gridster.mobileModeEnabled && gridster.curWidth <= gridster.mobileBreakPoint;
+
+							// loop through all items and reset their CSS
+							for (var rowIndex = 0, l = gridster.grid.length; rowIndex < l; ++rowIndex) {
+								var columns = gridster.grid[rowIndex];
+								if (!columns) {
+									continue;
+								}
+
+								for (var colIndex = 0, len = columns.length; colIndex < len; ++colIndex) {
+									if (columns[colIndex]) {
+										var item = columns[colIndex];
+										item.setElementPosition();
+										item.setElementSizeY();
+										item.setElementSizeX();
+									}
+								}
+							}
+
+							updateHeight();
+						}
+
+						var optionsKey = attrs.gridster;
+						if (optionsKey) {
+							scope.$parent.$watch(optionsKey, function(newConfig) {
+								refresh(newConfig);
+							}, true);
+						} else {
+							refresh({});
+						}
+
+						scope.$watch(function() {
+							return gridster.loaded;
+						}, function() {
+							if (gridster.loaded) {
+								$elem.addClass('gridster-loaded');
+							} else {
+								$elem.removeClass('gridster-loaded');
+							}
+						});
+
+						scope.$watch(function() {
+							return gridster.isMobile;
+						}, function() {
+							if (gridster.isMobile) {
+								$elem.addClass('gridster-mobile').removeClass('gridster-desktop');
+							} else {
+								$elem.removeClass('gridster-mobile').addClass('gridster-desktop');
+							}
+							$rootScope.$broadcast('gridster-mobile-changed', gridster);
+						});
+
+						scope.$watch(function() {
+							return gridster.draggable;
+						}, function() {
+							$rootScope.$broadcast('gridster-draggable-changed', gridster);
+						}, true);
+
+						scope.$watch(function() {
+							return gridster.resizable;
+						}, function() {
+							$rootScope.$broadcast('gridster-resizable-changed', gridster);
+						}, true);
+
+						function updateHeight() {
+							$elem.css('height', (gridster.gridHeight * gridster.curRowHeight) + (gridster.outerMargin ? gridster.margins[0] : -gridster.margins[0]) + 'px');
+						}
+
+						scope.$watch(function() {
+							return gridster.gridHeight;
+						}, updateHeight);
+
+						scope.$watch(function() {
+							return gridster.movingItem;
+						}, function() {
+							gridster.updateHeight(gridster.movingItem ? gridster.movingItem.sizeY : 0);
+						});
+
+						var prevWidth = $elem[0].offsetWidth || parseInt($elem.css('width'), 10);
+
+						var resize = function() {
+							var width = $elem[0].offsetWidth || parseInt($elem.css('width'), 10);
+
+							if (!width || width === prevWidth || gridster.movingItem) {
+								return;
+							}
+							prevWidth = width;
+
+							if (gridster.loaded) {
+								$elem.removeClass('gridster-loaded');
+							}
+
+							refresh();
+
+							if (gridster.loaded) {
+								$elem.addClass('gridster-loaded');
+							}
+
+							$rootScope.$broadcast('gridster-resized', [width, $elem[0].offsetHeight], gridster);
+						};
+
+						// track element width changes any way we can
+						var onResize = gridsterDebounce(function onResize() {
+							resize();
+							$timeout(function() {
+								scope.$apply();
+							});
+						}, 100);
+
+						scope.$watch(function() {
+							return isVisible($elem[0]);
+						}, onResize);
+
+						// see https://github.com/sdecima/javascript-detect-element-resize
+						if (typeof window.addResizeListener === 'function') {
+							window.addResizeListener($elem[0], onResize);
+						} else {
+							scope.$watch(function() {
+								return $elem[0].offsetWidth || parseInt($elem.css('width'), 10);
+							}, resize);
+						}
+						var $win = angular.element($window);
+						$win.on('resize', onResize);
+
+						// be sure to cleanup
+						scope.$on('$destroy', function() {
+							gridster.destroy();
+							$win.off('resize', onResize);
+							if (typeof window.removeResizeListener === 'function') {
+								window.removeResizeListener($elem[0], onResize);
+							}
+						});
+
+						// allow a little time to place items before floating up
+						$timeout(function() {
+							scope.$watch('gridster.floating', function() {
+								gridster.floatItemsUp();
+							});
+							gridster.loaded = true;
+						}, 100);
+					};
+				}
+			};
+		}
+	])
+
+	.controller('GridsterItemCtrl', function() {
+		this.$element = null;
+		this.gridster = null;
+		this.row = null;
+		this.col = null;
+		this.sizeX = null;
+		this.sizeY = null;
+		this.minSizeX = 0;
+		this.minSizeY = 0;
+		this.maxSizeX = null;
+		this.maxSizeY = null;
+
+		this.init = function($element, gridster) {
+			this.$element = $element;
+			this.gridster = gridster;
+			this.sizeX = gridster.defaultSizeX;
+			this.sizeY = gridster.defaultSizeY;
+		};
+
+		this.destroy = function() {
+			// set these to null to avoid the possibility of circular references
+			this.gridster = null;
+			this.$element = null;
+		};
+
+		/**
+		 * Returns the items most important attributes
+		 */
+		this.toJSON = function() {
+			return {
+				row: this.row,
+				col: this.col,
+				sizeY: this.sizeY,
+				sizeX: this.sizeX
+			};
+		};
+
+		this.isMoving = function() {
+			return this.gridster.movingItem === this;
+		};
+
+		/**
+		 * Set the items position
+		 *
+		 * @param {Number} row
+		 * @param {Number} column
+		 */
+		this.setPosition = function(row, column) {
+			this.gridster.putItem(this, row, column);
+
+			if (!this.isMoving()) {
+				this.setElementPosition();
+			}
+		};
+
+		/**
+		 * Sets a specified size property
+		 *
+		 * @param {String} key Can be either "x" or "y"
+		 * @param {Number} value The size amount
+		 * @param {Boolean} preventMove
+		 */
+		this.setSize = function(key, value, preventMove) {
+			key = key.toUpperCase();
+			var camelCase = 'size' + key,
+				titleCase = 'Size' + key;
+			if (value === '') {
+				return;
+			}
+			value = parseInt(value, 10);
+			if (isNaN(value) || value === 0) {
+				value = this.gridster['default' + titleCase];
+			}
+			var max = key === 'X' ? this.gridster.columns : this.gridster.maxRows;
+			if (this['max' + titleCase]) {
+				max = Math.min(this['max' + titleCase], max);
+			}
+			if (this.gridster['max' + titleCase]) {
+				max = Math.min(this.gridster['max' + titleCase], max);
+			}
+			if (key === 'X' && this.cols) {
+				max -= this.cols;
+			} else if (key === 'Y' && this.rows) {
+				max -= this.rows;
+			}
+
+			var min = 0;
+			if (this['min' + titleCase]) {
+				min = Math.max(this['min' + titleCase], min);
+			}
+			if (this.gridster['min' + titleCase]) {
+				min = Math.max(this.gridster['min' + titleCase], min);
+			}
+
+			value = Math.max(Math.min(value, max), min);
+
+			var changed = (this[camelCase] !== value || (this['old' + titleCase] && this['old' + titleCase] !== value));
+			this['old' + titleCase] = this[camelCase] = value;
+
+			if (!this.isMoving()) {
+				this['setElement' + titleCase]();
+			}
+			if (!preventMove && changed) {
+				this.gridster.moveOverlappingItems(this);
+				this.gridster.layoutChanged();
+			}
+
+			return changed;
+		};
+
+		/**
+		 * Sets the items sizeY property
+		 *
+		 * @param {Number} rows
+		 * @param {Boolean} preventMove
+		 */
+		this.setSizeY = function(rows, preventMove) {
+			return this.setSize('Y', rows, preventMove);
+		};
+
+		/**
+		 * Sets the items sizeX property
+		 *
+		 * @param {Number} columns
+		 * @param {Boolean} preventMove
+		 */
+		this.setSizeX = function(columns, preventMove) {
+			return this.setSize('X', columns, preventMove);
+		};
+
+		/**
+		 * Sets an elements position on the page
+		 */
+		this.setElementPosition = function() {
+			if (this.gridster.isMobile) {
+				this.$element.css({
+					marginLeft: this.gridster.margins[0] + 'px',
+					marginRight: this.gridster.margins[0] + 'px',
+					marginTop: this.gridster.margins[1] + 'px',
+					marginBottom: this.gridster.margins[1] + 'px',
+					top: '',
+					left: ''
+				});
+			} else {
+				this.$element.css({
+					margin: 0,
+					top: (this.row * this.gridster.curRowHeight + (this.gridster.outerMargin ? this.gridster.margins[0] : 0)) + 'px',
+					left: (this.col * this.gridster.curColWidth + (this.gridster.outerMargin ? this.gridster.margins[1] : 0)) + 'px'
+				});
+			}
+		};
+
+		/**
+		 * Sets an elements height
+		 */
+		this.setElementSizeY = function() {
+			if (this.gridster.isMobile && !this.gridster.saveGridItemCalculatedHeightInMobile) {
+				this.$element.css('height', '');
+			} else {
+				this.$element.css('height', (this.sizeY * this.gridster.curRowHeight - this.gridster.margins[0]) + 'px');
+			}
+		};
+
+		/**
+		 * Sets an elements width
+		 */
+		this.setElementSizeX = function() {
+			if (this.gridster.isMobile) {
+				this.$element.css('width', '');
+			} else {
+				this.$element.css('width', (this.sizeX * this.gridster.curColWidth - this.gridster.margins[1]) + 'px');
+			}
+		};
+
+		/**
+		 * Gets an element's width
+		 */
+		this.getElementSizeX = function() {
+			return (this.sizeX * this.gridster.curColWidth - this.gridster.margins[1]);
+		};
+
+		/**
+		 * Gets an element's height
+		 */
+		this.getElementSizeY = function() {
+			return (this.sizeY * this.gridster.curRowHeight - this.gridster.margins[0]);
+		};
+
+	})
+
+	.factory('GridsterTouch', [function() {
+		return function GridsterTouch(target, startEvent, moveEvent, endEvent) {
+			var lastXYById = {};
+
+			//  Opera doesn't have Object.keys so we use this wrapper
+			var numberOfKeys = function(theObject) {
+				if (Object.keys) {
+					return Object.keys(theObject).length;
+				}
+
+				var n = 0,
+					key;
+				for (key in theObject) {
+					++n;
+				}
+
+				return n;
+			};
+
+			//  this calculates the delta needed to convert pageX/Y to offsetX/Y because offsetX/Y don't exist in the TouchEvent object or in Firefox's MouseEvent object
+			var computeDocumentToElementDelta = function(theElement) {
+				var elementLeft = 0;
+				var elementTop = 0;
+				var oldIEUserAgent = navigator.userAgent.match(/\bMSIE\b/);
+
+				for (var offsetElement = theElement; offsetElement != null; offsetElement = offsetElement.offsetParent) {
+					//  the following is a major hack for versions of IE less than 8 to avoid an apparent problem on the IEBlog with double-counting the offsets
+					//  this may not be a general solution to IE7's problem with offsetLeft/offsetParent
+					if (oldIEUserAgent &&
+						(!document.documentMode || document.documentMode < 8) &&
+						offsetElement.currentStyle.position === 'relative' && offsetElement.offsetParent && offsetElement.offsetParent.currentStyle.position === 'relative' && offsetElement.offsetLeft === offsetElement.offsetParent.offsetLeft) {
+						// add only the top
+						elementTop += offsetElement.offsetTop;
+					} else {
+						elementLeft += offsetElement.offsetLeft;
+						elementTop += offsetElement.offsetTop;
+					}
+				}
+
+				return {
+					x: elementLeft,
+					y: elementTop
+				};
+			};
+
+			//  cache the delta from the document to our event target (reinitialized each mousedown/MSPointerDown/touchstart)
+			var documentToTargetDelta = computeDocumentToElementDelta(target);
+
+			//  common event handler for the mouse/pointer/touch models and their down/start, move, up/end, and cancel events
+			var doEvent = function(theEvtObj) {
+
+				if (theEvtObj.type === 'mousemove' && numberOfKeys(lastXYById) === 0) {
+					return;
+				}
+
+				var prevent = true;
+
+				var pointerList = theEvtObj.changedTouches ? theEvtObj.changedTouches : [theEvtObj];
+				for (var i = 0; i < pointerList.length; ++i) {
+					var pointerObj = pointerList[i];
+					var pointerId = (typeof pointerObj.identifier !== 'undefined') ? pointerObj.identifier : (typeof pointerObj.pointerId !== 'undefined') ? pointerObj.pointerId : 1;
+
+					//  use the pageX/Y coordinates to compute target-relative coordinates when we have them (in ie < 9, we need to do a little work to put them there)
+					if (typeof pointerObj.pageX === 'undefined') {
+						//  initialize assuming our source element is our target
+						pointerObj.pageX = pointerObj.offsetX + documentToTargetDelta.x;
+						pointerObj.pageY = pointerObj.offsetY + documentToTargetDelta.y;
+
+						if (pointerObj.srcElement.offsetParent === target && document.documentMode && document.documentMode === 8 && pointerObj.type === 'mousedown') {
+							//  source element is a child piece of VML, we're in IE8, and we've not called setCapture yet - add the origin of the source element
+							pointerObj.pageX += pointerObj.srcElement.offsetLeft;
+							pointerObj.pageY += pointerObj.srcElement.offsetTop;
+						} else if (pointerObj.srcElement !== target && !document.documentMode || document.documentMode < 8) {
+							//  source element isn't the target (most likely it's a child piece of VML) and we're in a version of IE before IE8 -
+							//  the offsetX/Y values are unpredictable so use the clientX/Y values and adjust by the scroll offsets of its parents
+							//  to get the document-relative coordinates (the same as pageX/Y)
+							var sx = -2,
+								sy = -2; // adjust for old IE's 2-pixel border
+							for (var scrollElement = pointerObj.srcElement; scrollElement !== null; scrollElement = scrollElement.parentNode) {
+								sx += scrollElement.scrollLeft ? scrollElement.scrollLeft : 0;
+								sy += scrollElement.scrollTop ? scrollElement.scrollTop : 0;
+							}
+
+							pointerObj.pageX = pointerObj.clientX + sx;
+							pointerObj.pageY = pointerObj.clientY + sy;
+						}
+					}
+
+
+					var pageX = pointerObj.pageX;
+					var pageY = pointerObj.pageY;
+
+					if (theEvtObj.type.match(/(start|down)$/i)) {
+						//  clause for processing MSPointerDown, touchstart, and mousedown
+
+						//  refresh the document-to-target delta on start in case the target has moved relative to document
+						documentToTargetDelta = computeDocumentToElementDelta(target);
+
+						//  protect against failing to get an up or end on this pointerId
+						if (lastXYById[pointerId]) {
+							if (endEvent) {
+								endEvent({
+									target: theEvtObj.target,
+									which: theEvtObj.which,
+									pointerId: pointerId,
+									pageX: pageX,
+									pageY: pageY
+								});
+							}
+
+							delete lastXYById[pointerId];
+						}
+
+						if (startEvent) {
+							if (prevent) {
+								prevent = startEvent({
+									target: theEvtObj.target,
+									which: theEvtObj.which,
+									pointerId: pointerId,
+									pageX: pageX,
+									pageY: pageY
+								});
+							}
+						}
+
+						//  init last page positions for this pointer
+						lastXYById[pointerId] = {
+							x: pageX,
+							y: pageY
+						};
+
+						// IE pointer model
+						if (target.msSetPointerCapture) {
+							target.msSetPointerCapture(pointerId);
+						} else if (theEvtObj.type === 'mousedown' && numberOfKeys(lastXYById) === 1) {
+							if (useSetReleaseCapture) {
+								target.setCapture(true);
+							} else {
+								document.addEventListener('mousemove', doEvent, false);
+								document.addEventListener('mouseup', doEvent, false);
+							}
+						}
+					} else if (theEvtObj.type.match(/move$/i)) {
+						//  clause handles mousemove, MSPointerMove, and touchmove
+
+						if (lastXYById[pointerId] && !(lastXYById[pointerId].x === pageX && lastXYById[pointerId].y === pageY)) {
+							//  only extend if the pointer is down and it's not the same as the last point
+
+							if (moveEvent && prevent) {
+								prevent = moveEvent({
+									target: theEvtObj.target,
+									which: theEvtObj.which,
+									pointerId: pointerId,
+									pageX: pageX,
+									pageY: pageY
+								});
+							}
+
+							//  update last page positions for this pointer
+							lastXYById[pointerId].x = pageX;
+							lastXYById[pointerId].y = pageY;
+						}
+					} else if (lastXYById[pointerId] && theEvtObj.type.match(/(up|end|cancel)$/i)) {
+						//  clause handles up/end/cancel
+
+						if (endEvent && prevent) {
+							prevent = endEvent({
+								target: theEvtObj.target,
+								which: theEvtObj.which,
+								pointerId: pointerId,
+								pageX: pageX,
+								pageY: pageY
+							});
+						}
+
+						//  delete last page positions for this pointer
+						delete lastXYById[pointerId];
+
+						//  in the Microsoft pointer model, release the capture for this pointer
+						//  in the mouse model, release the capture or remove document-level event handlers if there are no down points
+						//  nothing is required for the iOS touch model because capture is implied on touchstart
+						if (target.msReleasePointerCapture) {
+							target.msReleasePointerCapture(pointerId);
+						} else if (theEvtObj.type === 'mouseup' && numberOfKeys(lastXYById) === 0) {
+							if (useSetReleaseCapture) {
+								target.releaseCapture();
+							} else {
+								document.removeEventListener('mousemove', doEvent, false);
+								document.removeEventListener('mouseup', doEvent, false);
+							}
+						}
+					}
+				}
+
+				if (prevent) {
+					if (theEvtObj.preventDefault) {
+						theEvtObj.preventDefault();
+					}
+
+					if (theEvtObj.preventManipulation) {
+						theEvtObj.preventManipulation();
+					}
+
+					if (theEvtObj.preventMouseEvent) {
+						theEvtObj.preventMouseEvent();
+					}
+				}
+			};
+
+			var useSetReleaseCapture = false;
+			// saving the settings for contentZooming and touchaction before activation
+			var contentZooming, msTouchAction;
+
+			this.enable = function() {
+
+				if (window.navigator.msPointerEnabled) {
+					//  Microsoft pointer model
+					target.addEventListener('MSPointerDown', doEvent, false);
+					target.addEventListener('MSPointerMove', doEvent, false);
+					target.addEventListener('MSPointerUp', doEvent, false);
+					target.addEventListener('MSPointerCancel', doEvent, false);
+
+					//  css way to prevent panning in our target area
+					if (typeof target.style.msContentZooming !== 'undefined') {
+						contentZooming = target.style.msContentZooming;
+						target.style.msContentZooming = 'none';
+					}
+
+					//  new in Windows Consumer Preview: css way to prevent all built-in touch actions on our target
+					//  without this, you cannot touch draw on the element because IE will intercept the touch events
+					if (typeof target.style.msTouchAction !== 'undefined') {
+						msTouchAction = target.style.msTouchAction;
+						target.style.msTouchAction = 'none';
+					}
+				} else if (target.addEventListener) {
+					//  iOS touch model
+					target.addEventListener('touchstart', doEvent, false);
+					target.addEventListener('touchmove', doEvent, false);
+					target.addEventListener('touchend', doEvent, false);
+					target.addEventListener('touchcancel', doEvent, false);
+
+					//  mouse model
+					target.addEventListener('mousedown', doEvent, false);
+
+					//  mouse model with capture
+					//  rejecting gecko because, unlike ie, firefox does not send events to target when the mouse is outside target
+					if (target.setCapture && !window.navigator.userAgent.match(/\bGecko\b/)) {
+						useSetReleaseCapture = true;
+
+						target.addEventListener('mousemove', doEvent, false);
+						target.addEventListener('mouseup', doEvent, false);
+					}
+				} else if (target.attachEvent && target.setCapture) {
+					//  legacy IE mode - mouse with capture
+					useSetReleaseCapture = true;
+					target.attachEvent('onmousedown', function() {
+						doEvent(window.event);
+						window.event.returnValue = false;
+						return false;
+					});
+					target.attachEvent('onmousemove', function() {
+						doEvent(window.event);
+						window.event.returnValue = false;
+						return false;
+					});
+					target.attachEvent('onmouseup', function() {
+						doEvent(window.event);
+						window.event.returnValue = false;
+						return false;
+					});
+				}
+			};
+
+			this.disable = function() {
+				if (window.navigator.msPointerEnabled) {
+					//  Microsoft pointer model
+					target.removeEventListener('MSPointerDown', doEvent, false);
+					target.removeEventListener('MSPointerMove', doEvent, false);
+					target.removeEventListener('MSPointerUp', doEvent, false);
+					target.removeEventListener('MSPointerCancel', doEvent, false);
+
+					//  reset zooming to saved value
+					if (contentZooming) {
+						target.style.msContentZooming = contentZooming;
+					}
+
+					// reset touch action setting
+					if (msTouchAction) {
+						target.style.msTouchAction = msTouchAction;
+					}
+				} else if (target.removeEventListener) {
+					//  iOS touch model
+					target.removeEventListener('touchstart', doEvent, false);
+					target.removeEventListener('touchmove', doEvent, false);
+					target.removeEventListener('touchend', doEvent, false);
+					target.removeEventListener('touchcancel', doEvent, false);
+
+					//  mouse model
+					target.removeEventListener('mousedown', doEvent, false);
+
+					//  mouse model with capture
+					//  rejecting gecko because, unlike ie, firefox does not send events to target when the mouse is outside target
+					if (target.setCapture && !window.navigator.userAgent.match(/\bGecko\b/)) {
+						useSetReleaseCapture = true;
+
+						target.removeEventListener('mousemove', doEvent, false);
+						target.removeEventListener('mouseup', doEvent, false);
+					}
+				} else if (target.detachEvent && target.setCapture) {
+					//  legacy IE mode - mouse with capture
+					useSetReleaseCapture = true;
+					target.detachEvent('onmousedown');
+					target.detachEvent('onmousemove');
+					target.detachEvent('onmouseup');
+				}
+			};
+
+			return this;
+		};
+	}])
+
+	.factory('GridsterDraggable', ['$document', '$window', 'GridsterTouch',
+		function($document, $window, GridsterTouch) {
+			function GridsterDraggable($el, scope, gridster, item, itemOptions) {
+
+				var elmX, elmY, elmW, elmH,
+
+					mouseX = 0,
+					mouseY = 0,
+					lastMouseX = 0,
+					lastMouseY = 0,
+					mOffX = 0,
+					mOffY = 0,
+
+					minTop = 0,
+					maxTop = 9999,
+					minLeft = 0,
+					realdocument = $document[0];
+
+				var originalCol, originalRow;
+				var inputTags = ['select', 'input', 'textarea', 'button'];
+
+				function mouseDown(e) {
+					if (inputTags.indexOf(e.target.nodeName.toLowerCase()) !== -1) {
+						return false;
+					}
+
+					var $target = angular.element(e.target);
+
+					// exit, if a resize handle was hit
+					if ($target.hasClass('gridster-item-resizable-handler')) {
+						return false;
+					}
+
+					// exit, if the target has it's own click event
+					if ($target.attr('onclick') || $target.attr('ng-click')) {
+						return false;
+					}
+
+					// only works if you have jQuery
+					if ($target.closest && $target.closest('.gridster-no-drag').length) {
+						return false;
+					}
+
+					switch (e.which) {
+						case 1:
+							// left mouse button
+							break;
+						case 2:
+						case 3:
+							// right or middle mouse button
+							return;
+					}
+
+					lastMouseX = e.pageX;
+					lastMouseY = e.pageY;
+
+					elmX = parseInt($el.css('left'), 10);
+					elmY = parseInt($el.css('top'), 10);
+					elmW = $el[0].offsetWidth;
+					elmH = $el[0].offsetHeight;
+
+					originalCol = item.col;
+					originalRow = item.row;
+
+					dragStart(e);
+
+					return true;
+				}
+
+				function mouseMove(e) {
+					if (!$el.hasClass('gridster-item-moving') || $el.hasClass('gridster-item-resizing')) {
+						return false;
+					}
+
+					var maxLeft = gridster.curWidth - 1;
+
+					// Get the current mouse position.
+					mouseX = e.pageX;
+					mouseY = e.pageY;
+
+					// Get the deltas
+					var diffX = mouseX - lastMouseX + mOffX;
+					var diffY = mouseY - lastMouseY + mOffY;
+					mOffX = mOffY = 0;
+
+					// Update last processed mouse positions.
+					lastMouseX = mouseX;
+					lastMouseY = mouseY;
+
+					var dX = diffX,
+						dY = diffY;
+					if (elmX + dX < minLeft) {
+						diffX = minLeft - elmX;
+						mOffX = dX - diffX;
+					} else if (elmX + elmW + dX > maxLeft) {
+						diffX = maxLeft - elmX - elmW;
+						mOffX = dX - diffX;
+					}
+
+					if (elmY + dY < minTop) {
+						diffY = minTop - elmY;
+						mOffY = dY - diffY;
+					} else if (elmY + elmH + dY > maxTop) {
+						diffY = maxTop - elmY - elmH;
+						mOffY = dY - diffY;
+					}
+					elmX += diffX;
+					elmY += diffY;
+
+					// set new position
+					$el.css({
+						'top': elmY + 'px',
+						'left': elmX + 'px'
+					});
+
+					drag(e);
+
+					return true;
+				}
+
+				function mouseUp(e) {
+					if (!$el.hasClass('gridster-item-moving') || $el.hasClass('gridster-item-resizing')) {
+						return false;
+					}
+
+					mOffX = mOffY = 0;
+
+					dragStop(e);
+
+					return true;
+				}
+
+				function dragStart(event) {
+					$el.addClass('gridster-item-moving');
+					gridster.movingItem = item;
+
+					gridster.updateHeight(item.sizeY);
+					scope.$apply(function() {
+						if (gridster.draggable && gridster.draggable.start) {
+							gridster.draggable.start(event, $el, itemOptions);
+						}
+					});
+				}
+
+				function drag(event) {
+					var oldRow = item.row,
+						oldCol = item.col,
+						hasCallback = gridster.draggable && gridster.draggable.drag,
+						scrollSensitivity = gridster.draggable.scrollSensitivity,
+						scrollSpeed = gridster.draggable.scrollSpeed;
+
+					var row = gridster.pixelsToRows(elmY);
+					var col = gridster.pixelsToColumns(elmX);
+
+					var itemsInTheWay = gridster.getItems(row, col, item.sizeX, item.sizeY, item);
+					var hasItemsInTheWay = itemsInTheWay.length !== 0;
+
+					if (gridster.swapping === true && hasItemsInTheWay) {
+						var boundingBoxItem = gridster.getBoundingBox(itemsInTheWay),
+							sameSize = boundingBoxItem.sizeX === item.sizeX && boundingBoxItem.sizeY === item.sizeY,
+							sameRow = boundingBoxItem.row === oldRow,
+							sameCol = boundingBoxItem.col === oldCol,
+							samePosition = boundingBoxItem.row === row && boundingBoxItem.col === col,
+							inline = sameRow || sameCol;
+
+						if (sameSize && itemsInTheWay.length === 1) {
+							if (samePosition) {
+								gridster.swapItems(item, itemsInTheWay[0]);
+							} else if (inline) {
+								return;
+							}
+						} else if (boundingBoxItem.sizeX <= item.sizeX && boundingBoxItem.sizeY <= item.sizeY && inline) {
+							var emptyRow = item.row <= row ? item.row : row + item.sizeY,
+								emptyCol = item.col <= col ? item.col : col + item.sizeX,
+								rowOffset = emptyRow - boundingBoxItem.row,
+								colOffset = emptyCol - boundingBoxItem.col;
+
+							for (var i = 0, l = itemsInTheWay.length; i < l; ++i) {
+								var itemInTheWay = itemsInTheWay[i];
+
+								var itemsInFreeSpace = gridster.getItems(
+									itemInTheWay.row + rowOffset,
+									itemInTheWay.col + colOffset,
+									itemInTheWay.sizeX,
+									itemInTheWay.sizeY,
+									item
+								);
+
+								if (itemsInFreeSpace.length === 0) {
+									gridster.putItem(itemInTheWay, itemInTheWay.row + rowOffset, itemInTheWay.col + colOffset);
+								}
+							}
+						}
+					}
+
+					if (gridster.pushing !== false || !hasItemsInTheWay) {
+						item.row = row;
+						item.col = col;
+					}
+
+					if (event.pageY - realdocument.body.scrollTop < scrollSensitivity) {
+						realdocument.body.scrollTop = realdocument.body.scrollTop - scrollSpeed;
+					} else if ($window.innerHeight - (event.pageY - realdocument.body.scrollTop) < scrollSensitivity) {
+						realdocument.body.scrollTop = realdocument.body.scrollTop + scrollSpeed;
+					}
+
+					if (event.pageX - realdocument.body.scrollLeft < scrollSensitivity) {
+						realdocument.body.scrollLeft = realdocument.body.scrollLeft - scrollSpeed;
+					} else if ($window.innerWidth - (event.pageX - realdocument.body.scrollLeft) < scrollSensitivity) {
+						realdocument.body.scrollLeft = realdocument.body.scrollLeft + scrollSpeed;
+					}
+
+					if (hasCallback || oldRow !== item.row || oldCol !== item.col) {
+						scope.$apply(function() {
+							if (hasCallback) {
+								gridster.draggable.drag(event, $el, itemOptions);
+							}
+						});
+					}
+				}
+
+				function dragStop(event) {
+					$el.removeClass('gridster-item-moving');
+					var row = gridster.pixelsToRows(elmY);
+					var col = gridster.pixelsToColumns(elmX);
+					if (gridster.pushing !== false || gridster.getItems(row, col, item.sizeX, item.sizeY, item).length === 0) {
+						item.row = row;
+						item.col = col;
+					}
+					gridster.movingItem = null;
+					item.setPosition(item.row, item.col);
+
+					scope.$apply(function() {
+						if (gridster.draggable && gridster.draggable.stop) {
+							gridster.draggable.stop(event, $el, itemOptions);
+						}
+					});
+				}
+
+				var enabled = null;
+				var $dragHandles = null;
+				var unifiedInputs = [];
+
+				this.enable = function() {
+					if (enabled === true) {
+						return;
+					}
+
+					enabled = true;
+
+					// timeout required for some template rendering
+					$el.ready(function() {
+						if (enabled !== true) {
+							return;
+						}
+
+						// disable any existing draghandles
+						for (var u = 0, ul = unifiedInputs.length; u < ul; ++u) {
+							unifiedInputs[u].disable();
+						}
+						unifiedInputs = [];
+
+						if (gridster.draggable && gridster.draggable.handle) {
+							$dragHandles = angular.element($el[0].querySelectorAll(gridster.draggable.handle));
+							if ($dragHandles.length === 0) {
+								// fall back to element if handle not found...
+								$dragHandles = $el;
+							}
+						} else {
+							$dragHandles = $el;
+						}
+
+						for (var h = 0, hl = $dragHandles.length; h < hl; ++h) {
+							unifiedInputs[h] = new GridsterTouch($dragHandles[h], mouseDown, mouseMove, mouseUp);
+							unifiedInputs[h].enable();
+						}
+					});
+				};
+
+				this.disable = function() {
+					if (enabled === false) {
+						return;
+					}
+
+					enabled = false;
+
+					for (var u = 0, ul = unifiedInputs.length; u < ul; ++u) {
+						unifiedInputs[u].disable();
+					}
+
+					unifiedInputs = [];
+				};
+
+				this.toggle = function(enabled) {
+					if (enabled) {
+						this.enable();
+					} else {
+						this.disable();
+					}
+				};
+
+				this.destroy = function() {
+					this.disable();
+				};
+			}
+
+			return GridsterDraggable;
+		}
+	])
+
+	.factory('GridsterResizable', ['GridsterTouch', function(GridsterTouch) {
+		function GridsterResizable($el, scope, gridster, item, itemOptions) {
+
+			function ResizeHandle(handleClass) {
+
+				var hClass = handleClass;
+
+				var elmX, elmY, elmW, elmH,
+
+					mouseX = 0,
+					mouseY = 0,
+					lastMouseX = 0,
+					lastMouseY = 0,
+					mOffX = 0,
+					mOffY = 0,
+
+					minTop = 0,
+					maxTop = 9999,
+					minLeft = 0;
+
+				var getMinHeight = function() {
+					return (item.minSizeY ? item.minSizeY : 1) * gridster.curRowHeight - gridster.margins[0];
+				};
+				var getMinWidth = function() {
+					return (item.minSizeX ? item.minSizeX : 1) * gridster.curColWidth - gridster.margins[1];
+				};
+
+				var originalWidth, originalHeight;
+				var savedDraggable;
+
+				function mouseDown(e) {
+					switch (e.which) {
+						case 1:
+							// left mouse button
+							break;
+						case 2:
+						case 3:
+							// right or middle mouse button
+							return;
+					}
+
+					// save the draggable setting to restore after resize
+					savedDraggable = gridster.draggable.enabled;
+					if (savedDraggable) {
+						gridster.draggable.enabled = false;
+						scope.$broadcast('gridster-draggable-changed', gridster);
+					}
+
+					// Get the current mouse position.
+					lastMouseX = e.pageX;
+					lastMouseY = e.pageY;
+
+					// Record current widget dimensions
+					elmX = parseInt($el.css('left'), 10);
+					elmY = parseInt($el.css('top'), 10);
+					elmW = $el[0].offsetWidth;
+					elmH = $el[0].offsetHeight;
+
+					originalWidth = item.sizeX;
+					originalHeight = item.sizeY;
+
+					resizeStart(e);
+
+					return true;
+				}
+
+				function resizeStart(e) {
+					$el.addClass('gridster-item-moving');
+					$el.addClass('gridster-item-resizing');
+
+					gridster.movingItem = item;
+
+					item.setElementSizeX();
+					item.setElementSizeY();
+					item.setElementPosition();
+					gridster.updateHeight(1);
+
+					scope.$apply(function() {
+						// callback
+						if (gridster.resizable && gridster.resizable.start) {
+							gridster.resizable.start(e, $el, itemOptions); // options is the item model
+						}
+					});
+				}
+
+				function mouseMove(e) {
+					var maxLeft = gridster.curWidth - 1;
+
+					// Get the current mouse position.
+					mouseX = e.pageX;
+					mouseY = e.pageY;
+
+					// Get the deltas
+					var diffX = mouseX - lastMouseX + mOffX;
+					var diffY = mouseY - lastMouseY + mOffY;
+					mOffX = mOffY = 0;
+
+					// Update last processed mouse positions.
+					lastMouseX = mouseX;
+					lastMouseY = mouseY;
+
+					var dY = diffY,
+						dX = diffX;
+
+					if (hClass.indexOf('n') >= 0) {
+						if (elmH - dY < getMinHeight()) {
+							diffY = elmH - getMinHeight();
+							mOffY = dY - diffY;
+						} else if (elmY + dY < minTop) {
+							diffY = minTop - elmY;
+							mOffY = dY - diffY;
+						}
+						elmY += diffY;
+						elmH -= diffY;
+					}
+					if (hClass.indexOf('s') >= 0) {
+						if (elmH + dY < getMinHeight()) {
+							diffY = getMinHeight() - elmH;
+							mOffY = dY - diffY;
+						} else if (elmY + elmH + dY > maxTop) {
+							diffY = maxTop - elmY - elmH;
+							mOffY = dY - diffY;
+						}
+						elmH += diffY;
+					}
+					if (hClass.indexOf('w') >= 0) {
+						if (elmW - dX < getMinWidth()) {
+							diffX = elmW - getMinWidth();
+							mOffX = dX - diffX;
+						} else if (elmX + dX < minLeft) {
+							diffX = minLeft - elmX;
+							mOffX = dX - diffX;
+						}
+						elmX += diffX;
+						elmW -= diffX;
+					}
+					if (hClass.indexOf('e') >= 0) {
+						if (elmW + dX < getMinWidth()) {
+							diffX = getMinWidth() - elmW;
+							mOffX = dX - diffX;
+						} else if (elmX + elmW + dX > maxLeft) {
+							diffX = maxLeft - elmX - elmW;
+							mOffX = dX - diffX;
+						}
+						elmW += diffX;
+					}
+
+					// set new position
+					$el.css({
+						'top': elmY + 'px',
+						'left': elmX + 'px',
+						'width': elmW + 'px',
+						'height': elmH + 'px'
+					});
+
+					resize(e);
+
+					return true;
+				}
+
+				function mouseUp(e) {
+					// restore draggable setting to its original state
+					if (gridster.draggable.enabled !== savedDraggable) {
+						gridster.draggable.enabled = savedDraggable;
+						scope.$broadcast('gridster-draggable-changed', gridster);
+					}
+
+					mOffX = mOffY = 0;
+
+					resizeStop(e);
+
+					return true;
+				}
+
+				function resize(e) {
+					var oldRow = item.row,
+						oldCol = item.col,
+						oldSizeX = item.sizeX,
+						oldSizeY = item.sizeY,
+						hasCallback = gridster.resizable && gridster.resizable.resize;
+
+					var col = item.col;
+					// only change column if grabbing left edge
+					if (['w', 'nw', 'sw'].indexOf(handleClass) !== -1) {
+						col = gridster.pixelsToColumns(elmX, false);
+					}
+
+					var row = item.row;
+					// only change row if grabbing top edge
+					if (['n', 'ne', 'nw'].indexOf(handleClass) !== -1) {
+						row = gridster.pixelsToRows(elmY, false);
+					}
+
+					var sizeX = item.sizeX;
+					// only change row if grabbing left or right edge
+					if (['n', 's'].indexOf(handleClass) === -1) {
+						sizeX = gridster.pixelsToColumns(elmW, true);
+					}
+
+					var sizeY = item.sizeY;
+					// only change row if grabbing top or bottom edge
+					if (['e', 'w'].indexOf(handleClass) === -1) {
+						sizeY = gridster.pixelsToRows(elmH, true);
+					}
+
+
+					var canOccupy = row > -1 && col > -1 && sizeX + col <= gridster.columns && sizeY + row <= gridster.maxRows;
+					if (canOccupy && (gridster.pushing !== false || gridster.getItems(row, col, sizeX, sizeY, item).length === 0)) {
+						item.row = row;
+						item.col = col;
+						item.sizeX = sizeX;
+						item.sizeY = sizeY;
+					}
+					var isChanged = item.row !== oldRow || item.col !== oldCol || item.sizeX !== oldSizeX || item.sizeY !== oldSizeY;
+
+					if (hasCallback || isChanged) {
+						scope.$apply(function() {
+							if (hasCallback) {
+								gridster.resizable.resize(e, $el, itemOptions); // options is the item model
+							}
+						});
+					}
+				}
+
+				function resizeStop(e) {
+					$el.removeClass('gridster-item-moving');
+					$el.removeClass('gridster-item-resizing');
+
+					gridster.movingItem = null;
+
+					item.setPosition(item.row, item.col);
+					item.setSizeY(item.sizeY);
+					item.setSizeX(item.sizeX);
+
+					scope.$apply(function() {
+						if (gridster.resizable && gridster.resizable.stop) {
+							gridster.resizable.stop(e, $el, itemOptions); // options is the item model
+						}
+					});
+				}
+
+				var $dragHandle = null;
+				var unifiedInput;
+
+				this.enable = function() {
+					if (!$dragHandle) {
+						$dragHandle = angular.element('<div class="gridster-item-resizable-handler handle-' + hClass + '"></div>');
+						$el.append($dragHandle);
+					}
+
+					unifiedInput = new GridsterTouch($dragHandle[0], mouseDown, mouseMove, mouseUp);
+					unifiedInput.enable();
+				};
+
+				this.disable = function() {
+					if ($dragHandle) {
+						$dragHandle.remove();
+						$dragHandle = null;
+					}
+
+					unifiedInput.disable();
+					unifiedInput = undefined;
+				};
+
+				this.destroy = function() {
+					this.disable();
+				};
+			}
+
+			var handles = [];
+			var handlesOpts = gridster.resizable.handles;
+			if (typeof handlesOpts === 'string') {
+				handlesOpts = gridster.resizable.handles.split(',');
+			}
+			var enabled = false;
+
+			for (var c = 0, l = handlesOpts.length; c < l; c++) {
+				handles.push(new ResizeHandle(handlesOpts[c]));
+			}
+
+			this.enable = function() {
+				if (enabled) {
+					return;
+				}
+				for (var c = 0, l = handles.length; c < l; c++) {
+					handles[c].enable();
+				}
+				enabled = true;
+			};
+
+			this.disable = function() {
+				if (!enabled) {
+					return;
+				}
+				for (var c = 0, l = handles.length; c < l; c++) {
+					handles[c].disable();
+				}
+				enabled = false;
+			};
+
+			this.toggle = function(enabled) {
+				if (enabled) {
+					this.enable();
+				} else {
+					this.disable();
+				}
+			};
+
+			this.destroy = function() {
+				for (var c = 0, l = handles.length; c < l; c++) {
+					handles[c].destroy();
+				}
+			};
+		}
+		return GridsterResizable;
+	}])
+
+	.factory('gridsterDebounce', function() {
+		return function gridsterDebounce(func, wait, immediate) {
+			var timeout;
+			return function() {
+				var context = this,
+					args = arguments;
+				var later = function() {
+					timeout = null;
+					if (!immediate) {
+						func.apply(context, args);
+					}
+				};
+				var callNow = immediate && !timeout;
+				clearTimeout(timeout);
+				timeout = setTimeout(later, wait);
+				if (callNow) {
+					func.apply(context, args);
+				}
+			};
+		};
+	})
+
+	/**
+	 * GridsterItem directive
+	 * @param $parse
+	 * @param GridsterDraggable
+	 * @param GridsterResizable
+	 * @param gridsterDebounce
+	 */
+	.directive('gridsterItem', ['$parse', 'GridsterDraggable', 'GridsterResizable', 'gridsterDebounce',
+		function($parse, GridsterDraggable, GridsterResizable, gridsterDebounce) {
+			return {
+				scope: true,
+				restrict: 'EA',
+				controller: 'GridsterItemCtrl',
+				controllerAs: 'gridsterItem',
+				require: ['^gridster', 'gridsterItem'],
+				link: function(scope, $el, attrs, controllers) {
+					var optionsKey = attrs.gridsterItem,
+						options;
+
+					var gridster = controllers[0],
+						item = controllers[1];
+
+					scope.gridster = gridster;
+
+					// bind the item's position properties
+					// options can be an object specified by gridster-item="object"
+					// or the options can be the element html attributes object
+					if (optionsKey) {
+						var $optionsGetter = $parse(optionsKey);
+						options = $optionsGetter(scope) || {};
+						if (!options && $optionsGetter.assign) {
+							options = {
+								row: item.row,
+								col: item.col,
+								sizeX: item.sizeX,
+								sizeY: item.sizeY,
+								minSizeX: 0,
+								minSizeY: 0,
+								maxSizeX: null,
+								maxSizeY: null
+							};
+							$optionsGetter.assign(scope, options);
+						}
+					} else {
+						options = attrs;
+					}
+
+					item.init($el, gridster);
+
+					$el.addClass('gridster-item');
+
+					var aspects = ['minSizeX', 'maxSizeX', 'minSizeY', 'maxSizeY', 'sizeX', 'sizeY', 'row', 'col'],
+						$getters = {};
+
+					var expressions = [];
+					var aspectFn = function(aspect) {
+						var expression;
+						if (typeof options[aspect] === 'string') {
+							// watch the expression in the scope
+							expression = options[aspect];
+						} else if (typeof options[aspect.toLowerCase()] === 'string') {
+							// watch the expression in the scope
+							expression = options[aspect.toLowerCase()];
+						} else if (optionsKey) {
+							// watch the expression on the options object in the scope
+							expression = optionsKey + '.' + aspect;
+						} else {
+							return;
+						}
+						expressions.push('"' + aspect + '":' + expression);
+						$getters[aspect] = $parse(expression);
+
+						// initial set
+						var val = $getters[aspect](scope);
+						if (typeof val === 'number') {
+							item[aspect] = val;
+						}
+					};
+
+					for (var i = 0, l = aspects.length; i < l; ++i) {
+						aspectFn(aspects[i]);
+					}
+
+					var watchExpressions = '{' + expressions.join(',') + '}';
+					// when the value changes externally, update the internal item object
+					scope.$watchCollection(watchExpressions, function(newVals, oldVals) {
+						for (var aspect in newVals) {
+							var newVal = newVals[aspect];
+							var oldVal = oldVals[aspect];
+							if (oldVal === newVal) {
+								continue;
+							}
+							newVal = parseInt(newVal, 10);
+							if (!isNaN(newVal)) {
+								item[aspect] = newVal;
+							}
+						}
+					});
+
+					function positionChanged() {
+						// call setPosition so the element and gridster controller are updated
+						item.setPosition(item.row, item.col);
+
+						// when internal item position changes, update externally bound values
+						if ($getters.row && $getters.row.assign) {
+							$getters.row.assign(scope, item.row);
+						}
+						if ($getters.col && $getters.col.assign) {
+							$getters.col.assign(scope, item.col);
+						}
+					}
+					scope.$watch(function() {
+						return item.row + ',' + item.col;
+					}, positionChanged);
+
+					function sizeChanged() {
+						var changedX = item.setSizeX(item.sizeX, true);
+						if (changedX && $getters.sizeX && $getters.sizeX.assign) {
+							$getters.sizeX.assign(scope, item.sizeX);
+						}
+						var changedY = item.setSizeY(item.sizeY, true);
+						if (changedY && $getters.sizeY && $getters.sizeY.assign) {
+							$getters.sizeY.assign(scope, item.sizeY);
+						}
+
+						if (changedX || changedY) {
+							item.gridster.moveOverlappingItems(item);
+							gridster.layoutChanged();
+							scope.$broadcast('gridster-item-resized', item);
+						}
+					}
+
+					scope.$watch(function() {
+						return item.sizeY + ',' + item.sizeX + ',' + item.minSizeX + ',' + item.maxSizeX + ',' + item.minSizeY + ',' + item.maxSizeY;
+					}, sizeChanged);
+
+					var draggable = new GridsterDraggable($el, scope, gridster, item, options);
+					var resizable = new GridsterResizable($el, scope, gridster, item, options);
+
+					var updateResizable = function() {
+						resizable.toggle(!gridster.isMobile && gridster.resizable && gridster.resizable.enabled);
+					};
+					updateResizable();
+
+					var updateDraggable = function() {
+						draggable.toggle(!gridster.isMobile && gridster.draggable && gridster.draggable.enabled);
+					};
+					updateDraggable();
+
+					scope.$on('gridster-draggable-changed', updateDraggable);
+					scope.$on('gridster-resizable-changed', updateResizable);
+					scope.$on('gridster-resized', updateResizable);
+					scope.$on('gridster-mobile-changed', function() {
+						updateResizable();
+						updateDraggable();
+					});
+
+					function whichTransitionEvent() {
+						var el = document.createElement('div');
+						var transitions = {
+							'transition': 'transitionend',
+							'OTransition': 'oTransitionEnd',
+							'MozTransition': 'transitionend',
+							'WebkitTransition': 'webkitTransitionEnd'
+						};
+						for (var t in transitions) {
+							if (el.style[t] !== undefined) {
+								return transitions[t];
+							}
+						}
+					}
+
+					var debouncedTransitionEndPublisher = gridsterDebounce(function() {
+						scope.$apply(function() {
+							scope.$broadcast('gridster-item-transition-end', item);
+						});
+					}, 50);
+
+					$el.on(whichTransitionEvent(), debouncedTransitionEndPublisher);
+
+					scope.$broadcast('gridster-item-initialized', item);
+
+					return scope.$on('$destroy', function() {
+						try {
+							resizable.destroy();
+							draggable.destroy();
+						} catch (e) {}
+
+						try {
+							gridster.removeItem(item);
+						} catch (e) {}
+
+						try {
+							item.destroy();
+						} catch (e) {}
+					});
+				}
+			};
+		}
+	])
+
+	.directive('gridsterNoDrag', function() {
+		return {
+			restrict: 'A',
+			link: function(scope, $element) {
+				$element.addClass('gridster-no-drag');
+			}
+		};
+	})
+
+	;
+
+}));
+
+/**
+* Detect Element Resize Plugin for jQuery
+*
+* https://github.com/sdecima/javascript-detect-element-resize
+* Sebastian Decima
+*
+* version: 0.5.3
+**/
+
+(function ( $ ) {
+	var attachEvent = document.attachEvent,
+		stylesCreated = false;
+	
+	var jQuery_resize = $.fn.resize;
+	
+	$.fn.resize = function(callback) {
+		return this.each(function() {
+			if(this == window)
+				jQuery_resize.call(jQuery(this), callback);
+			else
+				addResizeListener(this, callback);
+		});
+	}
+
+	$.fn.removeResize = function(callback) {
+		return this.each(function() {
+			removeResizeListener(this, callback);
+		});
+	}
+	
+	if (!attachEvent) {
+		var requestFrame = (function(){
+			var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame ||
+								function(fn){ return window.setTimeout(fn, 20); };
+			return function(fn){ return raf(fn); };
+		})();
+		
+		var cancelFrame = (function(){
+			var cancel = window.cancelAnimationFrame || window.mozCancelAnimationFrame || window.webkitCancelAnimationFrame ||
+								   window.clearTimeout;
+		  return function(id){ return cancel(id); };
+		})();
+
+		function resetTriggers(element){
+			var triggers = element.__resizeTriggers__,
+				expand = triggers.firstElementChild,
+				contract = triggers.lastElementChild,
+				expandChild = expand.firstElementChild;
+			contract.scrollLeft = contract.scrollWidth;
+			contract.scrollTop = contract.scrollHeight;
+			expandChild.style.width = expand.offsetWidth + 1 + 'px';
+			expandChild.style.height = expand.offsetHeight + 1 + 'px';
+			expand.scrollLeft = expand.scrollWidth;
+			expand.scrollTop = expand.scrollHeight;
+		};
+
+		function checkTriggers(element){
+			return element.offsetWidth != element.__resizeLast__.width ||
+						 element.offsetHeight != element.__resizeLast__.height;
+		}
+		
+		function scrollListener(e){
+			var element = this;
+			resetTriggers(this);
+			if (this.__resizeRAF__) cancelFrame(this.__resizeRAF__);
+			this.__resizeRAF__ = requestFrame(function(){
+				if (checkTriggers(element)) {
+					element.__resizeLast__.width = element.offsetWidth;
+					element.__resizeLast__.height = element.offsetHeight;
+					element.__resizeListeners__.forEach(function(fn){
+						fn.call(element, e);
+					});
+				}
+			});
+		};
+		
+		/* Detect CSS Animations support to detect element display/re-attach */
+		var animation = false,
+			animationstring = 'animation',
+			keyframeprefix = '',
+			animationstartevent = 'animationstart',
+			domPrefixes = 'Webkit Moz O ms'.split(' '),
+			startEvents = 'webkitAnimationStart animationstart oAnimationStart MSAnimationStart'.split(' '),
+			pfx  = '';
+		{
+			var elm = document.createElement('fakeelement');
+			if( elm.style.animationName !== undefined ) { animation = true; }    
+			
+			if( animation === false ) {
+				for( var i = 0; i < domPrefixes.length; i++ ) {
+					if( elm.style[ domPrefixes[i] + 'AnimationName' ] !== undefined ) {
+						pfx = domPrefixes[ i ];
+						animationstring = pfx + 'Animation';
+						keyframeprefix = '-' + pfx.toLowerCase() + '-';
+						animationstartevent = startEvents[ i ];
+						animation = true;
+						break;
+					}
+				}
+			}
+		}
+		
+		var animationName = 'resizeanim';
+		var animationKeyframes = '@' + keyframeprefix + 'keyframes ' + animationName + ' { from { opacity: 0; } to { opacity: 0; } } ';
+		var animationStyle = keyframeprefix + 'animation: 1ms ' + animationName + '; ';
+	}
+	
+	function createStyles() {
+		if (!stylesCreated) {
+			//opacity:0 works around a chrome bug https://code.google.com/p/chromium/issues/detail?id=286360
+			var css = (animationKeyframes ? animationKeyframes : '') +
+					'.resize-triggers { ' + (animationStyle ? animationStyle : '') + 'visibility: hidden; opacity: 0; } ' +
+					'.resize-triggers, .resize-triggers > div, .contract-trigger:before { content: \" \"; display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; } .resize-triggers > div { background: #eee; overflow: auto; } .contract-trigger:before { width: 200%; height: 200%; }',
+				head = document.head || document.getElementsByTagName('head')[0],
+				style = document.createElement('style');
+			
+			style.type = 'text/css';
+			if (style.styleSheet) {
+				style.styleSheet.cssText = css;
+			} else {
+				style.appendChild(document.createTextNode(css));
+			}
+
+			head.appendChild(style);
+			stylesCreated = true;
+		}
+	}
+	
+	window.addResizeListener = function(element, fn){
+		if (attachEvent) element.attachEvent('onresize', fn);
+		else {
+			if (!element.__resizeTriggers__) {
+				if (getComputedStyle(element).position == 'static') element.style.position = 'relative';
+				createStyles();
+				element.__resizeLast__ = {};
+				element.__resizeListeners__ = [];
+				(element.__resizeTriggers__ = document.createElement('div')).className = 'resize-triggers';
+				element.__resizeTriggers__.innerHTML = '<div class="expand-trigger"><div></div></div>' +
+																						'<div class="contract-trigger"></div>';
+				element.appendChild(element.__resizeTriggers__);
+				resetTriggers(element);
+				element.addEventListener('scroll', scrollListener, true);
+				
+				/* Listen for a css animation to detect element display/re-attach */
+				animationstartevent && element.__resizeTriggers__.addEventListener(animationstartevent, function(e) {
+					if(e.animationName == animationName)
+						resetTriggers(element);
+				});
+			}
+			element.__resizeListeners__.push(fn);
+		}
+	};
+	
+	window.removeResizeListener = function(element, fn){
+		if (attachEvent) element.detachEvent('onresize', fn);
+		else {
+			element.__resizeListeners__.splice(element.__resizeListeners__.indexOf(fn), 1);
+			if (!element.__resizeListeners__.length) {
+					element.removeEventListener('scroll', scrollListener);
+					element.__resizeTriggers__ = !element.removeChild(element.__resizeTriggers__);
+			}
+		}
+	}
+}( jQuery ));
+
+(function( angular ){
+
+  'use strict';
+
+  var app = angular.module( 'ngFileReader', [] );
+
+  app.directive( "ngFileReader", function(){
+
+    /**
+    * @param {Object} attrs
+    * @return Object
+    */
+    var parseParams_ = function( attrs ){
+
+      return {
+        multiple:attrs.multiple != undefined
+      };
+    };
+
+    /**
+    * @param {jQuery|jqlite} $elem
+    * @param {Object} inputParams
+    */
+    var init_ = function( $elem, inputParams ){
+
+      var $input = $elem.find( "input" );
+
+      if ( inputParams.multiple ) $input.attr( 'multiple', true );
+
+    };
+
+    var events = {
+
+      /**
+      * @param {Scope} scope
+      * @param {FileList} files
+      */
+      onSelected:function( scope, files ){
+
+        scope.onSelected( {files:files} );
+      },
+
+      /**
+      * @param {Scope} scope
+      * @param {FileList} files
+      */
+      onReadered:function( scope, files ){
+
+        angular.forEach( files, function( file ){
+
+          var readMethod = scope.readMethod;
+
+          if ( readMethod ) {
+
+            var fileReader = new FileReader();
+
+            fileReader.addEventListener( 'loadend', function( e ){
+
+              scope.onReaded( {event:e,file:file} );
+              scope.$apply();
+            });
+
+            fileReader[ readMethod ] && fileReader[ readMethod ]( file, scope.readEncoding );
+
+          }
+        });
+
+      }
+    };
+
+    return {
+
+      scope:{
+        onSelected:"&",
+        onReaded:"&",
+        readMethod:"=",
+        readEncoding:"=",
+        accept:"@",
+        filereader:"@"
+      },
+
+      template:"<input type='file' accept='{{accept}}' />",
+
+      /**
+      * @param {Scope} scope
+      * @param {jQuery|jqlite} $elem
+      * @param {Object} attrs
+      */
+      link:function( scope, $elem, attrs ){
+
+        var inputParams = parseParams_( attrs );
+
+        if ( window.File == undefined ) {
+
+          var position = $elem.css('position'),
+
+          initParams = {
+            multiple:inputParams.multiple,
+            debugMode:attrs.debugMode,
+            filereader:scope.filereader,
+          };
+
+          if ( position == "" || position == "static" ) {
+
+            $elem.css( "position", "relative" );
+
+            $.extend( initParams,{
+              appendTo:$elem,
+              position:"absolute",
+              offsetCss:function(){
+                return {left:0,top:0};
+              }
+            });
+
+          }
+
+          $elem.fileReader( initParams );
+
+
+        } else {
+
+          init_( $elem, inputParams );
+
+          var ignoreDrag = function( e ){
+
+            e.preventDefault();
+          };
+
+          $elem.on( "dragenter", ignoreDrag );
+          $elem.on( "dragover", ignoreDrag );
+          $elem.on( "drop", function( e ){
+
+              ignoreDrag( e );
+
+              //console.log( e.dataTransfer.files.length );
+
+              var originalEvent = e.originalEvent ? e.originalEvent : e,
+
+              files = originalEvent.dataTransfer.files;
+
+              //console.log( originalEvent );
+
+              events.onSelected( scope, files );
+
+              events.onReadered( scope, files );
+
+          });
+
+        }
+
+        $elem.on( 'change', function( evt ){
+
+          var files = evt.target.files;
+
+          events.onSelected( scope, files );
+
+          events.onReadered( scope, files );
+
+          $elem.find("input").val('');
+          //console.log( 'change' );
+          scope.$apply();
+        });
+
+      }
+    };
+
+  });
+
+  app.filter( 'fileSize', function(){
+
+      return function( total, bit ){
+
+          if ( !total ) return "";
+
+          var size_types = ["k","m","g","t"],
+              output = total,
+              index = -1;
+
+          while ( output >= 1024 ) {
+
+            var output = output / 1024;
+
+            index ++;
+
+            if ( output < 1 || index == 3 ) {
+
+              break;
+            }
+            
+          }
+
+          return output.toFixed( bit ? bit : 1 ) + " " + ( size_types[index]? size_types[index]:"" );
+
+      };
+  });
+
+
+})( angular );
+
+
+(function( $ ){
+	var readyCallbacks = $.Callbacks('once unique memory'),
+	inputsCount = 0,
+	currentTarget = null;
+
+	// if native FileReader support, then dont add the polyfill and make the plugin do nothing
+	if (window.FileReader) {
+		$.fn.fileReader = function() { return this; };
+		return ;
+	}
+	
+	/**
+	* JQuery Plugin
+	*/
+	$.fn.fileReader = function( options ) {  
+		options = $.extend({}, $.fn.fileReader.defaults, options);
+		
+		var self = this;
+		readyCallbacks.add(function() {
+			return main(self, options);
+		});
+		if ($.isFunction(options.callback)) readyCallbacks.add(options.callback);
+		
+		if (!FileAPIProxy.ready && !FileAPIProxy.hasInitialized) {
+			FileAPIProxy.init(options);
+		}
+		return this;
+	};
+	
+	/**
+	* Default options
+	*  	allows user set default options
+	*/
+	$.fn.fileReader.defaults = {
+		id              : 'fileReaderSWFObject', // ID for the created swf object container,
+		multiple        : null,
+		accept          : null,
+		label           : null,
+		extensions      : null,
+		filereader      : 'files/filereader.swf', // The path to the filereader swf file
+		expressInstall  : null, // The path to the express install swf file
+		debugMode       : false,
+		callback        : false, // Callback function when Filereader is ready
+		position        : 'fixed',
+		appendTo        : 'body',
+		offsetCss       : function (trigger) {
+			return trigger.offset();
+		}
+	};
+	
+	/**
+	* Plugin callback
+	*     adds an input to registry
+	*/
+	var main = function(el, options) {
+		return el.each(function(i, input) {
+			var trigger = $(options.trigger || input);
+			input = $(input);
+			var id = input.attr('id');
+			if (!id) {
+				id = 'flashFileInput' + inputsCount;
+				input.attr('id', id);
+				inputsCount++;
+			}
+			options.multiple = !!(options.multiple === null ? input.attr('multiple') : options.multiple);
+			options.accept = options.accept === null ? input.attr('accept') : options.accept;
+			
+			FileAPIProxy.inputs[id] = input;
+			FileAPIProxy.swfObject.add(id, options.multiple, options.accept, options.label, options.extensions);
+			
+			trigger.add(input)
+				.css('z-index', 0)
+				.mouseover(function (e) {
+					if (id !== currentTarget) {
+						e = e || window.event;
+						currentTarget = id;
+						FileAPIProxy.swfObject.mouseover(id);
+					}
+
+					FileAPIProxy.container
+						.height(trigger.outerHeight())
+						.width(trigger.outerWidth())
+						.css(options.offsetCss(trigger));
+				})
+				.click(function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+					e.stopImmediatePropagation();
+					return false;
+				});
+		});
+	};
+	
+	/**
+	* Flash FileReader Proxy
+	*/
+	window.FileAPIProxy = {
+		ready: false,
+		hasInitialized: false,
+		init: function(o) {
+			var self = this;
+			this.hasInitialized = true;
+			this.debugMode = o.debugMode;
+			this.container = $('<div>').attr('id', o.id)
+				.wrap('<div>')
+				.parent()
+				.css({
+					position: o.position,
+					// top:'0px',
+					width:'1px',
+					height:'1px',
+					display:'inline-block',
+					background:'transparent',
+					'z-index':99999
+				})
+				// Hands over mouse events to original input for css styles
+				.on('mouseover mouseout mousedown mouseup', function(evt) {
+					if(currentTarget) $('#' + currentTarget).trigger(evt.type);
+				})
+				.appendTo(o.appendTo);
+
+			function swfLoadEvent(e, fn) {
+				var initialTimeout = setTimeout(function () {
+					//Ensure Flash Player's PercentLoaded method is available and returns a value
+				    if (typeof e.ref.PercentLoaded !== 'undefined') {
+						//Set up a timer to periodically check value of PercentLoaded
+						var loadCheckInterval = setInterval(function () {
+							if (self.debugMode) console.info('SWF Load Percentage: ', e.ref.PercentLoaded());
+							//Once value == 100 (fully loaded) we can do whatever we want
+							if (e.ref.PercentLoaded() === 100) {
+								fn();
+								clearInterval(loadCheckInterval);
+							}
+						}, 500);
+					}
+				}, 200);
+			}
+			
+			swfobject.embedSWF(o.filereader, o.id, '100%', '100%', '10', o.expressInstall, {debugMode: o.debugMode ? true : ''}, {'wmode':'transparent','allowScriptAccess':'sameDomain'}, {}, function(e) {
+				self.swfObject = e.ref;
+				$(self.swfObject)
+					.css({
+						display: 'block',
+						outline: 0
+					})
+					.attr('tabindex', 0);
+
+				if (e.success) {
+					swfLoadEvent(e, function () {
+						if (self.ready) {
+							readyCallbacks.fire();
+						}
+						self.ready = $.isFunction(e.ref.add);
+					});
+				} else {
+					self.hasInitialized = false;
+				}
+			});
+		},
+		swfObject: null,
+		container: null,
+		// Inputs Registry
+		inputs: {},
+		// Readers Registry
+		readers: {},
+		// Receives FileInput events
+		onFileInputEvent: function(evt) {
+			if (this.debugMode) console.info('FileInput Event ', evt.type, evt);
+			if (evt.target in this.inputs) {
+				var el = this.inputs[evt.target];
+				evt.target = el[0];
+				if( evt.type === 'change') {
+					evt.files = new FileList(evt.files);
+					evt.target = {files: evt.files};
+				}
+				el.trigger(evt);
+			}
+			window.focus();
+		},
+		// Receives FileReader ProgressEvents
+		onFileReaderEvent: function(evt) {
+			if (this.debugMode) console.info('FileReader Event ', evt.type, evt, evt.target in this.readers);
+			if (evt.target in this.readers) {
+				var reader = this.readers[evt.target];
+				evt.target = reader;
+				reader._handleFlashEvent.call(reader, evt);
+			}
+		},
+		// Receives flash FileReader Error Events
+		onFileReaderError: function(error) {
+			if (this.debugMode) console.log(error);
+		},
+		onSWFReady: function () {
+			this.container.css({position: 'absolute'});
+			this.ready = $.isFunction(this.swfObject.add);
+			if (this.ready) {
+				readyCallbacks.fire();
+			}
+			
+			return true;
+		}
+	};
+	
+	
+	/**
+	* Add FileReader to the window object
+	*/
+	window.FileReader = function () {
+		// states
+		this.EMPTY = 0;
+		this.LOADING = 1;
+		this.DONE = 2;
+
+		this.readyState = 0;
+
+		// File or Blob data
+		this.result = null;
+
+		this.error = null;
+
+		// event handler attributes
+		this.onloadstart = null;
+		this.onprogress = null;
+		this.onload = null;
+		this.onabort = null;
+		this.onerror = null;
+		this.onloadend = null;
+		
+		// Event Listeners handling using JQuery Callbacks
+		this._callbacks = {
+			loadstart : $.Callbacks( "unique" ),
+			progress  : $.Callbacks( "unique" ),
+			abort     : $.Callbacks( "unique" ),
+			error     : $.Callbacks( "unique" ),
+			load      : $.Callbacks( "unique" ),
+			loadend   : $.Callbacks( "unique" )
+		};
+		
+		// Custom properties
+		this._id = null;
+	};
+	
+	window.FileReader.prototype = {
+		// async read methods
+		readAsBinaryString: function (file) {
+			this._start(file);
+			FileAPIProxy.swfObject.read(file.input, file.name, 'readAsBinaryString');
+		},
+		readAsText: function (file, encoding) {
+			this._start(file);
+			FileAPIProxy.swfObject.read(file.input, file.name, 'readAsText');
+		},
+		readAsDataURL: function (file) {
+			this._start(file);
+			FileAPIProxy.swfObject.read(file.input, file.name, 'readAsDataURL');
+		},
+		readAsArrayBuffer: function(file){
+			throw("Whoops FileReader.readAsArrayBuffer is unimplemented");
+		},
+		
+		abort: function () {
+			this.result = null;
+			if (this.readyState === this.EMPTY || this.readyState === this.DONE) return;
+			FileAPIProxy.swfObject.abort(this._id);
+		},
+		
+		// Event Target interface
+		addEventListener: function (type, listener) {
+			if (type in this._callbacks) this._callbacks[type].add(listener);
+		},
+		removeEventListener: function (type, listener) {
+			if (type in this._callbacks) this._callbacks[type].remove(listener);
+		},
+		dispatchEvent: function (event) {
+			event.target = this;
+			if (event.type in this._callbacks) {
+				var fn = this['on' + event.type];
+				if ($.isFunction(fn)) fn(event);
+				this._callbacks[event.type].fire(event);
+			}
+			return true;
+		},
+		
+		// Custom private methods
+		
+		// Registers FileReader instance for flash callbacks
+		_register: function(file) {
+			this._id = file.input + '.' + file.name;
+			FileAPIProxy.readers[this._id] = this;
+		},
+		_start: function(file) {
+			this._register(file);
+			if (this.readyState === this.LOADING) throw {type: 'InvalidStateError', code: 11, message: 'The object is in an invalid state.'};
+		},
+		_handleFlashEvent: function(evt) {
+			switch (evt.type) {
+				case 'loadstart':
+					this.readyState = this.LOADING;
+					break;
+				case 'loadend':
+					this.readyState = this.DONE;
+					break;
+				case 'load':
+					this.readyState = this.DONE;
+					this.result = FileAPIProxy.swfObject.result(this._id);
+					break;
+				case 'error':
+					this.result = null;
+					this.error = {
+						name: 'NotReadableError',
+						message: 'The File cannot be read!'
+					};
+			}
+			this.dispatchEvent(new FileReaderEvent(evt));
+		}
+	};
+	
+	/**
+	* FileReader ProgressEvent implenting Event interface
+	*/
+	FileReaderEvent = function (e) {
+		this.initEvent(e);
+	};
+
+	FileReaderEvent.prototype = {
+		initEvent: function (event) {
+			$.extend(this, {
+				type: null,
+				target: null,
+				currentTarget: null,
+			
+				eventPhase: 2,
+
+				bubbles: false,
+				cancelable: false,
+		 
+				defaultPrevented: false,
+
+				isTrusted: false,
+				timeStamp: new Date().getTime()
+			}, event);
+		},
+		stopPropagation: function (){
+		},
+		stopImmediatePropagation: function (){
+		},
+		preventDefault: function (){
+		}
+	};
+	
+	/**
+	* FileList interface (Object with item function)
+	*/
+	FileList = function(array) {
+		if (array) {
+			for (var i = 0; i < array.length; i++) {
+				this[i] = array[i];
+			}
+			this.length = array.length;
+		} else {
+			this.length = 0;
+		}
+	};
+	
+	FileList.prototype = {
+		item: function(index) {
+			if (index in this) return this[index];
+			return null;
+		}
+	};
+	
+})( jQuery );
