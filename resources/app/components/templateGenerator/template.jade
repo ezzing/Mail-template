@@ -23,18 +23,21 @@
 
       #templateGeneratorBody.col-xs-11(gridster = "gridsterOpts")
         input#img(type='file', style='display: none;')
+        div.tinymceWidget
+            h1 You can edit me
         ul
             li.widgetContainer(gridster-item='element' ng-repeat='element in elementList' ng-switch on='element.type')
-                span.fa.fa-trash.trashIcon(ng-click='deleteItem($index)')
-                span.fa.fa-arrows.fa-2x.arrowIcon(ng-mousedown='gridsterOpts.draggable.enabled = true' ng-mouseup='gridsterOpts.draggable.enabled = false')
-                h1.widgetContent(ng-if='element.type === "h1"') Big title
-                h2.widgetContent(ng-if='element.type === "h2"') Middle title
-                h3.widgetContent(ng-if='element.type === "h3"') Small title
-                p.widgetContent(ng-if='element.type === "p"') Paragraph
-                img.widgetContent.imageOnWidget(ng-if='element.type === "img"'  style='background-image: url({{element.src}});') 
-                a.widgetContent(ng-if='element.type === "a"' ng-href="{{element.href}}") {{element.text}}
-                img.widgetContent.imageOnWidget(ng-if='element.type === "img"'  style='background-image: url({{element.src}});')
-                a.widgetContent(ng-if='element.type === "a"' ng-href="{{element.href}}") {{element.text}}
+                div.tinymceWidget
+                    span.fa.fa-trash.trashIcon(ng-click='deleteItem($index)')
+                    span.fa.fa-arrows.fa-2x.arrowIcon(ng-mousedown='gridsterOpts.draggable.enabled = true' ng-mouseup='gridsterOpts.draggable.enabled = false')
+                    h1.widgetContent(ng-if='element.type === "h1"') Big title
+                    h2.widgetContent(ng-if='element.type === "h2"') Middle title
+                    h3.widgetContent(ng-if='element.type === "h3"') Small title
+                    p.widgetContent(ng-if='element.type === "p"') Paragraph
+                    img.widgetContent.imageOnWidget(ng-if='element.type === "img"'  style='background-image: url({{element.src}});') 
+                    a.widgetContent(ng-if='element.type === "a"' ng-href="{{element.href}}") {{element.text}}
+                    img.widgetContent.imageOnWidget(ng-if='element.type === "img"'  style='background-image: url({{element.src}});')
+                    a.widgetContent(ng-if='element.type === "a"' ng-href="{{element.href}}") {{element.text}}
 
 // Modal window for save a template
 div#saveTemplate.modal.fade

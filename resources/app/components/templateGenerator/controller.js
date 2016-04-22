@@ -1,56 +1,59 @@
 (function () {
 
     'use strict';
-
     angular.module('mailTemplate').controller('templateGeneratorCtrl', templateGeneratorCtrl);
-
     templateGeneratorCtrl.$inject = ['$scope', '$http'];
-
-
+    
     function templateGeneratorCtrl ($scope, $http) {
-
+        
+        // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
         $scope.validateTemForm = validateTemForm;
         $scope.createTextElement = createTextElement;
         $scope.validateForm = validateForm;
         $scope.createLink = createLink;
         $scope.deleteItem = deleteItem;
-        $scope.readMethod = 'readAsDataURL';
         $scope.onReaded = onReaded;
+        
+        // All controller properties are declared here
+        $scope.readMethod = 'readAsDataURL';
         $scope.elementList = [];
         $scope.gridsterOpts = {
-            'columns': 24,  // the width of the grid, in columns
-            'pushing': true, // whether to push other items out of the way on move or resize
-            'floating': false, // whether to automatically float items up so they stack (you can temporarily disable if you are adding unsorted items with ng-repeat)
-            'swapping': true, // whether or not to have items of the same size switch places instead of pushing down if they are the same size
-            'width': 'auto', // can be an integer or 'auto'. 'auto' scales gridster to be the full width of its containing element
-            'colWidth': 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
-            'rowHeight': 100, // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
-            'margins': [10, 10], // the pixel distance between each widget
-            'outerMargin': true, // whether margins apply to outer edges of the grid
-            'isMobile': false, // stacks the grid items if true
-            'mobileBreakPoint': 600, // if the screen is not wider that this, remove the grid layout and stack the items
-            'mobileModeEnabled': true, // whether or not to toggle mobile mode when screen width is less than mobileBreakPoint
-            'minColumns': 1, // the minimum columns the grid must have
-            'minRows': 1, // the minimum height of the grid, in rows
+            'columns': 24,
+            'pushing': true,
+            'floating': false,
+            'swapping': true,
+            'width': 'auto',
+            'colWidth': 'auto',
+            'rowHeight': 100,
+            'margins': [10, 10],
+            'outerMargin': true,
+            'isMobile': false,
+            'mobileBreakPoint': 600,
+            'mobileModeEnabled': true,
+            'minColumns': 1,
+            'minRows': 1,
             'maxRows': 100,
-            'defaultSizeX':1, // the default width of a gridster item, if not specifed
-            'defaultSizeY': 1, // the default height of a gridster item, if not specified
-            'minSizeX': 1, // minimum column width of an item
-            'maxSizeX': null, // maximum column width of an item
-            'minSizeY': 1, // minumum row height of an item
-            'maxSizeY': null, // maximum row height of an item
+            'defaultSizeX': 1,
+            'defaultSizeY': 1,
+            'minSizeX': 1,
+            'maxSizeX': null,
+            'minSizeY': 1,
+            'maxSizeY': null,
             'resizable': {
                 'enabled': true,
-                'handles': ['se'],
-                'start': function(event, $element, widget) {}, // optional callback fired when resize is started,
-                'resize': function(event, $element, widget) {}, // optional callback fired when item is resized,
-                'stop': function(event, $element, widget) {} // optional callback fired when item is finished resizing
+                'handles': ['se']
+                /*
+                 * 'start': function(event, $element, widget) {},
+                'resize': function(event, $element, widget) {},
+                'stop': function(event, $element, widget) {}
+                */
             },
             'draggable': {
                 'enabled': false,
                 'handle': '.my-class',
-                'start': function (event, $element, widget){
+                'start': function (event, $element, widget) {
+                    // Create a new property on widget to store initial row
                     widget.initialRow = widget.row;
                 },
                 'drag': function (event, $element, widget) {
@@ -83,33 +86,30 @@
             }
         };
 
+
         /*
          * This function validates the fields in the mail sending form
          * @returns {Boolean}
          */
         function validateTemForm () {
-            if (
-                $scope.saveTemplateForm.name_template.$invalid) {
-                return true;
-            }
+            return $scope.saveTemplateForm.name_template.$invalid ? true : '';
         }
 
         /*
-         * This function saves the template when button in header is clicked
+         * This function saves the  new template when button in header is clicked
          */
         function saveTemplate () {
-
             // Getting template data
             var templateData = {
                 'name_template': $scope.name_template,
-                'icon': $scope.icon_template, //Solo obtengo el nombre CAMBIAR
+                'icon': $scope.icon_template,
                 'html': document.getElementById('templateGeneratorBody').innerHTML
             };
-
+            
             // Parsing js object to string
             templateData = JSON.stringify(templateData);
 
-            // Saving Template
+            // Ajax request to sabe new template
             $http.post('saveTemplate', {
                 'template': templateData
             }).then(function (response) {
@@ -152,47 +152,48 @@
             });
         }
 
-        //TinyMCE image selector
+        // TinyMCE image selector
         tinymce.init({
-            selector: '.imageExample',
-            inline: true,
-            resize: true,
-            plugins: [
-                "image",
-                "imagetools"
+            'selector': '.imageExample',
+            'inline': true,
+            'resize': true,
+            'plugins': [
+                'image',
+                'imagetools'
             ],
-            menubar: false,
-            toolbar: 'undo redo | image | alignleft aligncenter alignright',
-            file_browser_callback : myFileBrowser,
-            imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io']
+            'menubar': false,
+            'toolbar': 'undo redo | image | alignleft aligncenter alignright',
+            'file_browser_callback': myFileBrowser,
+            'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
         });
 
-        //TinyMCE Text selector
+        //TinyMCE  text selector
         tinymce.init({
-            selector: '.textExample',
-            inline: true,
-            resize: true,
-            plugins: [
-                "link autolink image",
-                "textcolor imagetools"
+            'selector': '.tinymceWidget',
+            'inline': true,
+            'resize': true,
+            'plugins': [
+                'link autolink image',
+                'textcolor imagetools',
+                'colorpicker'
             ],
-            menubar: false,
-            toolbar1: 'fontsizeselect fontselect | alignleft aligncenter alignright alignjustify | subscript superscript ',
-            toolbar2: 'undo redo | bold italic underline forecolor backcolor | mybutton | image  link unlink',
-            setup: function(editor) {
+            'menubar': false,
+            'toolbar1': 'fontsizeselect fontselect | alignleft aligncenter alignright alignjustify | subscript superscript ',
+            'toolbar2': 'undo redo | bold italic underline forecolor backcolor | mybutton | image  link unlink',
+            'setup': function (editor) {
                 editor.addButton('mybutton', {
-                    text: 'Variable',
-                    icon: false,
-                    onclick:function() {
+                    'text': 'Variable',
+                    'icon': false,
+                    'onclick': function () {
                         editor.insertContent('<span class="variables" style="color: red; background: yellow; font-weight: bold">' +
                             '<span class="uneditable" contenteditable="false">{{</span>Variable<span class="uneditable" contenteditable="false">}}' +
                             '</span></span>');
                     }
                 });
             },
-            file_browser_callback : myFileBrowser,
-            fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt 42pt 72pt',
-            imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io']
+            'file_browser_callback': myFileBrowser,
+            'fontsize_formats': '8pt 10pt 12pt 14pt 18pt 24pt 36pt 42pt 72pt',
+            'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
         });
 
         /*
@@ -201,14 +202,12 @@
         * @param field_name {type} string
         * @param win {type} window Object
          */
-        function readURL(input, field_name, win) {
+        function readURL (input, field_name, win) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-
                 reader.onload = function (e) {
                     win.document.getElementById(field_name).value = e.target.result;
-                }
-
+                };
                 reader.readAsDataURL(input.files[0]);
             }
         }
@@ -216,16 +215,15 @@
         /*
         * This Function expand the browser file to insert an image
          */
-        function myFileBrowser (field_name, url, type, win)
-        {
-            var elemId = "img";
+        function myFileBrowser (field_name, url, type, win) {
+            var elemId = 'img';
             var elem = win.document.getElementById(elemId);
-            if(elem && document.createEvent) {
-                var evt = document.createEvent("MouseEvents");
-                evt.initEvent("click", true, false);
+            if (elem && document.createEvent) {
+                var evt = document.createEvent('MouseEvents');
+                evt.initEvent('click', true, false);
                 elem.dispatchEvent(evt);
             }
-            $("#" + elemId).change(function (){
+            $('#' + elemId).change(function () {
                 readURL(this, field_name, win);
             });
             win.document.getElementById(field_name).value = 'Without file';
@@ -279,24 +277,10 @@
      * @param {type} index
      * @returns {undefined}
      */
-            function deleteItem (index) {
-                $scope.elementList.splice(index, 1);
-            }
-        
-    /*
-     * This function is used to create a gridster img element, in which the image source is used
-     * as background.
-     */
-
-        /*
-         * This function is used to delete a gridster element when trash icon is clicked
-         * @param {type} index
-         * @returns {undefined}
-         */
         function deleteItem (index) {
             $scope.elementList.splice(index, 1);
         }
-
+        
         /*
          * This function is used to create a gridster img element, in which the image source is used
          * as background.

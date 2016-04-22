@@ -31,23 +31,23 @@
       </ul>
     </div>
     <div id="templateGeneratorBody" gridster="gridsterOpts" class="col-xs-11">
-<<<<<<< HEAD
-=======
       <input id="img" type="file" style="display: none;"/>
->>>>>>> feature-tinymce-implementation
+      <div class="tinymceWidget">
+        <h1>You can edit me</h1>
+      </div>
       <ul>
-        <li gridster-item="element" ng-repeat="element in elementList" ng-switch="ng-switch" on="element.type" class="widgetContainer"><span ng-click="deleteItem($index)" class="fa fa-trash trashIcon"></span><span ng-mousedown="gridsterOpts.draggable.enabled = true" ng-mouseup="gridsterOpts.draggable.enabled = false" class="fa fa-arrows fa-2x arrowIcon"></span>
-          <h1 ng-if="element.type === &quot;h1&quot;" class="widgetContent">Big title</h1>
-          <h2 ng-if="element.type === &quot;h2&quot;" class="widgetContent">Middle title</h2>
-          <h3 ng-if="element.type === &quot;h3&quot;" class="widgetContent">Small title</h3>
-          <p ng-if="element.type === &quot;p&quot;" class="widgetContent">Paragraph</p><img ng-if="element.type === &quot;img&quot;" style="background-image: url({{element.src}});" class="widgetContent imageOnWidget"/><a ng-if="element.type === &quot;a&quot;" ng-href="{{element.href}}" class="widgetContent">{{element.text}}</a>
+        <li gridster-item="element" ng-repeat="element in elementList" ng-switch="ng-switch" on="element.type" class="widgetContainer">
+          <div class="tinymceWidget"><span ng-click="deleteItem($index)" class="fa fa-trash trashIcon"></span><span ng-mousedown="gridsterOpts.draggable.enabled = true" ng-mouseup="gridsterOpts.draggable.enabled = false" class="fa fa-arrows fa-2x arrowIcon"></span>
+            <h1 ng-if="element.type === &quot;h1&quot;" class="widgetContent">Big title</h1>
+            <h2 ng-if="element.type === &quot;h2&quot;" class="widgetContent">Middle title</h2>
+            <h3 ng-if="element.type === &quot;h3&quot;" class="widgetContent">Small title</h3>
+            <p ng-if="element.type === &quot;p&quot;" class="widgetContent">Paragraph</p><img ng-if="element.type === &quot;img&quot;" style="background-image: url({{element.src}});" class="widgetContent imageOnWidget"/><a ng-if="element.type === &quot;a&quot;" ng-href="{{element.href}}" class="widgetContent">{{element.text}}</a><img ng-if="element.type === &quot;img&quot;" style="background-image: url({{element.src}});" class="widgetContent imageOnWidget"/><a ng-if="element.type === &quot;a&quot;" ng-href="{{element.href}}" class="widgetContent">{{element.text}}</a>
+          </div>
         </li>
       </ul>
     </div>
   </div>
 </div>
-<<<<<<< HEAD
-=======
 <!-- Modal window for save a template-->
 <div id="saveTemplate" class="modal fade">
   <div class="modal-dialog modal-lg">
@@ -72,7 +72,6 @@
     </div>
   </div>
 </div>
->>>>>>> feature-tinymce-implementation
 <!-- Modal window for asking for a link-->
 <div id="askForLink" class="modal fade">
   <div class="modal-dialog">
@@ -115,6 +114,7 @@
         <div ng-file-reader="ng-file-reader" on-readed="onReaded(event, file)" read-method="readMethod" multiple="multiple"></div>
       </div>
       <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
         <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
       </div>
     </div>

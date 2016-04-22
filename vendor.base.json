@@ -13,6 +13,7 @@
   "bower_components/angular-ui-tinymce/src/tinymce.js",
   "bower_components/tinymce/plugins/image/plugin.js",
   "bower_components/tinymce/plugins/imagetools/plugin.js",
+  "bower_components/tinymce/plugins/colorpicker/plugin.js",
   "bower_components/tinymce/plugins/autolink/plugin.js",
   "bower_components/tinymce/plugins/link/plugin.js",
   "bower_components/tinymce/plugins/textcolor/plugin.js",
