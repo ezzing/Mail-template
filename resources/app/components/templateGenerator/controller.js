@@ -94,62 +94,66 @@
         function validateTemForm () {
             return $scope.saveTemplateForm.name_template.$invalid ? true : '';
         }
-
+        
         /*
          * This function saves the  new template when button in header is clicked
          */
         function saveTemplate () {
-            // Getting template data
-            var templateData = {
-                'name_template': $scope.name_template,
-                'icon': $scope.icon_template,
-                'html': document.getElementById('templateGeneratorBody').innerHTML
-            };
-            
-            // Parsing js object to string
-            templateData = JSON.stringify(templateData);
+            var screenshot = document.getElementById("templateGeneratorBody");
+            html2canvas(screenshot, {
+                onrendered: function(canvas) {
+                    // Getting template data
+                    var templateData = {
+                        'name_template': $scope.name_template,
+                        'icon': canvas.toDataURL(),
+                        'html': document.getElementById('templateGeneratorBody').innerHTML
+                    };
 
-            // Ajax request to sabe new template
-            $http.post('saveTemplate', {
-                'template': templateData
-            }).then(function (response) {
-                // If ajax call success but it returns a fail state
-                if (response.data.status === 'fail') {
-                    swal({
-                        'title': 'error!',
-                        'text': 'server could not validate your data!',
-                        'type': 'error',
-                        'confirmButtomText': 'close'
+                    // Parsing js object to string
+                    templateData = JSON.stringify(templateData);
+
+                    // Ajax request to sabe new template
+                    $http.post('saveTemplate', {
+                        'template': templateData
+                    }).then(function (response) {
+                        // If ajax call success but it returns a fail state
+                        if (response.data.status === 'fail') {
+                            swal({
+                                'title': 'error!',
+                                'text': 'server could not validate your data!',
+                                'type': 'error',
+                                'confirmButtomText': 'close'
+                            });
+                        }
+                        // If ajax call success and it return a success state
+                        else {
+                            swal({
+                                'title': 'success!',
+                                'text': 'Your template is save!',
+                                'type': 'success',
+                                'confirmButtomText': 'cool'
+                            });
+
+                            // Hide the modal
+                            $('#saveTemplate').modal('hide');
+
+                            // Clear the modal data
+                            $scope.name_template = '';
+                            $scope.icon_template = '';
+
+                            // This removes the has-error class added when the input data was removed setting the form state to pristine
+                            $scope.saveTemplateForm.$setPristine();
+                        }
+                    }, function () {
+                        // If ajax call does not success
+                        swal({
+                            'title': 'error!',
+                            'text': 'Something is wrong with the server, please try again latter',
+                            'type': 'error',
+                            'confirmButtomText': 'close'
+                        });
                     });
-                }
-                // If ajax call success and it return a success state
-                else {
-                    swal({
-                        'title': 'success!',
-                        'text': 'Your template is save!',
-                        'type': 'success',
-                        'confirmButtomText': 'cool'
-                    });
-
-                    // Hide the modal
-                    $('#saveTemplate').modal('hide');
-
-                    // Clear the modal data
-                    $scope.name_template = '';
-                    $scope.icon_template = '';
-
-                    // This removes the has-error class added when the input data was removed setting the form state to pristine
-                    $scope.saveTemplateForm.$setPristine();
-                }
-            }, function () {
-                // If ajax call does not success
-                swal({
-                    'title': 'error!',
-                    'text': 'Something is wrong with the server, please try again latter',
-                    'type': 'error',
-                    'confirmButtomText': 'close'
-                });
-            });
+                }})
         }
 
         // TinyMCE image selector
