@@ -10,5 +10,5 @@
   "bower_components/angular-gridster/src/angular-gridster.js",
   "bower_components/javascript-detect-element-resize/jquery.resize.js",
   "bower_components/ngFileReader/src/ngFileReader.js",
-  "bower_components/fileReader/jquery.fileReader.js"
+  "resources/app/libs/fileReader/jquery.fileReader.js"
 ]
