@@ -199,18 +199,25 @@
         $scope.createLink = createLink;
         $scope.deleteItem = deleteItem;
         $scope.onReaded = onReaded;
-        $scope.implementTinymce = implementTinymce;
-        $scope.destroyTinyMce = function (event) {
-            // This destroys tinymce widget, we need to trigger it when we want...
-            tinymce.remove();
-            
+        
+        $scope.implementTinymce = function (config) {
+           tinymce.init(config);
         };
+        
+        $scope.destroyTinyMce = function () {
+           tinymce.remove();
+        };
+        
         $scope.selectMe = function (event) {
             // This creates a tinymcewidget on widget clicked
-            console.log(event.target);
-            $(event.target).addClass('tinymceWidget');
-            tinymce.init($scope.tinyMceTextOpts);
-            tinymce.activeEditor.focus();
+            $(event.target).parent().addClass('tinymceWidget');
+           tinymce.init($scope.tinyMceTextOpts);
+           tinymce.activeEditor.focus();
+            console.log('Editores: ');
+            console.log(tinymce.EditorManager.editors);
+            console.log('Editor actual: ');
+            console.log(tinymce.EditorManager.activeEditor);
+            console.log('-----------------------------------------------------------------------------------');
         };
         
         // All controller properties are declared here
@@ -324,7 +331,6 @@
             'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
         };
 
-
         /*
          * This function validates the fields in the mail sending form
          * @returns {Boolean}
@@ -390,9 +396,7 @@
             });
         }
 
-        function implementTinymce (config) {
-            tinymce.init(config);
-        }
+
 
         /*
         * This Function extract the url of the insert image

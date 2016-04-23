@@ -69,6 +69,10 @@
   animation-fill-mode: forwards;
   color: grey;
 }
+#templateGenerator #templateGeneratorBody .tinymceWidget {
+  height: 100%;
+  overflow: hidden;
+}
 #templateGenerator .gridster-item-resizable-handler, #templateGenerator .handle-se {
   border-color: transparent transparent black;
 }
