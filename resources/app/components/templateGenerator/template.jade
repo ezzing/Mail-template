@@ -26,10 +26,10 @@
         ul
             li.widgetContainer(gridster-item='element' ng-repeat='element in elementList' ng-switch on='element.type')
                 span.fa.fa-trash.trashIcon(ng-click='deleteItem($index)')
-                span.fa.fa-arrows.fa-2x.arrowIcon(ng-mousedown='gridsterOpts.draggable.enabled = true' ng-mouseup='gridsterOpts.draggable.enabled = false')
-                div(ng-dblclick='selectMe($event)')
-                    h1.widgetContent(ng-if='element.type === "h1" ' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') Big title
-                    h2.widgetContent(ng-if='element.type === "h2"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') Middle title
+                span.fa.fa-arrows.fa-2x.arrowIcon(ng-mousedown='gridsterOpts.draggable.enabled = true' ng-mouseup='gridsterOpts.draggable.enabled = false' ng-mouseleave='gridsterOpts.draggable.enabled = false')
+                div.test(ng-click='selectMe($event)')
+                    h1.widgetContent(ng-if='element.type === "h1" ') Big title
+                    h2.widgetContent(ng-if='element.type === "h2"') Middle title
                     h3.widgetContent(ng-if='element.type === "h3"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') Small title
                     p.widgetContent(ng-if='element.type === "p"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') Paragraph
                 img.widgetContent.imageOnWidget(ng-if='element.type === "img"'  style='background-image: url({{element.src}});') 

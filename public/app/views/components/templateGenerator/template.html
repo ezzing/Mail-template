@@ -33,10 +33,10 @@
     <div id="templateGeneratorBody" gridster="gridsterOpts" class="col-xs-11">
       <input id="img" type="file" style="display: none;"/>
       <ul>
-        <li gridster-item="element" ng-repeat="element in elementList" ng-switch="ng-switch" on="element.type" class="widgetContainer"><span ng-click="deleteItem($index)" class="fa fa-trash trashIcon"></span><span ng-mousedown="gridsterOpts.draggable.enabled = true" ng-mouseup="gridsterOpts.draggable.enabled = false" class="fa fa-arrows fa-2x arrowIcon"></span>
-          <div ng-dblclick="selectMe($event)">
-            <h1 ng-if="element.type === &quot;h1&quot; " ng-init="implementTinymce(tinyMceTextOpts)" ng-blur="destroyTinyMce()" class="widgetContent">Big title</h1>
-            <h2 ng-if="element.type === &quot;h2&quot;" ng-init="implementTinymce(tinyMceTextOpts)" ng-blur="destroyTinyMce()" class="widgetContent">Middle title</h2>
+        <li gridster-item="element" ng-repeat="element in elementList" ng-switch="ng-switch" on="element.type" class="widgetContainer"><span ng-click="deleteItem($index)" class="fa fa-trash trashIcon"></span><span ng-mousedown="gridsterOpts.draggable.enabled = true" ng-mouseup="gridsterOpts.draggable.enabled = false" ng-mouseleave="gridsterOpts.draggable.enabled = false" class="fa fa-arrows fa-2x arrowIcon"></span>
+          <div ng-click="selectMe($event)" class="test">
+            <h1 ng-if="element.type === &quot;h1&quot; " class="widgetContent">Big title</h1>
+            <h2 ng-if="element.type === &quot;h2&quot;" class="widgetContent">Middle title</h2>
             <h3 ng-if="element.type === &quot;h3&quot;" ng-init="implementTinymce(tinyMceTextOpts)" ng-blur="destroyTinyMce()" class="widgetContent">Small title</h3>
             <p ng-if="element.type === &quot;p&quot;" ng-init="implementTinymce(tinyMceTextOpts)" ng-blur="destroyTinyMce()" class="widgetContent">Paragraph</p>
           </div><img ng-if="element.type === &quot;img&quot;" style="background-image: url({{element.src}});" class="widgetContent imageOnWidget"/><a ng-if="element.type === &quot;a&quot;" ng-href="{{element.href}}" class="widgetContent">{{element.text}}</a>

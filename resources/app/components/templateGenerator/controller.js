@@ -14,25 +14,16 @@
         $scope.createLink = createLink;
         $scope.deleteItem = deleteItem;
         $scope.onReaded = onReaded;
-        
-        $scope.implementTinymce = function (config) {
-           tinymce.init(config);
-        };
-        
-        $scope.destroyTinyMce = function () {
-           tinymce.remove();
-        };
-        
+
+        // Esto se realiza cuando se hace doble click sobre un elemento creado
         $scope.selectMe = function (event) {
-            // This creates a tinymcewidget on widget clicked
-            $(event.target).parent().addClass('tinymceWidget');
-           tinymce.init($scope.tinyMceTextOpts);
-           tinymce.activeEditor.focus();
-            console.log('Editores: ');
-            console.log(tinymce.EditorManager.editors);
-            console.log('Editor actual: ');
-            console.log(tinymce.EditorManager.activeEditor);
-            console.log('-----------------------------------------------------------------------------------');
+            if (!$(event.target).parent('.test').hasClass('tinymceWidget')) {
+                // This creates a tinymcewidget on widget clicked
+                $(event.target).parent('.test').addClass('tinymceWidget');
+               tinymce.init($scope.tinyMceTextOpts);
+               tinymce.activeEditor.focus();
+            }
+
         };
         
         // All controller properties are declared here
@@ -107,6 +98,9 @@
         };
         $scope.tinyMceTextOpts = {
             'selector': '.tinymceWidget',
+            'force_br_newlines' : true,
+            force_p_newlines : false,
+            forced_root_block : '',            
             'inline': true,
             'resize': true,
             'plugins': [
