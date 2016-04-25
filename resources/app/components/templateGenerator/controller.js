@@ -2,9 +2,9 @@
 
     'use strict';
     angular.module('mailTemplate').controller('templateGeneratorCtrl', templateGeneratorCtrl);
-    templateGeneratorCtrl.$inject = ['$scope', '$http'];
+    templateGeneratorCtrl.$inject = ['$scope', '$http', '$window'];
     
-    function templateGeneratorCtrl ($scope, $http) {
+    function templateGeneratorCtrl ($scope, $http, $window) {
         
         // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
@@ -14,17 +14,7 @@
         $scope.createLink = createLink;
         $scope.deleteItem = deleteItem;
         $scope.onReaded = onReaded;
-
-        // Esto se realiza cuando se hace doble click sobre un elemento creado
-        $scope.selectMe = function (event) {
-            if (!$(event.target).parent('.test').hasClass('tinymceWidget')) {
-                // This creates a tinymcewidget on widget clicked
-                $(event.target).parent('.test').addClass('tinymceWidget');
-               tinymce.init($scope.tinyMceTextOpts);
-               tinymce.activeEditor.focus();
-            }
-
-        };
+        $scope.openTinymce = openTinymce;
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -99,8 +89,8 @@
         $scope.tinyMceTextOpts = {
             'selector': '.tinymceWidget',
             'force_br_newlines' : true,
-            force_p_newlines : false,
-            forced_root_block : '',            
+            'force_p_newlines ': false,
+            'forced_root_block' : '',
             'inline': true,
             'resize': true,
             'plugins': [
@@ -205,8 +195,6 @@
             });
         }
 
-
-
         /*
         * This Function extract the url of the insert image
         * @param input {type} HTML Element
@@ -306,6 +294,25 @@
                 'sizeY': 1
             });
             $('#askForImg').modal('hide');
+        }
+        /*
+         *  This function opens tinymce menu wuen a gridster widget is clicked
+         */
+        function openTinymce (event) {
+            if (!$(event.target).parent('.tinymceContainer').hasClass('tinymceWidget')) {
+                // This creates a tinymcewidget on widget clicked
+                $(event.target).parent('.tinymceContainer').addClass('tinymceWidget');
+                tinymce.init($scope.tinyMceTextOpts);
+                tinymce.activeEditor.focus();
+
+            }
+            /*
+                var selection = $window.getSelection();
+                var range = document.createRange();
+                range.selectNodeContents(event.target);
+                console.log(selection);
+                selection.addRange(range);
+                */
         }
     }
 })();
