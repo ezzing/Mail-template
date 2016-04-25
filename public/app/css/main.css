@@ -51,6 +51,8 @@
   left: 45%;
   top: 45%;
   opacity: 0;
+}
+#templateGenerator #templateGeneratorBody .arrowIcon:hover {
   animation-name: makeArrowVisible;
   animation-duration: 1s;
 }
