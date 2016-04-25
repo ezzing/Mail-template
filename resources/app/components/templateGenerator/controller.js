@@ -302,20 +302,22 @@
         }
         /*
          *  This function opens tinymce menu wuen a gridster widget is clicked
+         *   It also selects default text to change it
          */
         function openTinymce (event) {
+            var selection = $window.getSelection();
+            var range = document.createRange();
+            var parent = $(event.target).parent();
+            
             if (!$(event.target).parent('.tinymceContainer').hasClass('tinymceWidget')) {
                 // This creates a tinymcewidget on widget clicked
                 $(event.target).parent('.tinymceContainer').addClass('tinymceWidget');
                 tinymce.init($scope.tinyMceTextOpts);
                 tinymce.activeEditor.focus();
-
+                range.selectNodeContents(parent.children().get(0));
+                selection.removeAllRanges();
+                selection.addRange(range);
             }
-            var selection = $window.getSelection();
-            var range = document.createRange();
-            range.selectNodeContents(event.target);
-            console.log(event.target);
-            selection.addRange(range);
         }
     }
 })();
