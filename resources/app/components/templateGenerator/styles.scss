@@ -53,6 +53,7 @@
            position: absolute;
           right: 0px;
            cursor: pointer;
+           z-index: 10;
        }
        
        .arrowIcon {           
@@ -62,12 +63,6 @@
            left: 45%;
            top: 45%;
            opacity: 0;
-
-       }
-       
-       .arrowIcon:hover {
-           animation-name: makeArrowVisible;
-           animation-duration: 1s;
        }
        
        .widgetContent {

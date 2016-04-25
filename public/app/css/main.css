@@ -43,6 +43,7 @@
   position: absolute;
   right: 0px;
   cursor: pointer;
+  z-index: 10;
 }
 #templateGenerator #templateGeneratorBody .arrowIcon {
   z-index: 10;
@@ -51,10 +52,6 @@
   left: 45%;
   top: 45%;
   opacity: 0;
-}
-#templateGenerator #templateGeneratorBody .arrowIcon:hover {
-  animation-name: makeArrowVisible;
-  animation-duration: 1s;
 }
 #templateGenerator #templateGeneratorBody .widgetContent {
   margin-top: 20px;

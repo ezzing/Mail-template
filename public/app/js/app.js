@@ -273,9 +273,10 @@
         };
         $scope.tinyMceTextOpts = {
             'selector': '.tinymceWidget',
-            'force_br_newlines' : true,
+            'font_formats': 'Andale Mono=andale mono, monospace;Arial=arial,helvetica,sans-serif;Courier New=courier new,courier;Times New Roman=times new roman,times;',
+            'force_br_newlines': true,
             'force_p_newlines ': false,
-            'forced_root_block' : '',
+            'forced_root_block': '',
             'inline': true,
             'resize': true,
             'plugins': [
@@ -382,7 +383,7 @@
                             'confirmButtomText': 'close'
                         });
                     });
-                }})
+                }});
         }
         /*
         * This Function extract the url of the insert image
@@ -495,13 +496,11 @@
                 tinymce.activeEditor.focus();
 
             }
-            /*
-                var selection = $window.getSelection();
-                var range = document.createRange();
-                range.selectNodeContents(event.target);
-                console.log(selection);
-                selection.addRange(range);
-                */
+            var selection = $window.getSelection();
+            var range = document.createRange();
+            range.selectNodeContents(event.target);
+            console.log(event.target);
+            selection.addRange(range);
         }
     }
 })();
