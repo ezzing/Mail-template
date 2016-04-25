@@ -284,6 +284,7 @@
          * This function saves the  new template when button in header is clicked
          */
         function saveTemplate () {
+            // Take a screenshot form the template for the icon
             var screenshot = document.getElementById("templateGeneratorBody");
             html2canvas(screenshot, {
                 onrendered: function(canvas) {
@@ -380,6 +381,10 @@
                     }
                 });
             },
+            font_formats :  "Andale Mono=andale mono, monospace;"+
+                            "Arial=arial,helvetica,sans-serif;"+
+                            "Courier New=courier new,courier;"+
+                            "Times New Roman=times new roman,times;",
             'file_browser_callback': myFileBrowser,
             'fontsize_formats': '8pt 10pt 12pt 14pt 18pt 24pt 36pt 42pt 72pt',
             'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
