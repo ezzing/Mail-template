@@ -61,6 +61,7 @@
   cursor: pointer;
 }
 #templateGenerator #templateGeneratorBody .arrowIcon {
+  z-index: 10;
   position: absolute;
   cursor: pointer;
   left: 45%;
@@ -84,6 +85,11 @@
   animation-duration: 1s;
   animation-fill-mode: forwards;
   color: grey;
+}
+#templateGenerator #templateGeneratorBody .tinymceWidget {
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
 }
 #templateGenerator .gridster-item-resizable-handler, #templateGenerator .handle-se {
   border-color: transparent transparent black;

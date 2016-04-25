@@ -187,9 +187,9 @@
 
     'use strict';
     angular.module('mailTemplate').controller('templateGeneratorCtrl', templateGeneratorCtrl);
-    templateGeneratorCtrl.$inject = ['$scope', '$http'];
+    templateGeneratorCtrl.$inject = ['$scope', '$http', '$window'];
     
-    function templateGeneratorCtrl ($scope, $http) {
+    function templateGeneratorCtrl ($scope, $http, $window) {
         
         // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
@@ -199,6 +199,7 @@
         $scope.createLink = createLink;
         $scope.deleteItem = deleteItem;
         $scope.onReaded = onReaded;
+        $scope.openTinymce = openTinymce;
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -270,7 +271,49 @@
                 // 'stop': function (event, $element, widget) {}
             }
         };
-
+        $scope.tinyMceTextOpts = {
+            'selector': '.tinymceWidget',
+            'force_br_newlines' : true,
+            'force_p_newlines ': false,
+            'forced_root_block' : '',
+            'inline': true,
+            'resize': true,
+            'plugins': [
+                'link autolink image',
+                'textcolor imagetools',
+                'colorpicker'
+            ],
+            'menubar': false,
+            'toolbar1': 'fontsizeselect fontselect | alignleft aligncenter alignright alignjustify | subscript superscript ',
+            'toolbar2': 'undo redo | bold italic underline forecolor backcolor | mybutton | image  link unlink',
+            'setup': function (editor) {
+                editor.addButton('mybutton', {
+                    'text': 'Variable',
+                    'icon': false,
+                    'onclick': function () {
+                        editor.insertContent('<span class="variables" style="color: red; background: yellow; font-weight: bold">' +
+                            '<span class="uneditable" contenteditable="false">{{</span>Variable<span class="uneditable" contenteditable="false">}}' +
+                            '</span></span>');
+                    }
+                });
+            },
+            'file_browser_callback': myFileBrowser,
+            'fontsize_formats': '8pt 10pt 12pt 14pt 18pt 24pt 36pt 42pt 72pt',
+            'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
+        };
+        $scope.tinyMceImgOpts = {
+            'selector': '.imageExample',
+            'inline': true,
+            'resize': true,
+            'plugins': [
+                'image',
+                'imagetools'
+            ],
+            'menubar': false,
+            'toolbar': 'undo redo | image | alignleft aligncenter alignright',
+            'file_browser_callback': myFileBrowser,
+            'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
+        };
 
         /*
          * This function validates the fields in the mail sending form
@@ -341,55 +384,6 @@
                     });
                 }})
         }
-
-        // TinyMCE image selector
-        tinymce.init({
-            'selector': '.imageExample',
-            'inline': true,
-            'resize': true,
-            'plugins': [
-                'image',
-                'imagetools'
-            ],
-            'menubar': false,
-            'toolbar': 'undo redo | image | alignleft aligncenter alignright',
-            'file_browser_callback': myFileBrowser,
-            'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
-        });
-
-        //TinyMCE  text selector
-        tinymce.init({
-            'selector': '.tinymceWidget',
-            'inline': true,
-            'resize': true,
-            'plugins': [
-                'link autolink image',
-                'textcolor imagetools',
-                'colorpicker'
-            ],
-            'menubar': false,
-            'toolbar1': 'fontsizeselect fontselect | alignleft aligncenter alignright alignjustify | subscript superscript ',
-            'toolbar2': 'undo redo | bold italic underline forecolor backcolor | mybutton | image  link unlink',
-            'setup': function (editor) {
-                editor.addButton('mybutton', {
-                    'text': 'Variable',
-                    'icon': false,
-                    'onclick': function () {
-                        editor.insertContent('<span class="variables" style="color: red; background: yellow; font-weight: bold">' +
-                            '<span class="uneditable" contenteditable="false">{{</span>Variable<span class="uneditable" contenteditable="false">}}' +
-                            '</span></span>');
-                    }
-                });
-            },
-            font_formats :  "Andale Mono=andale mono, monospace;"+
-                            "Arial=arial,helvetica,sans-serif;"+
-                            "Courier New=courier new,courier;"+
-                            "Times New Roman=times new roman,times;",
-            'file_browser_callback': myFileBrowser,
-            'fontsize_formats': '8pt 10pt 12pt 14pt 18pt 24pt 36pt 42pt 72pt',
-            'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
-        });
-
         /*
         * This Function extract the url of the insert image
         * @param input {type} HTML Element
@@ -489,6 +483,25 @@
                 'sizeY': 1
             });
             $('#askForImg').modal('hide');
+        }
+        /*
+         *  This function opens tinymce menu wuen a gridster widget is clicked
+         */
+        function openTinymce (event) {
+            if (!$(event.target).parent('.tinymceContainer').hasClass('tinymceWidget')) {
+                // This creates a tinymcewidget on widget clicked
+                $(event.target).parent('.tinymceContainer').addClass('tinymceWidget');
+                tinymce.init($scope.tinyMceTextOpts);
+                tinymce.activeEditor.focus();
+
+            }
+            /*
+                var selection = $window.getSelection();
+                var range = document.createRange();
+                range.selectNodeContents(event.target);
+                console.log(selection);
+                selection.addRange(range);
+                */
         }
     }
 })();
