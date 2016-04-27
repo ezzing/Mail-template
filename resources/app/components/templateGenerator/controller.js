@@ -26,7 +26,7 @@
             'swapping': true,
             'width': 'auto',
             'colWidth': 'auto',
-            'rowHeight': 100,
+            'rowHeight': 50,
             'margins': [10, 10],
             'outerMargin': true,
             'isMobile': false,
@@ -35,7 +35,7 @@
             'minColumns': 1,
             'minRows': 1,
             'maxRows': 100,
-            'defaultSizeX': 1,
+            'defaultSizeX': 4,
             'defaultSizeY': 1,
             'minSizeX': 1,
             'maxSizeX': null,
@@ -144,7 +144,7 @@
          */
         function saveTemplate () {
             // Take a screenshot form the template for the icon
-            var screenshot = document.getElementById("templateGeneratorBody");
+            var screenshot = document.getElementById('templateGeneratorBody');
             html2canvas(screenshot, {
                 onrendered: function(canvas) {
                     // Getting template data
@@ -240,10 +240,13 @@
          * @returns {undefined}
          */
         function createTextElement (element) {
+            
             $scope.elementList.push({
                 'type': element,
-                'sizeX': 2,
-                'sizeY': 1
+                'sizeX': 4,
+                'sizeY': 1,
+                'gridsterId': $scope.elementList.length,
+                'innerBrNodes': 1
             });
         }
         /*
