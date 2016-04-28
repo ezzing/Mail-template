@@ -11,6 +11,7 @@
         // Loading templates and saving in $scope.templateList in order to use it on div#emailGeneratorToolbar
         $http.get('/getCreatedTemplates').then(function (response) {
             $scope.templateList = response.data.templates;
+            console.log($scope.templateList);
         });
 
         $scope.loadTemplate = loadTemplate;
@@ -22,6 +23,7 @@
         $scope.changeVariables = changeVariables;
         
         $scope.closeDropdown = closeDropdown;
+        $scope.saveOnEnter = saveOnEnter;
         
         /*
          * This function loads clicked template on #actualTemplate container, checks for variables on it, and loads them on dropdown menu
@@ -73,7 +75,6 @@
          * This function sends the email when button in header is clicked
          */
         function sendMail () {
-
             // Getting mail data
             var mailData = {
                 'email': $scope.email,
@@ -111,7 +112,7 @@
 
                     // Hide the modal
                     $('#sendMail').modal('hide');
-
+                    
                     // Clear the modal data
                     $scope.name = '';
                     $scope.email = '';
@@ -159,6 +160,13 @@
         function closeDropdown (event) {
             (event.keyCode === 13) ? $('div#variables').removeClass('open') : '';
         }
+        // This functions saves a new template when enter is pressed on modal window, and form is validated
+        function saveOnEnter (event) {
+            if (event.keyCode === 13 &&
+                 $('#sendMail .btn-success').is(':enabled')) {       
+                $scope.sendMail();
+            }
+        }        
     }
 })();
 

@@ -15,10 +15,10 @@
         $scope.deleteItem = deleteItem;
         $scope.onReaded = onReaded;
         $scope.openTinymce = openTinymce;
-        $scope.closeSaveModal = closeSaveModal;
         $scope.newTemplate = newTemplate;
         $scope.escribirVariable = escribirVariable;
         $scope.variableName= '';
+        $scope.saveOnEnter = saveOnEnter;
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -267,6 +267,9 @@
                                 'text': 'Your template is save!',
                                 'type': 'success',
                                 'confirmButtomText': 'cool'
+                            }, function() {
+                            // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
+                             $window.location.href = "http://mailtemplate.app:8000/#/mailGenerator";
                             });
                             // Hide the modal
                             $('#saveTemplate').modal('hide');
@@ -277,8 +280,6 @@
 
                             // This removes the has-error class added when the input data was removed setting the form state to pristine
                             $scope.saveTemplateForm.$setPristine();
-
-                            //window.location = '../#/mailGenerator';
 
                         }
                     }, function () {
@@ -414,14 +415,6 @@
                 selection.addRange(range);
             }
         }
-
-        /*
-         * This function save the template when hit enter
-         */
-        function closeSaveModal (event) {
-            (event.keyCode === 13) ? saveTemplate(): '';
-        }
-
         /*
          * This function restart the edition of a template
          */
@@ -429,13 +422,13 @@
             $("#templateGeneratorBody ul li").remove();
             $scope.elementList = [];
         }
-
-        /*
-         * This function restart the edition of a template
-         */
-        function setVariable () {
-            $scope.tempVariable = $scope.variableName;
-            $("#setVariables").modal('hide');
+        
+        // This functions saves a new template when enter is pressed on modal window, and form is validated
+        function saveOnEnter (event) {
+            if (event.keyCode === 13 &&
+                 $('#saveTemplate .btn-success').is(':enabled')) {
+                $scope.saveTemplate();
+            }
         }
     }
 })();

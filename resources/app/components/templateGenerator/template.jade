@@ -37,7 +37,7 @@
                 a.widgetContent(ng-if='element.type === "a"' ng-href="{{element.href}}") {{element.text}}
 
 // Modal window for save a template
-div#saveTemplate.modal.fade(ng-keydown='closeSaveModal($event)')
+div#saveTemplate.modal.fade(ng-keydown='saveOnEnter($event)')
     div.modal-dialog.modal-lg
         div.modal-content
             div.modal-header

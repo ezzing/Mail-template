@@ -4,7 +4,7 @@
       #emailGeneratorHeader.col-xs-12.rown
         .col-xs-1
         h3.col-xs-6.col-xs-offset-3 Mail Generator
-        button(type='button'  data-toggle='modal' data-target='#sendMail').btn.btn-success.col-xs-1.col-xs-offset-1 Send
+        button#sendButton(type='button'  data-toggle='modal' data-target='#sendMail' onfocus="$(this).blur();").btn.btn-success.col-xs-1.col-xs-offset-1 Send
     .row
       // Toolbar for template selector in tablet and desktop versions
       #emailGeneratorToolbar.col-lg-3.col-md-3.col-sm-3.col-xs-3
@@ -63,7 +63,7 @@
         #actualTemplate
                 
 // Modal window for sending an email
-div#sendMail.modal.fade
+div#sendMail.modal.fade(ng-keydown='saveOnEnter($event)')
     div.modal-dialog.modal-lg
         div.modal-content
             div.modal-header

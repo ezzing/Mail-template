@@ -31,6 +31,7 @@
         // Loading templates and saving in $scope.templateList in order to use it on div#emailGeneratorToolbar
         $http.get('/getCreatedTemplates').then(function (response) {
             $scope.templateList = response.data.templates;
+            console.log($scope.templateList);
         });
 
         $scope.loadTemplate = loadTemplate;
@@ -42,6 +43,7 @@
         $scope.changeVariables = changeVariables;
         
         $scope.closeDropdown = closeDropdown;
+        $scope.saveOnEnter = saveOnEnter;
         
         /*
          * This function loads clicked template on #actualTemplate container, checks for variables on it, and loads them on dropdown menu
@@ -93,7 +95,6 @@
          * This function sends the email when button in header is clicked
          */
         function sendMail () {
-
             // Getting mail data
             var mailData = {
                 'email': $scope.email,
@@ -131,7 +132,7 @@
 
                     // Hide the modal
                     $('#sendMail').modal('hide');
-
+                    
                     // Clear the modal data
                     $scope.name = '';
                     $scope.email = '';
@@ -179,6 +180,13 @@
         function closeDropdown (event) {
             (event.keyCode === 13) ? $('div#variables').removeClass('open') : '';
         }
+        // This functions saves a new template when enter is pressed on modal window, and form is validated
+        function saveOnEnter (event) {
+            if (event.keyCode === 13 &&
+                 $('#sendMail .btn-success').is(':enabled')) {       
+                $scope.sendMail();
+            }
+        }        
     }
 })();
 
@@ -200,10 +208,10 @@
         $scope.deleteItem = deleteItem;
         $scope.onReaded = onReaded;
         $scope.openTinymce = openTinymce;
-        $scope.closeSaveModal = closeSaveModal;
         $scope.newTemplate = newTemplate;
         $scope.escribirVariable = escribirVariable;
         $scope.variableName= '';
+        $scope.saveOnEnter = saveOnEnter;
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -452,6 +460,9 @@
                                 'text': 'Your template is save!',
                                 'type': 'success',
                                 'confirmButtomText': 'cool'
+                            }, function() {
+                            // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
+                             $window.location.href = "http://mailtemplate.app:8000/#/mailGenerator";
                             });
                             // Hide the modal
                             $('#saveTemplate').modal('hide');
@@ -462,8 +473,6 @@
 
                             // This removes the has-error class added when the input data was removed setting the form state to pristine
                             $scope.saveTemplateForm.$setPristine();
-
-                            //window.location = '../#/mailGenerator';
 
                         }
                     }, function () {
@@ -599,14 +608,6 @@
                 selection.addRange(range);
             }
         }
-
-        /*
-         * This function save the template when hit enter
-         */
-        function closeSaveModal (event) {
-            (event.keyCode === 13) ? saveTemplate(): '';
-        }
-
         /*
          * This function restart the edition of a template
          */
@@ -614,13 +615,13 @@
             $("#templateGeneratorBody ul li").remove();
             $scope.elementList = [];
         }
-
-        /*
-         * This function restart the edition of a template
-         */
-        function setVariable () {
-            $scope.tempVariable = $scope.variableName;
-            $("#setVariables").modal('hide');
+        
+        // This functions saves a new template when enter is pressed on modal window, and form is validated
+        function saveOnEnter (event) {
+            if (event.keyCode === 13 &&
+                 $('#saveTemplate .btn-success').is(':enabled')) {
+                $scope.saveTemplate();
+            }
         }
     }
 })();
