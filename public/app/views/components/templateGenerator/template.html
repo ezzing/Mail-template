@@ -119,7 +119,7 @@
   </div>
 </div>
 <!-- Modal window for a new variable-->
-<div id="setVariables" ng-keydown="closeVariableModal($event)" class="modal fade">
+<div id="setVariables" class="modal fade">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -128,16 +128,16 @@
       </div>
       <div class="modal-body"></div>
       <form name="setVariableForm" class="form-horizontal">
-        <div ng-class=" { 'has-error' : setVariableForm.variableName.$invalid &amp;&amp; setVariableForm.variableName.$dirty, 'has-success' : setVariableForm.variableName.$valid} " class="form-group has-feedback">
+        <div class="form-group">
           <label for="variableName" class="col-sm-2 control-label">Variable Name:</label>
           <div class="col-sm-8">
-            <input id="variableName" type="text" ng-model="variableName" name="variableName" placeholder="Name of the Variable" ng-pattern="/^[a-zA-ZáéíóúÁÉÍÓÚñÑ1-9][a-zA-ZáéíóúÁÉÍÓÚñÑ1-9 ]{3,50}$/" autofocus="autofocus" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : setVariableForm.variableName.$valid, 'glyphicon-remove' : setVariableForm.variableName.$invalid &amp;&amp; setVariableForm.variableName.$dirty}" class="glyphicon form-control-feedback"></span>
+            <input id="variableName" type="text" ng-model="variableName" name="variableName" placeholder="Name of the Variable" class="form-control"/>
           </div>
         </div>
       </form>
       <div class="modal-footer">
         <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
-        <button type="button" ng-click="setVariable()" ng-disabled="validateSetVariableForm()" class="btn btn-success">Set</button>
+        <button type="button" ng-click="escribirVariable()" class="btn btn-success">Set</button>
       </div>
     </div>
   </div>

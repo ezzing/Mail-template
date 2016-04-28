@@ -23,8 +23,8 @@
         $scope.openTinymce = openTinymce;
         $scope.closeSaveModal = closeSaveModal;
         $scope.newTemplate = newTemplate;
-        $scope.setVariable = setVariable;
-        $scope.TempVariable = "";
+        $scope.escribirVariable = escribirVariable;
+        $scope.variableName= 'example';
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -118,13 +118,6 @@
                     'icon': false,
                     'onclick': function () {
                         $("#setVariables").modal('show');
-                        do{
-                            console.log($("#setVariables").hasClass("modal fade ng-scope in"));
-                        }while ($("#setVariables").hasClass("modal fade ng-scope in"));
-                        console.log($("#setVariables").hasClass("modal fade ng-scope in"));
-                        var variable = $scope.tempVariable;
-                        editor.insertContent('<span class="variables" style="color: red; background: yellow; font-weight: bold" contenteditable="false">' +
-                                '{{' + variable + '}}</span>');
                     }
                 });
             },
@@ -132,6 +125,11 @@
             'fontsize_formats': '8pt 10pt 12pt 14pt 18pt 24pt 36pt 42pt 72pt',
             'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
         };
+        
+        function escribirVariable() {
+            console.log($scope.variableName);
+            tinymce.activeEditor.execCommand('mceInsertContent', false, '' + $scope.variableName + '');
+        }
         $scope.tinyMceImgOpts = {
             'selector': '.imageExample',
             'inline': true,
