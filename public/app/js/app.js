@@ -190,12 +190,6 @@
     templateGeneratorCtrl.$inject = ['$scope', '$http', '$window'];
     
     function templateGeneratorCtrl ($scope, $http, $window) {
-
-        $("h3").click(function () {
-            //document.getElementById("setVariables").setAttribute("style", " display: block; ");
-            //document.getElementById("setVariables").setAttribute("class", "modal fade ng-scope in");
-            console.log($("#setVariables").hasClass("modal fade ng-scope in"));
-        });
         
         // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
@@ -209,7 +203,7 @@
         $scope.closeSaveModal = closeSaveModal;
         $scope.newTemplate = newTemplate;
         $scope.escribirVariable = escribirVariable;
-        $scope.variableName= 'example';
+        $scope.variableName= '';
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -313,7 +307,9 @@
         
         function escribirVariable() {
             console.log($scope.variableName);
-            tinymce.activeEditor.execCommand('mceInsertContent', false, '' + $scope.variableName + '');
+            tinymce.activeEditor.execCommand('mceInsertContent', false, '<span class="variables" style="color: red; background: yellow; font-weight: bold" contenteditable="false">{{' + $scope.variableName + '}}</span>');
+            $("#setVariables").modal('hide');
+            $scope.variableName = '';
         }
         $scope.tinyMceImgOpts = {
             'selector': '.imageExample',
@@ -408,10 +404,6 @@
                     for (var j = 0; j < variables.length ; j++) {
                         variables[j].removeAttribute("data-mce-style");
                         variables[j].removeAttribute("style");
-                        var bloqueo = variables[j].getElementsByClassName("uneditable");
-                        variables[j].removeChild(bloqueo[0]);
-                        variables[j].removeChild(bloqueo[0]);
-                        variables[j].innerHTML = "{{" + variables[j].innerHTML + "}}";
                     }
                 }
             }
