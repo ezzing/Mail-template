@@ -15,6 +15,7 @@
         $scope.deleteItem = deleteItem;
         $scope.onReaded = onReaded;
         $scope.openTinymce = openTinymce;
+        $scope.saveOnEnter = saveOnEnter;
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -177,6 +178,9 @@
                                 'text': 'Your template is save!',
                                 'type': 'success',
                                 'confirmButtomText': 'cool'
+                            }, function() {
+                            // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
+                             $window.location.href = "http://mailtemplate.app:8000/#/mailGenerator";
                             });
 
                             // Hide the modal
@@ -188,6 +192,8 @@
 
                             // This removes the has-error class added when the input data was removed setting the form state to pristine
                             $scope.saveTemplateForm.$setPristine();
+                            
+
                         }
                     }, function () {
                         // If ajax call does not success
@@ -320,6 +326,14 @@
                 range.selectNodeContents(parent.children().get(0));
                 selection.removeAllRanges();
                 selection.addRange(range);
+            }
+        }
+        
+        // This functions saves a new template when enter is pressed on modal window, and form is validated
+        function saveOnEnter (event) {
+            if (event.keyCode === 13 &&
+                 $('#saveTemplate .btn-success').is(':enabled')) {
+                $scope.saveTemplate();
             }
         }
     }
