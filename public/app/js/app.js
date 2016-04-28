@@ -190,6 +190,19 @@
     templateGeneratorCtrl.$inject = ['$scope', '$http', '$window'];
     
     function templateGeneratorCtrl ($scope, $http, $window) {
+
+        $("h3").click(function () {
+            var img = document.getElementsByTagName("img")[0];
+            var canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth; // or 'width' if you want a special/scaled size
+            canvas.height = img.naturalHeight; // or 'height' if you want a special/scaled size
+
+            canvas.getContext('2d').drawImage(img, 0, 0);
+
+            //console.log(canvas.toDataURL());
+            img.setAttribute("src", canvas.toDataURL());
+            console.log(img.getAttribute("src"));
+        });
         
         // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
@@ -200,6 +213,8 @@
         $scope.deleteItem = deleteItem;
         $scope.onReaded = onReaded;
         $scope.openTinymce = openTinymce;
+        $scope.closeSaveModal = closeSaveModal;
+        $scope.newTemplate = newTemplate;
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -322,6 +337,85 @@
         function validateTemForm () {
             return $scope.saveTemplateForm.name_template.$invalid ? true : '';
         }
+
+        /*
+         * This function clean the HTML code to store it
+         * @returns {string}
+         */
+        function cleanHTML () {
+            // Extract the created template
+            var template = document.getElementById('templateGeneratorBody').getElementsByTagName("ul")[0];
+            var originalTemplate = document.getElementById('templateGeneratorBody').innerHTML;
+            // Extract the lis
+            var li = template.getElementsByTagName("li");
+            // If exists Li
+            if (li.length !== 0){
+                // clean all the lis
+                for (var i = 0; i < li.length ; i++){
+                    // Change the proporcion of the li to introduce in the database
+                    var styles = li[i].getAttribute("style");
+                    var start = styles.search("width");
+                    var sub = styles.substring(start, start + 14);
+                    var end = sub.search("px");
+                    var width = sub.substring(7 , end);
+                    width = width*959/1166;
+                    styles = styles.substring(0 , start) + "width: " + width + "px" + styles.substring(start + end + 2, styles.length) + " display: block; position: absolute;";
+                    li[i].setAttribute("style", styles);
+                    li[i].removeAttribute("gridster-item");
+                    li[i].removeAttribute("ng-repeat");
+                    li[i].removeAttribute("ng-switch");
+                    li[i].removeAttribute("on");
+                    li[i].removeAttribute("class");
+                    li[i].removeChild(li[i].firstChild);
+                    li[i].removeChild(li[i].firstChild);
+                    li[i].removeChild(li[i].lastChild);
+                    var div = li[i].getElementsByTagName("div")[0];
+                    div.removeAttribute("ng-click");
+                    div.setAttribute("class", "tinymceWidget");
+                    div.removeAttribute("contenteditable");
+                    div.removeAttribute("spellcheck");
+                    // if there are divs
+                    if (div.getElementsByClassName("widgetContent")[0]) {
+                        div.getElementsByClassName("widgetContent")[0].removeAttribute("ng-if");
+                    }
+                    // If there are a img
+                    if (document.getElementsByTagName("img")){
+                        var img = document.getElementsByTagName("img");
+                        console.log(img[0].getAttribute("class"));
+                        for (var z = 0; z < img.length; z++) {
+                            if (img[z].getAttribute("class") != "") {
+                                var canvas = document.createElement('canvas');
+                                canvas.width = img[z].naturalWidth; // or 'width' if you want a special/scaled size
+                                canvas.height = img[z].naturalHeight; // or 'height' if you want a special/scaled size
+                                img[z].removeAttribute("ng-if");
+                                canvas.getContext('2d').drawImage(img[z], 0, 0);
+                                img[z].setAttribute("src", canvas.toDataURL());
+                            }else {
+                                console.log(img[z]);
+                                img[z].removeAttribute("ng-if");
+                                img[z].setAttribute("style", img[z].getAttribute("style") + "background-size: cover; height: 100%; width: 100%;");
+                                img[z].removeAttribute("class");
+                                console.log(img[z]);
+                            }
+                        }
+                    }
+                    var variables = div.getElementsByClassName("variables");
+                    for (var j = 0; j < variables.length ; j++) {
+                        variables[j].removeAttribute("data-mce-style");
+                        variables[j].removeAttribute("style");
+                        var bloqueo = variables[j].getElementsByClassName("uneditable");
+                        console.log(bloqueo);
+                        variables[j].removeChild(bloqueo[0]);
+                        variables[j].removeChild(bloqueo[0]);
+                        console.log(variables[j].innerHTML);
+                        variables[j].innerHTML = "{{" + variables[j].innerHTML + "}}";
+                    }
+                }
+            }
+            template = "<ul style='top: 25px; position: absolute;'>" + template.innerHTML + "</ul>";
+            document.getElementById('templateGeneratorBody').innerHTML = originalTemplate;
+            return template;
+        }
         
         /*
          * This function saves the  new template when button in header is clicked
@@ -331,11 +425,13 @@
             var screenshot = document.getElementById("templateGeneratorBody");
             html2canvas(screenshot, {
                 onrendered: function(canvas) {
+                    // Getting the cleaning HTML
+                    var html = cleanHTML();
                     // Getting template data
                     var templateData = {
                         'name_template': $scope.name_template,
                         'icon': canvas.toDataURL(),
-                        'html': document.getElementById('templateGeneratorBody').innerHTML
+                        'html': html
                     };
 
                     // Parsing js object to string
@@ -362,7 +458,6 @@
                                 'type': 'success',
                                 'confirmButtomText': 'cool'
                             });
-
                             // Hide the modal
                             $('#saveTemplate').modal('hide');
 
@@ -372,6 +467,9 @@
 
                             // This removes the has-error class added when the input data was removed setting the form state to pristine
                             $scope.saveTemplateForm.$setPristine();
+
+                            //window.location = '../#/mailGenerator';
+
                         }
                     }, function () {
                         // If ajax call does not success
@@ -502,6 +600,21 @@
                 console.log(selection);
                 selection.addRange(range);
                 */
+        }
+
+        /*
+         * This function save the template when hit enter
+         */
+        function closeSaveModal (event) {
+            (event.keyCode === 13) ? saveTemplate(): '';
+        }
+
+        /*
+         * This function restart the edition of a template
+         */
+        function newTemplate () {
+            $("#templateGeneratorBody ul li").remove();
+            $scope.elementList = [];
         }
     }
 })();

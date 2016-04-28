@@ -1,3 +1,19 @@
+#templateGenerator {
+  @keyframes makeArrowVisible {
+    0% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+
+    100% {
+      opacity: 1;
+    }
+}
+
+}
 #templateGenerator #templateGeneratorHeader {
   border: 1px solid grey;
   min-height: 10vh;
@@ -6,12 +22,10 @@
 #templateGenerator #templateGeneratorHeader button {
   margin-top: 25px;
   white-space: nowrap;
+  margin-right: 5px;
 }
 #templateGenerator #templateGeneratorHeader ul li {
   display: inline-block;
-}
-#templateGenerator #templateGeneratorHeader h3 {
-  padding-left: 8%;
 }
 #templateGenerator #templateGeneratorToolbar {
   border: 2px solid grey;
@@ -82,17 +96,7 @@
 #templateGenerator .gridster-item-resizable-handler, #templateGenerator .handle-se {
   border-color: transparent transparent black;
 }
-@keyframes makeArrowVisible {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
+
 #emailGenerator .btn {
   white-space: normal !important;
   word-wrap: break-word;

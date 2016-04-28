@@ -3,12 +3,13 @@
 #templateGenerator {
 
     #templateGeneratorHeader {
-        border: 1px solid grey; 
+       border: 1px solid grey;
        min-height:  10vh;
        background-color: #e6e6e6;       
        button {
            margin-top: 25px;
-            white-space: nowrap;
+           white-space: nowrap;
+           margin-right: 5px;
        }
        ul {
            li {
@@ -16,7 +17,7 @@
   }
        }
        h3 {
-           padding-left:8%;
+
        }
     }
     

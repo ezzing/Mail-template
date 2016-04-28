@@ -63,8 +63,8 @@ class TemplateController extends Controller
         else {
             // If the html have any script tag, delete it
             $html = $template -> html;
-            if ($html.contains("<script>")){
-                $html = preg_replace('/((<script>){1}.*(<\/script>){1})/',"",$html);
+            if ($html.contains("&lt;script&gt;")){
+                $html = preg_replace('/((&lt;script&gt;){1}.*(&lt;\/script&gt;){1})/',"",$html);
             }
 
             // Save data at database
