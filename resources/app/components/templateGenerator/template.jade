@@ -92,3 +92,22 @@ div#askForImg.modal.fade
             div.modal-footer
                 button.btn.btn-warning(type='button' data-dismiss='modal') Close
                 button.btn.btn-warning(type='button' data-dismiss='modal') Close
+
+// Modal window for a new variable
+div#setVariables.modal.fade(ng-keydown='closeVariableModal($event)')
+    div.modal-dialog.modal-lg
+        div.modal-content
+            div.modal-header
+                button.close(type='button' data-dismiss='modal' aria-label='close')
+                    span(aria-hidden='true') &times;
+                h4.modal-title Set Variable
+            div.modal-body
+            form.form-horizontal(name='setVariableForm')
+                div.form-group.has-feedback(ng-class=" { 'has-error' : setVariableForm.variableName.$invalid && setVariableForm.variableName.$dirty, 'has-success' : setVariableForm.variableName.$valid} ")
+                    label.col-sm-2.control-label(for='variableName') Variable Name:
+                    div.col-sm-8
+                        input#variableName.form-control(type='text' ng-model='variableName' name='variableName'  placeholder='Name of the Variable' ng-pattern='/^[a-zA-ZáéíóúÁÉÍÓÚñÑ1-9][a-zA-ZáéíóúÁÉÍÓÚñÑ1-9 ]{3,50}$/' autofocus=true required)
+                        span.glyphicon.form-control-feedback(ng-class="{'glyphicon-ok' : setVariableForm.variableName.$valid, 'glyphicon-remove' : setVariableForm.variableName.$invalid && setVariableForm.variableName.$dirty}")
+            div.modal-footer
+                button.btn.btn-warning(type='button' data-dismiss='modal') Close
+                button.btn.btn-success(type='button' ng-click='setVariable()' ng-disabled='validateSetVariableForm()') Set

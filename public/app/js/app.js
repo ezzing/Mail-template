@@ -192,16 +192,9 @@
     function templateGeneratorCtrl ($scope, $http, $window) {
 
         $("h3").click(function () {
-            var img = document.getElementsByTagName("img")[0];
-            var canvas = document.createElement('canvas');
-            canvas.width = img.naturalWidth; // or 'width' if you want a special/scaled size
-            canvas.height = img.naturalHeight; // or 'height' if you want a special/scaled size
-
-            canvas.getContext('2d').drawImage(img, 0, 0);
-
-            //console.log(canvas.toDataURL());
-            img.setAttribute("src", canvas.toDataURL());
-            console.log(img.getAttribute("src"));
+            //document.getElementById("setVariables").setAttribute("style", " display: block; ");
+            //document.getElementById("setVariables").setAttribute("class", "modal fade ng-scope in");
+            console.log($("#setVariables").hasClass("modal fade ng-scope in"));
         });
         
         // All controller functions are declared here
@@ -215,6 +208,8 @@
         $scope.openTinymce = openTinymce;
         $scope.closeSaveModal = closeSaveModal;
         $scope.newTemplate = newTemplate;
+        $scope.setVariable = setVariable;
+        $scope.TempVariable = "";
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -307,9 +302,14 @@
                     'text': 'Variable',
                     'icon': false,
                     'onclick': function () {
-                        editor.insertContent('<span class="variables" style="color: red; background: yellow; font-weight: bold">' +
-                            '<span class="uneditable" contenteditable="false">{{</span>Variable<span class="uneditable" contenteditable="false">}}' +
-                            '</span></span>');
+                        $("#setVariables").modal('show');
+                        do{
+                            console.log($("#setVariables").hasClass("modal fade ng-scope in"));
+                        }while ($("#setVariables").hasClass("modal fade ng-scope in"));
+                        console.log($("#setVariables").hasClass("modal fade ng-scope in"));
+                        var variable = $scope.tempVariable;
+                        editor.insertContent('<span class="variables" style="color: red; background: yellow; font-weight: bold" contenteditable="false">' +
+                                '{{' + variable + '}}</span>');
                     }
                 });
             },
@@ -362,6 +362,14 @@
                     width = width*959/1166;
                     styles = styles.substring(0 , start) + "width: " + width + "px" + styles.substring(start + end + 2, styles.length) + " display: block; position: absolute;";
                     li[i].setAttribute("style", styles);
+                    styles = li[i].getAttribute("style");
+                    start = styles.search("left");
+                    sub = styles.substring(start, start + 13);
+                    end = sub.search("px");
+                    var left = sub.substring(6 , end);
+                    left = left*959/1166;
+                    styles = styles.substring(0 , start) + "left: " + left + "px" + styles.substring(start + end + 2, styles.length);
+                    li[i].setAttribute("style", styles);
                     li[i].removeAttribute("gridster-item");
                     li[i].removeAttribute("ng-repeat");
                     li[i].removeAttribute("ng-switch");
@@ -380,23 +388,21 @@
                         div.getElementsByClassName("widgetContent")[0].removeAttribute("ng-if");
                     }
                     // If there are a img
-                    if (document.getElementsByTagName("img")){
-                        var img = document.getElementsByTagName("img");
-                        console.log(img[0].getAttribute("class"));
+                    if (li[i].getElementsByTagName("img")) {
+                        var img = li[i].getElementsByTagName("img");
                         for (var z = 0; z < img.length; z++) {
-                            if (img[z].getAttribute("class") != "") {
+                            if (img[z].getAttribute("class") === null) {
                                 var canvas = document.createElement('canvas');
                                 canvas.width = img[z].naturalWidth; // or 'width' if you want a special/scaled size
                                 canvas.height = img[z].naturalHeight; // or 'height' if you want a special/scaled size
                                 img[z].removeAttribute("ng-if");
                                 canvas.getContext('2d').drawImage(img[z], 0, 0);
                                 img[z].setAttribute("src", canvas.toDataURL());
-                            }else {
-                                console.log(img[z]);
+                                li[i].setAttribute("style", li[i].getAttribute("style") + " overflow: hidden;");
+                            } else {
                                 img[z].removeAttribute("ng-if");
-                                img[z].setAttribute("style", img[z].getAttribute("style") + "background-size: cover; height: 100%; width: 100%;");
+                                img[z].setAttribute("style", img[z].getAttribute("style") + " background-size: cover; height: 100%; width: 100%;");
                                 img[z].removeAttribute("class");
-                                console.log(img[z]);
                             }
                         }
                     }
@@ -405,10 +411,8 @@
                         variables[j].removeAttribute("data-mce-style");
                         variables[j].removeAttribute("style");
                         var bloqueo = variables[j].getElementsByClassName("uneditable");
-                        console.log(bloqueo);
                         variables[j].removeChild(bloqueo[0]);
                         variables[j].removeChild(bloqueo[0]);
-                        console.log(variables[j].innerHTML);
                         variables[j].innerHTML = "{{" + variables[j].innerHTML + "}}";
                     }
                 }
@@ -619,6 +623,14 @@
         function newTemplate () {
             $("#templateGeneratorBody ul li").remove();
             $scope.elementList = [];
+        }
+
+        /*
+         * This function restart the edition of a template
+         */
+        function setVariable () {
+            $scope.tempVariable = $scope.variableName;
+            $("#setVariables").modal('hide');
         }
     }
 })();
