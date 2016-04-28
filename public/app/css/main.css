@@ -57,21 +57,18 @@
   position: absolute;
   right: 0px;
   cursor: pointer;
+  z-index: 10;
 }
 #templateGenerator #templateGeneratorBody .arrowIcon {
   z-index: 10;
   position: absolute;
   cursor: pointer;
   left: 45%;
-  top: 45%;
+  top: 40%;
   opacity: 0;
 }
-#templateGenerator #templateGeneratorBody .arrowIcon:hover {
-  animation-name: makeArrowVisible;
-  animation-duration: 1s;
-}
 #templateGenerator #templateGeneratorBody .widgetContent {
-  margin-top: 20px;
+  margin: 0px;
 }
 #templateGenerator #templateGeneratorBody .imageOnWidget {
   margin: 0px;
@@ -89,7 +86,7 @@
   color: grey;
 }
 #templateGenerator #templateGeneratorBody .tinymceWidget {
-  height: 100%;
+  height: 99%;
   overflow: hidden;
   z-index: 0;
 }

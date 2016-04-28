@@ -54,6 +54,7 @@
            position: absolute;
           right: 0px;
            cursor: pointer;
+           z-index: 10;
        }
        
        .arrowIcon {           
@@ -61,18 +62,12 @@
            position: absolute;
            cursor: pointer;
            left: 45%;
-           top: 45%;
+           top: 40%;
            opacity: 0;
-
-       }
-       
-       .arrowIcon:hover {
-           animation-name: makeArrowVisible;
-           animation-duration: 1s;
        }
        
        .widgetContent {
-        margin-top:  20px;
+        margin: 0px;
        }
        .imageOnWidget {
            margin: 0px;
@@ -91,12 +86,12 @@
                animation-name: makeArrowVisible;
                animation-duration: 1s;
                animation-fill-mode:  forwards;
-               color: grey;
+               color: grey; 
            }
        }
        
        .tinymceWidget {
-           height: 100%;
+           height: 99%;
            overflow: hidden;
            z-index: 0;
        }

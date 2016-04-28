@@ -25,11 +25,11 @@
       #templateGeneratorBody.col-xs-11(gridster = "gridsterOpts")
         input#img(type='file', style='display: none;')
         ul
-            li.widgetContainer(gridster-item='element' ng-repeat='element in elementList' ng-switch on='element.type')
+            li.widgetContainer(gridster-item='element' ng-repeat='element in elementList'  data-gridsterId='{{element.gridsterId}}' data-innerBrNodes='{{element.innerBrNodes}}')
                 span.fa.fa-trash.trashIcon(ng-click='deleteItem($index)')
-                span.fa.fa-arrows.fa-2x.arrowIcon(ng-mousedown='gridsterOpts.draggable.enabled = true' ng-mouseup='gridsterOpts.draggable.enabled = false' ng-mouseleave='gridsterOpts.draggable.enabled = false')
-                div.tinymceContainer(ng-click='openTinymce($event)' ) 
-                    h1.widgetContent(ng-if='element.type === "h1" ' ) Big title
+                span.fa.fa-arrows.fa-lg.arrowIcon(ng-mousedown='gridsterOpts.draggable.enabled = true' ng-mouseup='gridsterOpts.draggable.enabled = false' ng-mouseleave='gridsterOpts.draggable.enabled = false')
+                div.tinymceContainer(ng-click='openTinymce($event)' ng-resizable) 
+                    h1.widgetContent(ng-if='element.type === "h1" ') Big title
                     h2.widgetContent(ng-if='element.type === "h2"') Middle title
                     h3.widgetContent(ng-if='element.type === "h3"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') Small title
                     p.widgetContent(ng-if='element.type === "p"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') Paragraph

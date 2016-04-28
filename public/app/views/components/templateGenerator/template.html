@@ -34,8 +34,8 @@
     <div id="templateGeneratorBody" gridster="gridsterOpts" class="col-xs-11">
       <input id="img" type="file" style="display: none;"/>
       <ul>
-        <li gridster-item="element" ng-repeat="element in elementList" ng-switch="ng-switch" on="element.type" class="widgetContainer"><span ng-click="deleteItem($index)" class="fa fa-trash trashIcon"></span><span ng-mousedown="gridsterOpts.draggable.enabled = true" ng-mouseup="gridsterOpts.draggable.enabled = false" ng-mouseleave="gridsterOpts.draggable.enabled = false" class="fa fa-arrows fa-2x arrowIcon"></span>
-          <div ng-click="openTinymce($event)" class="tinymceContainer"> 
+        <li gridster-item="element" ng-repeat="element in elementList" data-gridsterId="{{element.gridsterId}}" data-innerBrNodes="{{element.innerBrNodes}}" class="widgetContainer"><span ng-click="deleteItem($index)" class="fa fa-trash trashIcon"></span><span ng-mousedown="gridsterOpts.draggable.enabled = true" ng-mouseup="gridsterOpts.draggable.enabled = false" ng-mouseleave="gridsterOpts.draggable.enabled = false" class="fa fa-arrows fa-lg arrowIcon"></span>
+          <div ng-click="openTinymce($event)" ng-resizable="ng-resizable" class="tinymceContainer"> 
             <h1 ng-if="element.type === &quot;h1&quot; " class="widgetContent">Big title</h1>
             <h2 ng-if="element.type === &quot;h2&quot;" class="widgetContent">Middle title</h2>
             <h3 ng-if="element.type === &quot;h3&quot;" ng-init="implementTinymce(tinyMceTextOpts)" ng-blur="destroyTinyMce()" class="widgetContent">Small title</h3>
