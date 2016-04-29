@@ -31,7 +31,6 @@
         // Loading templates and saving in $scope.templateList in order to use it on div#emailGeneratorToolbar
         $http.get('/getCreatedTemplates').then(function (response) {
             $scope.templateList = response.data.templates;
-            console.log($scope.templateList);
         });
 
         $scope.loadTemplate = loadTemplate;
@@ -198,6 +197,10 @@
     templateGeneratorCtrl.$inject = ['$scope', '$http', '$window'];
     
     function templateGeneratorCtrl ($scope, $http, $window) {
+
+        $("h3").click(function() {
+            console.log($("#templateGeneratorBody ul li").css('font-size'));
+        });
         
         // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
@@ -357,21 +360,24 @@
                 // clean all the lis
                 for (var i = 0; i < li.length ; i++){
                     // Change the proporcion of the li to introduce in the database
+                    var maxwidth = $("#templateGeneratorBody").width();
+                    // Change the width
                     var styles = li[i].getAttribute("style");
                     var start = styles.search("width");
                     var sub = styles.substring(start, start + 14);
                     var end = sub.search("px");
                     var width = sub.substring(7 , end);
-                    width = parseInt(width*959/1166);
-                    styles = styles.substring(0 , start) + "width: " + width + "px" + styles.substring(start + end + 2, styles.length) + " display: block; position: absolute;";
+                    width = Math.round(width*100/maxwidth);
+                    styles = styles.substring(0 , start) + "width: " + width + "%" + styles.substring(start + end + 2, styles.length) + " display: block; position: absolute;";
                     li[i].setAttribute("style", styles);
+                    // Change the left position
                     styles = li[i].getAttribute("style");
                     start = styles.search("left");
                     sub = styles.substring(start, start + 13);
                     end = sub.search("px");
                     var left = sub.substring(6 , end);
-                    left = parseInt(left*959/1166);
-                    styles = styles.substring(0 , start) + "left: " + left + "px" + styles.substring(start + end + 2, styles.length);
+                    left = Math.round(left*100/maxwidth);
+                    styles = styles.substring(0 , start) + "left: " + left + "%" + styles.substring(start + end + 2, styles.length);
                     li[i].setAttribute("style", styles);
                     li[i].removeAttribute("gridster-item");
                     li[i].removeAttribute("ng-repeat");
@@ -400,7 +406,9 @@
                         for (var z = 0; z < img.length; z++) {
                             if (img[z].getAttribute("class") === null) {
                                 var canvas = document.createElement('canvas');
-                                canvas.width = img[z].naturalWidth; // or 'width' if you want a special/scaled size
+                                var maxwidthli = li[i].offsetWidth;
+                                var widthimg = Math.round(img[z].naturalWidth*100/maxwidthli);
+                                canvas.width = widthimg; // or 'width' if you want a special/scaled size
                                 canvas.height = img[z].naturalHeight; // or 'height' if you want a special/scaled size
                                 img[z].removeAttribute("ng-if");
                                 canvas.getContext('2d').drawImage(img[z], 0, 0);
@@ -420,7 +428,7 @@
                     }
                 }
             }
-            template = "<ul style='top: 25px; position: absolute;'>" + template.innerHTML + "</ul>";
+            template = "<ul style='top: 25px; position: absolute; width: 100%; height: 100%;'>" + template.innerHTML + "</ul>";
             document.getElementById('templateGeneratorBody').innerHTML = originalTemplate;
             return template;
         }
