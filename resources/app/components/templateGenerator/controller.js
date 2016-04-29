@@ -112,6 +112,7 @@
                     'icon': false,
                     'onclick': function () {
                         $("#setVariables").modal('show');
+                        $("#variableName").focus();
                     }
                 });
             },
@@ -168,7 +169,7 @@
                     var sub = styles.substring(start, start + 14);
                     var end = sub.search("px");
                     var width = sub.substring(7 , end);
-                    width = width*959/1166;
+                    width = parseInt(width*959/1166);
                     styles = styles.substring(0 , start) + "width: " + width + "px" + styles.substring(start + end + 2, styles.length) + " display: block; position: absolute;";
                     li[i].setAttribute("style", styles);
                     styles = li[i].getAttribute("style");
@@ -176,7 +177,7 @@
                     sub = styles.substring(start, start + 13);
                     end = sub.search("px");
                     var left = sub.substring(6 , end);
-                    left = left*959/1166;
+                    left = parseInt(left*959/1166);
                     styles = styles.substring(0 , start) + "left: " + left + "px" + styles.substring(start + end + 2, styles.length);
                     li[i].setAttribute("style", styles);
                     li[i].removeAttribute("gridster-item");
@@ -195,6 +196,10 @@
                     // if there are divs
                     if (div.getElementsByClassName("widgetContent")[0]) {
                         div.getElementsByClassName("widgetContent")[0].removeAttribute("ng-if");
+                    }
+                    // If there are a P
+                    if (div.getElementsByTagName("p")[0]){
+                        div.getElementsByTagName("p")[0].setAttribute("style", "margin-top: 20px; ");
                     }
                     // If there are a img
                     if (li[i].getElementsByTagName("img")) {
