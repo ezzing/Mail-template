@@ -22,6 +22,7 @@
         $scope.changeVariables = changeVariables;
         
         $scope.closeDropdown = closeDropdown;
+        $scope.saveOnEnter = saveOnEnter;
         
         /*
          * This function loads clicked template on #actualTemplate container, checks for variables on it, and loads them on dropdown menu
@@ -32,7 +33,7 @@
             $http.get('getTemplate/' + id).then(function (response) {
                 // Getting new template
                 var htmlTemplate = response.data.templates || '<h1> No template received from server</h1>';
-
+                console.log('loading...' + id);
                 // If there is some '{{' string on template
                 if (htmlTemplate.search('{{') !== -1) {
                     var startOfVariable = null;
@@ -45,16 +46,15 @@
                         variable = htmlTemplate.substring(startOfVariable + 2, endOfVariable);
                         $scope.templateVariables.push([variable, variable]);
                         htmlTemplate = htmlTemplate.substring(0, startOfVariable) +
-                            '<label for=' + variable + 'class="variables">' + variable + '</label>' +
+                            '<label for=' + variable + ' ' + 'class="variables">' + variable + '</label>' +
                             htmlTemplate.substring(endOfVariable + 2, htmlTemplate.length);
                     } while (htmlTemplate.search('{{') !== -1);
-
+                }
                     // Injecting new template in DOM
                     $('#actualTemplate').html(htmlTemplate);
 
                     // Compiling the new DOM content to enable angular on it
                     $compile($('#actualTemplate').contents())($scope);
-                }
             });
         }
         
@@ -74,7 +74,6 @@
          * This function sends the email when button in header is clicked
          */
         function sendMail () {
-
             // Getting mail data
             var mailData = {
                 'email': $scope.email,
@@ -112,7 +111,7 @@
 
                     // Hide the modal
                     $('#sendMail').modal('hide');
-
+                    
                     // Clear the modal data
                     $scope.name = '';
                     $scope.email = '';
@@ -160,6 +159,13 @@
         function closeDropdown (event) {
             (event.keyCode === 13) ? $('div#variables').removeClass('open') : '';
         }
+        // This functions saves a new template when enter is pressed on modal window, and form is validated
+        function saveOnEnter (event) {
+            if (event.keyCode === 13 &&
+                 $('#sendMail .btn-success').is(':enabled')) {       
+                $scope.sendMail();
+            }
+        }        
     }
 })();
 

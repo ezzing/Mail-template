@@ -19,7 +19,7 @@ class CreateTemplatesTable extends Migration
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->longText('html');
-            $table->string('icon')->nullable();
+            $table->longText('icon');
         });
     }
 

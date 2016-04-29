@@ -4,7 +4,9 @@
         .module('mailTemplate', [
             'ui.router',
             'ngRoute',
-            'ngLodash'
+            'ngLodash',
+            'gridster',
+            'ngFileReader'
         ])
         .run(['$rootScope', '$state', '$stateParams', '$window',
             function ($rootScope, $state, $stateParams, $window) {

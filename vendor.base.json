@@ -6,5 +6,20 @@
   "bower_components/angular-cookies/angular-cookies.js",
   "bower_components/ng-lodash/build/ng-lodash.js",
   "bower_components/bootstrap/dist/js/bootstrap.js",
-  "bower_components/sweetalert/dist/sweetalert.min.js"
+  "bower_components/sweetalert/dist/sweetalert.min.js",
+  "bower_components/tinymce-dist/tinymce.js",
+  "bower_components/tinymce-dist/themes/modern/theme.js",
+  "bower_components/angular/angular.js",
+  "bower_components/angular-ui-tinymce/src/tinymce.js",
+  "bower_components/tinymce/plugins/image/plugin.js",
+  "bower_components/tinymce/plugins/imagetools/plugin.js",
+  "bower_components/tinymce/plugins/colorpicker/plugin.js",
+  "bower_components/tinymce/plugins/autolink/plugin.js",
+  "bower_components/tinymce/plugins/link/plugin.js",
+  "bower_components/tinymce/plugins/textcolor/plugin.js",
+  "bower_components/html2canvas/build/html2canvas.js",
+  "bower_components/angular-gridster/src/angular-gridster.js",
+  "bower_components/javascript-detect-element-resize/jquery.resize.js",
+  "bower_components/ngFileReader/src/ngFileReader.js",
+  "resources/app/libs/fileReader/jquery.fileReader.js"
 ]
