@@ -59,7 +59,7 @@
         <div ng-class=" { 'has-error' : saveTemplateForm.name_template.$invalid &amp;&amp; saveTemplateForm.name_template.$dirty, 'has-success' : saveTemplateForm.name_template.$valid} " class="form-group has-feedback">
           <label for="nameTemplate" class="col-sm-2 control-label">Template name:</label>
           <div class="col-sm-8">
-            <input id="nameTemplate" type="text" ng-model="name_template" name="name_template" placeholder="Name of the Template" ng-pattern="/^[a-zA-ZáéíóúÁÉÍÓÚñÑ1-9][a-zA-ZáéíóúÁÉÍÓÚñÑ1-9 ]{3,50}$/" autofocus="autofocus" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : saveTemplateForm.name_template.$valid, 'glyphicon-remove' : saveTemplateForm.name_template.$invalid &amp;&amp; saveTemplateForm.name_template.$dirty}" class="glyphicon form-control-feedback"></span>
+            <input id="nameTemplate" type="text" ng-model="name_template" name="name_template" placeholder="Name of the Template" ng-pattern="/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9][a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,50}$/" autofocus="autofocus" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : saveTemplateForm.name_template.$valid, 'glyphicon-remove' : saveTemplateForm.name_template.$invalid &amp;&amp; saveTemplateForm.name_template.$dirty}" class="glyphicon form-control-feedback"></span>
           </div>
         </div>
       </form>
