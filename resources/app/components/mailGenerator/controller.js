@@ -11,7 +11,6 @@
         // Loading templates and saving in $scope.templateList in order to use it on div#emailGeneratorToolbar
         $http.get('/getCreatedTemplates').then(function (response) {
             $scope.templateList = response.data.templates;
-            console.log($scope.templateList);
         });
 
         $scope.loadTemplate = loadTemplate;
