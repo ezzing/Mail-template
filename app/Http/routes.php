@@ -37,3 +37,5 @@ Route::post('/saveTemplate', 'TemplateController@SaveTemplate');
 Route::get('/getCreatedTemplates', 'TemplateController@getCreatedTemplates');
 
 Route::get('/getTemplate/{id}', 'TemplateController@getTemplate');
+
+Route::get('/getLanguage/{code}', 'MultilanguageController@getLanguage');

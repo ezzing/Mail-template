@@ -71,7 +71,8 @@ class TemplateController extends Controller
             Template::create(array(
                 'name_template' => $template -> name_template,
                 'html'          => $html,
-                'icon'          => $template -> icon
+                'icon'          => $template -> icon,
+                'gridster'      => $template -> gridster
             ));
 
             // Returning success message

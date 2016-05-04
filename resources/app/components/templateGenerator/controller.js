@@ -7,15 +7,32 @@
     function templateGeneratorCtrl ($scope, $http, $window) {
 
         $("h3").click(function() {
-            console.log($("#templateGeneratorBody ul li").css('font-size'));
+            $http.get('getTemplate/4').then(function (response) {
+                console.log(response.data.templates);
+            });
+            /*
+            var Json = angular.fromJson($scope.gridsters);
+            console.log(Json[1]);
+            $scope.elementList.push(Json[0]);
+            $scope.elementList.push(Json[1]);
+            $scope.$digest();
+            */
         });
-        
+
+        /*
+         * This function resize the editor to a mobile size
+         */
+        function changeMobile () {
+            $scope.gridsters = angular.toJson($scope.elementList);
+            console.log($scope.gridsters);
+            $scope.elementList = [];
+        }
+
         // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
         $scope.validateTemForm = validateTemForm;
         $scope.createTextElement = createTextElement;
         $scope.validateForm = validateForm;
-        $scope.createLink = createLink;
         $scope.deleteItem = deleteItem;
         $scope.onReaded = onReaded;
         $scope.openTinymce = openTinymce;
@@ -23,6 +40,7 @@
         $scope.escribirVariable = escribirVariable;
         $scope.variableName= '';
         $scope.saveOnEnter = saveOnEnter;
+        $scope.changeMobile = changeMobile;
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -250,12 +268,16 @@
             html2canvas(screenshot, {
                 onrendered: function(canvas) {
                     // Getting the cleaning HTML
+                    var icon = canvas.toDataURL();
                     var html = cleanHTML();
                     // Getting template data
+                    var gridster = JSON.stringify($scope.elementList);
+                    console.log(gridster);
                     var templateData = {
                         'name_template': $scope.name_template,
-                        'icon': canvas.toDataURL(),
-                        'html': html
+                        'icon': icon,
+                        'html': html,
+                        'gridster': gridster
                     };
 
                     // Parsing js object to string
@@ -367,25 +389,6 @@
                 return true;
             }
         }
-
-        /*
-         * This function is used to create a link element (this functionality will probably be deprecated in order
-         * to use tinymce instead). It receives as arguments the href and text values for link and creates
-         * a new gridster element.
-         * @param {type} link
-         * @param {type} linkText
-         * @returns {undefined}
-         */
-        function createLink (link, linkText) {
-            $scope.elementList.push({
-                'type': 'a',
-                'href': link,
-                'text': linkText,
-                'sizeX': 1,
-                'sizeY': 1
-            });
-        }
-        
     /*
      * This function is used to delete a gridster element when trash icon is clicked
      * @param {type} index
@@ -444,5 +447,10 @@
                 $scope.saveTemplate();
             }
         }
+
+        // Focus the first input on the modal window
+        $("#setVariables, #saveTemplate").on('shown.bs.modal', function(){
+            $('input:text:visible:first', this).focus();
+        });
     }
 })();

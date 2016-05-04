@@ -13,6 +13,11 @@
             $scope.templateList = response.data.templates;
         });
 
+        // Focus Modal Window Send Mail
+        $("#sendMail").on('shown.bs.modal', function(){
+            $('input:text:visible:first', this).focus();
+        });
+
         $scope.loadTemplate = loadTemplate;
 
         $scope.validateForm = validateForm;

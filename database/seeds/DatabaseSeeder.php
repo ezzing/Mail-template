@@ -1,6 +1,9 @@
 <?php
 
 use App\Models\Template;
+use App\Models\Language;
+use App\Models\LanguageKey;
+use App\Models\LanguageText;
 use Illuminate\Database\Seeder;
 
 
@@ -19,6 +22,9 @@ class DatabaseSeeder extends Seeder
 
         // call our class and run our seeds
         $this->call('TemplateAppSeeder');
+        $this->call('LanguageAppSeeder');
+        $this->call('LanguageKeyAppSeeder');
+        $this->call('LanguageTextAppSeeder');
 
         // show information in the command line after everything is run
         $this->command->info('');
@@ -30,8 +36,391 @@ class DatabaseSeeder extends Seeder
     }
 }
 
-// our own seeder class
-// usually this would be its own file
+// Seed the table language_text
+class LanguageTextAppSeeder extends Seeder
+{
+
+    public function run()
+    {
+        // clear our database ------------------------------------------
+        DB::table('languages_text')->delete();
+
+        // seed our templates table -----------------------
+
+        // back key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '1',
+            'text' => 'Back'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '1',
+            'text' => 'Atras'
+        ));
+        // big_title key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '2',
+            'text' => 'Big title'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '2',
+            'text' => 'Título grande'
+        ));
+        // choose_image key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '3',
+            'text' => 'Choose image'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '3',
+            'text' => 'Elegir imagen'
+        ));
+        // close key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '4',
+            'text' => 'Close'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '4',
+            'text' => 'Cerrar'
+        ));
+        // date key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '5',
+            'text' => 'Date'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '5',
+            'text' => 'Fecha'
+        ));
+        // email key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '6',
+            'text' => 'Email'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '6',
+            'text' => 'Email'
+        ));
+        // email_settings key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '7',
+            'text' => 'Email settings'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '7',
+            'text' => 'Ajustes de Email'
+        ));
+        // image_settings key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '8',
+            'text' => 'Image settings'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '8',
+            'text' => 'Ajustes de imagen'
+        ));
+        // new key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '9',
+            'text' => 'New'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '9',
+            'text' => 'Nuevo'
+        ));
+        // new_template key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '10',
+            'text' => 'Create a new template'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '10',
+            'text' => 'Crear una nueva plantilla'
+        ));
+        // no_input_files key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '11',
+            'text' => 'No selected files'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '11',
+            'text' => 'Ningún archivo seleccionado'
+        ));
+        // middle_title key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '12',
+            'text' => 'Middle title'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '12',
+            'text' => 'Título medio'
+        ));
+        // paragraph key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '13',
+            'text' => 'Paragraph'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '13',
+            'text' => 'Párrafo'
+        ));
+        // save key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '14',
+            'text' => 'Save'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '14',
+            'text' => 'Guardar'
+        ));
+        // save_template key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '15',
+            'text' => 'Save template'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '15',
+            'text' => 'Guardar plantilla'
+        ));
+        // send key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '16',
+            'text' => 'Send'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '16',
+            'text' => 'Enviar'
+        ));
+        // small_title key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '17',
+            'text' => 'Small title'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '17',
+            'text' => 'Título pequeño'
+        ));
+        // subject key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '18',
+            'text' => 'Subject'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '18',
+            'text' => 'Asunto'
+        ));
+        // template_name key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '19',
+            'text' => 'Template name'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '19',
+            'text' => 'Nombre de la plantilla'
+        ));
+        // title_mail key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '20',
+            'text' => 'Mail generator'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '20',
+            'text' => 'Generador de E-mails'
+        ));
+        // title_template key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '21',
+            'text' => 'Mail template generator'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '21',
+            'text' => 'Generador de plantillas de E-mails'
+        ));
+        // variable key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '22',
+            'text' => 'Variables'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '22',
+            'text' => 'Variables'
+        ));
+
+        // show information in the command line after templates are created
+        $this->command->info('');
+        $this->command->info('*********************************************');
+        $this->command->info('****  Languages Text app seeds finished  ****');
+        $this->command->info('*********************************************');
+        $this->command->info('');
+
+    }
+}
+
+// Seed the table Language_keys
+class LanguageKeyAppSeeder extends Seeder
+{
+
+    public function run()
+    {
+        // clear our database ------------------------------------------
+        DB::table('languages_keys')->delete();
+
+        // seed our templates table -----------------------
+
+        LanguageKey::create(array(
+            'key' => 'back'
+        ));
+        LanguageKey::create(array(
+            'key' => 'big_title'
+        ));
+        LanguageKey::create(array(
+            'key' => 'choose_image'
+        ));
+        LanguageKey::create(array(
+            'key' => 'close'
+        ));
+        LanguageKey::create(array(
+            'key' => 'date'
+        ));
+        LanguageKey::create(array(
+            'key' => 'email'
+        ));
+        LanguageKey::create(array(
+            'key' => 'email_settings'
+        ));
+        LanguageKey::create(array(
+            'key' => 'image_settings'
+        ));
+        LanguageKey::create(array(
+            'key' => 'new'
+        ));
+        LanguageKey::create(array(
+            'key' => 'new_template'
+        ));
+        LanguageKey::create(array(
+            'key' => 'no_input_files'
+        ));
+        LanguageKey::create(array(
+            'key' => 'middle_title'
+        ));
+        LanguageKey::create(array(
+            'key' => 'paragraph'
+        ));
+        LanguageKey::create(array(
+            'key' => 'save'
+        ));
+        LanguageKey::create(array(
+            'key' => 'save_template'
+        ));
+        LanguageKey::create(array(
+            'key' => 'send'
+        ));
+        LanguageKey::create(array(
+            'key' => 'small_title'
+        ));
+        LanguageKey::create(array(
+            'key' => 'subject'
+        ));
+        LanguageKey::create(array(
+            'key' => 'template_name'
+        ));
+        LanguageKey::create(array(
+            'key' => 'title_mail'
+        ));
+        LanguageKey::create(array(
+            'key' => 'title_template'
+        ));
+        LanguageKey::create(array(
+            'key' => 'variables'
+        ));
+
+        // show information in the command line after templates are created
+        $this->command->info('');
+        $this->command->info('*********************************************');
+        $this->command->info('***   Languages Keys app seeds finished   ***');
+        $this->command->info('*********************************************');
+        $this->command->info('');
+
+    }
+}
+
+// Seed the table Language
+class LanguageAppSeeder extends Seeder
+{
+
+    public function run()
+    {
+        // clear our database ------------------------------------------
+        DB::table('languages')->delete();
+
+        // seed our templates table -----------------------
+
+        Language::create(array(
+            'code' => 'en',
+            'language' => 'English'
+        ));
+
+        Language::create(array(
+            'code' => 'es',
+            'language' => 'Spanish'
+        ));
+
+        // show information in the command line after templates are created
+        $this->command->info('');
+        $this->command->info('*********************************************');
+        $this->command->info('******  Languages app seeds finished   ******');
+        $this->command->info('*********************************************');
+        $this->command->info('');
+
+    }
+}
+
+
+// Seed the table Templates
 class TemplateAppSeeder extends Seeder {
 
         public function run() {

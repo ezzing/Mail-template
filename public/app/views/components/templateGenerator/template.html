@@ -4,8 +4,9 @@
     <div id="templateGeneratorHeader" class="col-xs-12 rown"><a ng-href="#/mailGenerator">
         <button type="button" class="btn btn-success col-xs-1"> Back</button></a>
       <button type="button" ng-click="newTemplate()" class="btn btn-success col-xs-1"> New</button>
-      <h3 class="col-xs-5 col-xs-offset-2">Mail template generator</h3>
-      <button type="button" data-toggle="modal" data-target="#saveTemplate" class="btn btn-success col-xs-1 col-xs-offset-1">Save</button>
+      <h3 class="col-xs-4 col-xs-offset-1">Mail template generator</h3>
+      <button type="button" ng-click="changeMobile()" class="btn btn-success col-xs-1"> Mobile</button>
+      <button type="button" data-toggle="modal" data-target="#saveTemplate" onfocus="$(this).blur();" class="btn btn-success col-xs-1 col-xs-offset-1">Save</button>
     </div>
   </div>
   <div class="row">
@@ -86,7 +87,7 @@
   </div>
 </div>
 <!-- Modal window for a new variable-->
-<div id="setVariables" style="z-index: 999999;" class="modal fade">
+<div id="setVariables" class="modal fade">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -98,7 +99,7 @@
         <div class="form-group">
           <label for="variableName" class="col-sm-2 control-label">Variable Name:</label>
           <div class="col-sm-8">
-            <input id="variableName" type="text" ng-model="variableName" name="variableName" placeholder="Name of the Variable" autofocus="autofocus" class="form-control"/>
+            <input id="variableName" type="text" ng-model="variableName" name="variableName" placeholder="Name of the Variable" class="form-control"/>
           </div>
         </div>
       </form>
