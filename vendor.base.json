@@ -21,5 +21,7 @@
   "bower_components/angular-gridster/src/angular-gridster.js",
   "bower_components/javascript-detect-element-resize/jquery.resize.js",
   "bower_components/ngFileReader/src/ngFileReader.js",
-  "resources/app/libs/fileReader/jquery.fileReader.js"
+  "resources/app/libs/fileReader/jquery.fileReader.js",
+  "bower_components/angular-translate/angular-translate.js",
+  "bower_components/angular-translate-loader-url/angular-translate-loader-url.js"
 ]

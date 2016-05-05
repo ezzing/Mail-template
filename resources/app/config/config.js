@@ -4,7 +4,26 @@
     
     angular.module('mailTemplate').config(URLConfig);
 
+    angular.module('mailTemplate').config(multilenguageConfig);
+    multilenguageConfig.$inject = ['$translateProvider'];
     URLConfig.$inject = ['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider'];
+    
+    
+    function multilenguageConfig ($translateProvider) {
+        $translateProvider.useUrlLoader('/getLanguages');
+        $translateProvider.preferredLanguage('en');
+        /*
+        $translateProvider.translations('en', {
+          HEADLINE: 'Hello there, This is my awesome app!',
+          INTRO_TEXT: 'And it has i18n support!'
+        })
+        .translations('de', {
+          HEADLINE: 'Hey, das ist meine großartige App!',
+          INTRO_TEXT: 'Und sie untersützt mehrere Sprachen!'
+        });
+        $translateProvider.preferredLanguage('de');
+        */
+    }
     
     /**
      * URL Configurator

@@ -33,6 +33,8 @@
     "tinymce": "^4.3.10",
     "angular-gridster": "^0.13.5",
     "components-font-awesome": "^4.5.0",
-    "ngFileReader": "^0.0.7"
+    "ngFileReader": "^0.0.7",
+    "angular-translate": "^2.11.0",
+    "angular-translate-loader-url": "^2.11.0"
   }
 }

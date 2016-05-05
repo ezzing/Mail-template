@@ -4,6 +4,9 @@
       #emailGeneratorHeader.col-xs-12.rown
         .col-xs-1
         h3#viewTitle.col-xs-6.col-xs-offset-3 Mail Generator
+        h2{{ 'HEADLINE' | translate }}
+       label(for='lenguage') Lenguage:
+       select#lenguage(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.value as language.name  for language in data.languages track by language.value' ng-change='cambiarIdioma (data.selectedLanguage)')
         button#sendButton(type='button'  data-toggle='modal' data-target='#sendMail' onfocus="$(this).blur();").btn.btn-success.col-xs-1.col-xs-offset-1 Send
     .row
       // Toolbar for template selector in tablet and desktop versions

@@ -6,7 +6,8 @@
             'ngRoute',
             'ngLodash',
             'gridster',
-            'ngFileReader'
+            'ngFileReader',
+            'pascalprecht.translate'
         ])
         .run(['$rootScope', '$state', '$stateParams', '$window',
             function ($rootScope, $state, $stateParams, $window) {

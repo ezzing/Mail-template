@@ -6,7 +6,8 @@
             'ngRoute',
             'ngLodash',
             'gridster',
-            'ngFileReader'
+            'ngFileReader',
+            'pascalprecht.translate'
         ])
         .run(['$rootScope', '$state', '$stateParams', '$window',
             function ($rootScope, $state, $stateParams, $window) {
@@ -24,9 +25,9 @@
     
     angular.module('mailTemplate').controller('mailGeneratorCtrl', mailGeneratorCtrl);
     
-    mailGeneratorCtrl.$inject = ['$scope', '$http', '$compile'];
+    mailGeneratorCtrl.$inject = ['$scope', '$http', '$compile', '$translate'];
 
-    function mailGeneratorCtrl ($scope, $http, $compile) {
+    function mailGeneratorCtrl ($scope, $http, $compile, $translate) {
         
         // Loading templates and saving in $scope.templateList in order to use it on div#emailGeneratorToolbar
         $http.get('/getCreatedTemplates').then(function (response) {
@@ -43,6 +44,18 @@
         
         $scope.closeDropdown = closeDropdown;
         $scope.saveOnEnter = saveOnEnter;
+        
+        $scope.data = {
+            'languages': [
+                {'value': "en", 'name': 'english'},
+                {'value': "es", 'name': 'spanish'}
+            ],
+        'selectedLanguage': {'value': "en"}
+        };
+        
+        $scope.cambiarIdioma = function (lang) {
+            $translate.use(lang);
+        };
         
         /*
          * This function loads clicked template on #actualTemplate container, checks for variables on it, and loads them on dropdown menu
@@ -656,7 +669,26 @@
     
     angular.module('mailTemplate').config(URLConfig);
 
+    angular.module('mailTemplate').config(multilenguageConfig);
+    multilenguageConfig.$inject = ['$translateProvider'];
     URLConfig.$inject = ['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider'];
+    
+    
+    function multilenguageConfig ($translateProvider) {
+        $translateProvider.useUrlLoader('/getLanguages');
+        $translateProvider.preferredLanguage('en');
+        /*
+        $translateProvider.translations('en', {
+          HEADLINE: 'Hello there, This is my awesome app!',
+          INTRO_TEXT: 'And it has i18n support!'
+        })
+        .translations('de', {
+          HEADLINE: 'Hey, das ist meine großartige App!',
+          INTRO_TEXT: 'Und sie untersützt mehrere Sprachen!'
+        });
+        $translateProvider.preferredLanguage('de');
+        */
+    }
     
     /**
      * URL Configurator
