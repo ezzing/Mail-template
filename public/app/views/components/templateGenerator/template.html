@@ -1,37 +1,46 @@
 
 <div id="templateGenerator">
-  <div class="row">
-    <div id="templateGeneratorHeader" class="col-xs-12 rown"><a ng-href="#/mailGenerator">
-        <button type="button" class="btn btn-success col-xs-1"> {{ 'back' | translate }}</button></a>
-      <button type="button" ng-click="newTemplate()" class="btn btn-success col-xs-1"> {{ 'new' | translate }}</button>
-      <h3 class="col-xs-5 col-xs-offset-2">{{ 'title_template' | translate }}</h3>
-      <label for="lenguage">Lenguage:</label>
-      <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.value as language.name  for language in data.languages track by language.value" ng-change="cambiarIdioma (data.selectedLanguage)"></select>
-      <button type="button" ng-click="changeMobile()" class="btn btn-success col-xs-1"> Mobile</button>
-      <button type="button" data-toggle="modal" data-target="#saveTemplate" onfocus="$(this).blur();" class="btn btn-success col-xs-1 col-xs-offset-1">{{ 'save' | translate }}</button>
+  <!--header-->
+  <div id="templateGeneratorHeader" class="row">
+    <div id="lenguageSelector" class="col-xs-4">
+      <form class="form-horizontal">
+        <label for="lenguage" class="control-label col-xs-4">Lenguage:</label>
+        <div class="col-xs-8 col-sm-6 col-lg-4">
+          <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.value as language.name  for language in data.languages track by language.value" ng-change="cambiarIdioma (data.selectedLanguage)" class="form-control">       </select>
+        </div>
+      </form>
     </div>
+    <div id="title" class="col-xs-4">
+      <h3 id="viewTitle" class="col-xs-6 col-xs-offset-3">{{ 'title_mail' | translate }}            </h3>
+    </div>
+    <div id="buttonsWrapper" class="col-xs-4"><a ng-href="#/mailGenerator">
+        <button type="button" class="btn btn-success">{{ 'back' | translate }}</button></a>
+      <button type="button" ng-click="newTemplate()" class="btn btn-success">{{ 'new' | translate }}</button>
+      <button type="button" data-toggle="modal" data-target="#saveTemplate" onfocus="$(this).blur();" class="btn btn-success">{{ 'save' | translate }}</button>
+    </div>
+    <!-- body    -->
   </div>
-  <div class="row">
-    <div id="templateGeneratorToolbar" class="col-xs-1">
+  <div id="templateGeneratorBody" class="row">   
+    <div id="templateGeneratorToolbar" class="col-xs-2 col-sm-1">
       <ul id="mobileList">
         <li>
-          <button type="button" style="background-image: url(app/img/icons/h1.png)" ng-click="createTextElement(&quot;h1&quot;)"></button>
+          <button type="button" ng-click="createTextElement(&quot;h1&quot;)" class="btn btn-success">H1</button>
         </li>
         <li>
-          <button type="button" style="background-image: url(app/img/icons/h2.png)" ng-click="createTextElement(&quot;h2&quot;)"></button>
+          <button type="button" ng-click="createTextElement(&quot;h2&quot;)" class="btn btn-success">H2</button>
         </li>
         <li>
-          <button type="button" style="background-image: url(app/img/icons/h3.png)" ng-click="createTextElement(&quot;h3&quot;)"></button>
+          <button type="button" ng-click="createTextElement(&quot;h3&quot;)" class="btn btn-success">H3</button>
         </li>
         <li>
-          <button type="button" style="background-image: url(app/img/icons/text.png)" ng-click="createTextElement(&quot;p&quot;)"></button>
+          <button type="button" ng-click="createTextElement(&quot;p&quot;)" class="btn btn-success">Text</button>
         </li>
         <li>
-          <button type="button" style="background-image: url(app/img/icons/img.png)" onclick="$('#askForImg').modal('show')"></button>
+          <button type="button" onclick="$('#askForImg').modal('show')" class="btn btn-success">Img</button>
         </li>
       </ul>
     </div>
-    <div id="templateGeneratorBody" gridster="gridsterOpts" class="col-xs-11">
+    <div id="templateGeneratorMain" gridster="gridsterOpts" class="col-xs-10 col-sm-11">
       <input id="img" type="file" style="display: none;"/>
       <ul>
         <li gridster-item="element" ng-repeat="element in elementList" data-gridsterId="{{element.gridsterId}}" data-innerBrNodes="{{element.innerBrNodes}}" class="widgetContainer"><span ng-click="deleteItem($index)" class="fa fa-trash trashIcon"></span><span ng-mousedown="gridsterOpts.draggable.enabled = true" ng-mouseup="gridsterOpts.draggable.enabled = false" ng-mouseleave="gridsterOpts.draggable.enabled = false" class="fa fa-arrows fa-lg arrowIcon"></span>

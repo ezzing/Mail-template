@@ -1,101 +1,107 @@
-// Styles for the templateGenerator page
-
 #templateGenerator {
-
     #templateGeneratorHeader {
        border: 1px solid grey;
        min-height:  10vh;
-       background-color: #e6e6e6;       
-       button {
-           margin-top: 25px;
-           white-space: nowrap;
-           margin-right: 5px;
-       }
-       ul {
-           li {
-               display: inline-block;
-  }
-       }
-       h3 {
-
-       }
-    }
-    
-    #templateGeneratorToolbar {
-        border: 2px solid grey; 
-       min-height:  90vh;
-       background-color: #e6e6e6;
-       padding-left: 5px;
+       background-color: #000066; 
+        color: white;
+        
+       #lenguageSelector {
+           margin-top: 5vh;
+       }        
        
-    ul#mobileList {
-        padding: 0px;
-           li {
-           list-style:  none;
-           margin: 20% 0;
+       #title {
+           margin-top: 4vh;
+       }       
+       #buttonsWrapper{
+           margin-top: 5vh;
            button {
-                      height: 45px;
-                     width: 45px;
-                    padding: 0px;
-                    background-size: cover;
+            float: right;
+            margin-right: 10px;
            }
        }
-   }
-
     }
     
     #templateGeneratorBody {
-        border: 1px solid grey; 
-        min-height:  90vh;
-        padding: 0px;   
-       background-color:  #f2f2f2;
-       
-       .trashIcon {
-           font-size: 20px;
-           position: absolute;
-          right: 0px;
-           cursor: pointer;
-           z-index: 10;
-       }
-       
-       .arrowIcon {           
-           z-index: 10;
-           position: absolute;
-           cursor: pointer;
-           left: 45%;
-           top: 40%;
-           opacity: 0;
-       }
-       
-       .widgetContent {
-        margin: 0px;
-       }
-       .imageOnWidget {
-           margin: 0px;
-           width: 100%;
-           height: 100%;
-           background-size:  cover;
-           //background-repeat:  no-repeat;   
-       }
-       
-       .widgetContainer {
-           border: 1px dotted #009ecd;
-       }
-       
-       .widgetContainer:hover {
-           .arrowIcon {
-               animation-name: makeArrowVisible;
-               animation-duration: 1s;
-               animation-fill-mode:  forwards;
-               color: grey; 
+        
+        #templateGeneratorToolbar {
+            border: 2px solid grey; 
+           min-height:  90vh;
+           background-color: #000066;
+           padding-left: 5px;
+   
+
+        ul#mobileList {
+            padding: 0px;
+               li {
+               list-style:  none;
+               margin: 20% 25%;
+               button {
+                          height: 45px;
+                         width: 45px;
+                        padding: 0px;
+                        background-size: cover;
+               }
            }
        }
-       
-       .tinymceWidget {
-           height: 99%;
-           overflow: hidden;
-           z-index: 0;
-       }
+
+        }
+
+        #templateGeneratorMain {
+            border: 1px solid grey; 
+            min-height:  90vh;
+            padding: 0px;   
+           background-color:  white;
+ 
+
+           .trashIcon {
+               font-size: 20px;
+               position: absolute;
+              right: 0px;
+               cursor: pointer;
+               z-index: 10;
+           }
+
+           .arrowIcon {           
+               z-index: 10;
+               position: absolute;
+               cursor: pointer;
+               left: 45%;
+               top: 40%;
+               opacity: 0;
+           }
+
+           .widgetContent {
+            margin: 0px;
+           }
+           .imageOnWidget {
+               margin: 0px;
+               width: 100%;
+               height: 100%;
+               background-size:  cover;
+               //background-repeat:  no-repeat;   
+           }
+
+           .widgetContainer {
+               border: 1px dotted #009ecd;
+           }
+
+           .widgetContainer:hover {
+               .arrowIcon {
+                   animation-name: makeArrowVisible;
+                   animation-duration: 1s;
+                   animation-fill-mode:  forwards;
+                   color: grey; 
+               }
+           }
+
+           .tinymceWidget {
+               height: 99%;
+               overflow: hidden;
+               z-index: 0;
+           }
+        }        
     }
+
     
     
     .gridster-item-resizable-handler, .handle-se  {

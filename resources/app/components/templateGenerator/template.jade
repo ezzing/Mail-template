@@ -1,41 +1,48 @@
-#templateGenerator
-    .row
-      #templateGeneratorHeader.col-xs-12.rown
-       a(ng-href='#/mailGenerator')
-            button(type='button').btn.btn-success.col-xs-1  {{ 'back' | translate }}
-       button(type='button' ng-click='newTemplate()').btn.btn-success.col-xs-1  {{ 'new' | translate }}
-       h3.col-xs-5.col-xs-offset-2 {{ 'title_template' | translate }}
-       label(for='lenguage') Lenguage:
-       select#lenguage(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.value as language.name  for language in data.languages track by language.value' ng-change='cambiarIdioma (data.selectedLanguage)')
-       button(type='button' ng-click='changeMobile()').btn.btn-success.col-xs-1  Mobile
-       button(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();").btn.btn-success.col-xs-1.col-xs-offset-1 {{ 'save' | translate }}
-    .row
-      #templateGeneratorToolbar.col-xs-1
-        ul#mobileList
-            li
-                button(type='button' style='background-image: url(app/img/icons/h1.png)' ng-click='createTextElement("h1")')
-            li
-                button(type='button' style='background-image: url(app/img/icons/h2.png)' ng-click='createTextElement("h2")')
-            li
-                button(type='button' style='background-image: url(app/img/icons/h3.png)' ng-click='createTextElement("h3")')
-            li
-                button(type='button' style='background-image: url(app/img/icons/text.png)' ng-click='createTextElement("p")')
-            li
-                button(type='button' style='background-image: url(app/img/icons/img.png)' onclick="$('#askForImg').modal('show')")
+div#templateGenerator
+    //header
+    div#templateGeneratorHeader.row
+        div#lenguageSelector.col-xs-4
+            form.form-horizontal
+                label.control-label.col-xs-4(for='lenguage') Lenguage:
+                div.col-xs-8.col-sm-6.col-lg-4
+                    select#lenguage.form-control(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.value as language.name  for language in data.languages track by language.value' ng-change='cambiarIdioma (data.selectedLanguage)')        
+        div#title.col-xs-4
+            h3#viewTitle.col-xs-6.col-xs-offset-3 {{ 'title_mail' | translate }}            
+        div#buttonsWrapper.col-xs-4
+            a(ng-href='#/mailGenerator')
+                button.btn.btn-success(type='button') {{ 'back' | translate }}
+            button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}
+            button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}
 
-      #templateGeneratorBody.col-xs-11(gridster = "gridsterOpts")
-        input#img(type='file', style='display: none;')
-        ul
-            li.widgetContainer(gridster-item='element' ng-repeat='element in elementList'  data-gridsterId='{{element.gridsterId}}' data-innerBrNodes='{{element.innerBrNodes}}')
-                span.fa.fa-trash.trashIcon(ng-click='deleteItem($index)')
-                span.fa.fa-arrows.fa-lg.arrowIcon(ng-mousedown='gridsterOpts.draggable.enabled = true' ng-mouseup='gridsterOpts.draggable.enabled = false' ng-mouseleave='gridsterOpts.draggable.enabled = false')
-                div.tinymceContainer(ng-click='openTinymce($event)' ng-resizable) 
-                    h1.widgetContent(ng-if='element.type === "h1" ') {{ 'big_title' | translate }}
-                    h2.widgetContent(ng-if='element.type === "h2"') {{ 'middle_title' | translate }}
-                    h3.widgetContent(ng-if='element.type === "h3"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') {{ 'small_title' | translate }}
-                    p.widgetContent(ng-if='element.type === "p"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') {{ 'paragraph' | translate }}
-                img.widgetContent.imageOnWidget(ng-if='element.type === "img"'  style='background-image: url({{element.src}});') 
-                a.widgetContent(ng-if='element.type === "a"' ng-href="{{element.href}}") {{element.text}}
+
+        // body    
+      div#templateGeneratorBody.row    
+        div#templateGeneratorToolbar.col-xs-2.col-sm-1
+          ul#mobileList
+              li
+                  button.btn.btn-success(type='button' ng-click='createTextElement("h1")') H1
+              li
+                  button.btn.btn-success(type='button'  ng-click='createTextElement("h2")') H2
+              li
+                  button.btn.btn-success(type='button'  ng-click='createTextElement("h3")') H3
+              li
+                  button.btn.btn-success(type='button'  ng-click='createTextElement("p")') Text
+              li
+                  button.btn.btn-success(type='button' onclick="$('#askForImg').modal('show')") Img
+
+        div#templateGeneratorMain.col-xs-10.col-sm-11(gridster = "gridsterOpts")
+          input#img(type='file', style='display: none;')
+          ul
+              li.widgetContainer(gridster-item='element' ng-repeat='element in elementList'  data-gridsterId='{{element.gridsterId}}' data-innerBrNodes='{{element.innerBrNodes}}')
+                  span.fa.fa-trash.trashIcon(ng-click='deleteItem($index)')
+                  span.fa.fa-arrows.fa-lg.arrowIcon(ng-mousedown='gridsterOpts.draggable.enabled = true' ng-mouseup='gridsterOpts.draggable.enabled = false' ng-mouseleave='gridsterOpts.draggable.enabled = false')
+                  div.tinymceContainer(ng-click='openTinymce($event)' ng-resizable) 
+                      h1.widgetContent(ng-if='element.type === "h1" ') {{ 'big_title' | translate }}
+                      h2.widgetContent(ng-if='element.type === "h2"') {{ 'middle_title' | translate }}
+                      h3.widgetContent(ng-if='element.type === "h3"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') {{ 'small_title' | translate }}
+                      p.widgetContent(ng-if='element.type === "p"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') {{ 'paragraph' | translate }}
+                  img.widgetContent.imageOnWidget(ng-if='element.type === "img"'  style='background-image: url({{element.src}});') 
+                  a.widgetContent(ng-if='element.type === "a"' ng-href="{{element.href}}") {{element.text}}
 
 // Modal window for save a template
 div#saveTemplate.modal.fade(ng-keydown='saveOnEnter($event)')

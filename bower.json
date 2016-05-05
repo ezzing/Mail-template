@@ -32,7 +32,7 @@
     "angular-ui-tinymce": "^0.0.15",
     "tinymce": "^4.3.10",
     "angular-gridster": "^0.13.5",
-    "components-font-awesome": "^4.5.0",
+    "components-font-awesome": "^4.6.1",
     "ngFileReader": "^0.0.7",
     "angular-translate": "^2.11.0",
     "angular-translate-loader-url": "^2.11.0"
