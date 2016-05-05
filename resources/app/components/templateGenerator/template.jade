@@ -2,15 +2,13 @@
     .row
       #templateGeneratorHeader.col-xs-12.rown
        a(ng-href='#/mailGenerator')
-            button(type='button').btn.btn-success.col-xs-1  Back
-       button(type='button' ng-click='newTemplate()').btn.btn-success.col-xs-1  New
-       h3.col-xs-5.col-xs-offset-2 Mail template generator
+            button(type='button').btn.btn-success.col-xs-1  {{ 'back' | translate }}
+       button(type='button' ng-click='newTemplate()').btn.btn-success.col-xs-1  {{ 'new' | translate }}
+       h3.col-xs-5.col-xs-offset-2 {{ 'title_template' | translate }}
        label(for='lenguage') Lenguage:
-       select#lenguage(name='lenguage'  onchange='aquí llamo a la api (lenguage)')
-        option(value='en' selected) English
-        option(value='es') Spanish
+       select#lenguage(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.value as language.name  for language in data.languages track by language.value' ng-change='cambiarIdioma (data.selectedLanguage)')
        button(type='button' ng-click='changeMobile()').btn.btn-success.col-xs-1  Mobile
-       button(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();").btn.btn-success.col-xs-1.col-xs-offset-1 Save
+       button(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();").btn.btn-success.col-xs-1.col-xs-offset-1 {{ 'save' | translate }}
     .row
       #templateGeneratorToolbar.col-xs-1
         ul#mobileList
@@ -32,10 +30,10 @@
                 span.fa.fa-trash.trashIcon(ng-click='deleteItem($index)')
                 span.fa.fa-arrows.fa-lg.arrowIcon(ng-mousedown='gridsterOpts.draggable.enabled = true' ng-mouseup='gridsterOpts.draggable.enabled = false' ng-mouseleave='gridsterOpts.draggable.enabled = false')
                 div.tinymceContainer(ng-click='openTinymce($event)' ng-resizable) 
-                    h1.widgetContent(ng-if='element.type === "h1" ') Big title
-                    h2.widgetContent(ng-if='element.type === "h2"') Middle title
-                    h3.widgetContent(ng-if='element.type === "h3"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') Small title
-                    p.widgetContent(ng-if='element.type === "p"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') Paragraph
+                    h1.widgetContent(ng-if='element.type === "h1" ') {{ 'big_title' | translate }}
+                    h2.widgetContent(ng-if='element.type === "h2"') {{ 'middle_title' | translate }}
+                    h3.widgetContent(ng-if='element.type === "h3"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') {{ 'small_title' | translate }}
+                    p.widgetContent(ng-if='element.type === "p"' ng-init="implementTinymce(tinyMceTextOpts)" ng-blur='destroyTinyMce()') {{ 'paragraph' | translate }}
                 img.widgetContent.imageOnWidget(ng-if='element.type === "img"'  style='background-image: url({{element.src}});') 
                 a.widgetContent(ng-if='element.type === "a"' ng-href="{{element.href}}") {{element.text}}
 
@@ -46,17 +44,17 @@ div#saveTemplate.modal.fade(ng-keydown='saveOnEnter($event)')
             div.modal-header
                 button.close(type='button' data-dismiss='modal' aria-label='close')
                     span(aria-hidden='true') &times;
-                h4.modal-title Save Template
+                h4.modal-title {{ 'save_template' | translate }}
             div.modal-body
             form.form-horizontal(name='saveTemplateForm')
                 div.form-group.has-feedback(ng-class=" { 'has-error' : saveTemplateForm.name_template.$invalid && saveTemplateForm.name_template.$dirty, 'has-success' : saveTemplateForm.name_template.$valid} ")
-                    label.col-sm-2.control-label(for='nameTemplate') Template name:
+                    label.col-sm-2.control-label(for='nameTemplate') {{ 'template_name' | translate }}:
                     div.col-sm-8
                         input#nameTemplate.form-control(type='text' ng-model='name_template' name='name_template'  placeholder='Name of the Template' ng-pattern='/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9][a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,50}$/' autofocus=true required)
                         span.glyphicon.form-control-feedback(ng-class="{'glyphicon-ok' : saveTemplateForm.name_template.$valid, 'glyphicon-remove' : saveTemplateForm.name_template.$invalid && saveTemplateForm.name_template.$dirty}")
             div.modal-footer
-                button.btn.btn-warning(type='button' data-dismiss='modal') Close
-                button.btn.btn-success(type='button' ng-click='saveTemplate()' ng-disabled='validateTemForm()') Save
+                button.btn.btn-warning(type='button' data-dismiss='modal') {{ 'close' | translate }}
+                button.btn.btn-success(type='button' ng-click='saveTemplate()' ng-disabled='validateTemForm()') {{ 'save' | translate }}
 
 // Modal window for asking for a image
 div#askForImg.modal.fade
@@ -65,12 +63,12 @@ div#askForImg.modal.fade
             div.modal-header
                 button.close(type='button' data-dismiss='modal' aria-label='close')
                     span(aria-hidden='true') &times;
-                h4.modal-title Image settings
+                h4.modal-title {{ 'image_settings' | translate }}
             div.modal-body
                 div(ng-file-reader on-readed="onReaded(event, file)" read-method="readMethod"  multiple)
             div.modal-footer
-                button.btn.btn-warning(type='button' data-dismiss='modal') Close
-                button.btn.btn-warning(type='button' data-dismiss='modal') Close
+                button.btn.btn-warning(type='button' data-dismiss='modal') {{ 'close' | translate }}
+                button.btn.btn-warning(type='button' data-dismiss='modal') {{ 'close' | translate }}
 
 // Modal window for a new variable
 div#setVariables.modal.fade

@@ -4,8 +4,7 @@
     <!-- Header of the template-->
     <div id="emailGeneratorHeader" class="col-xs-12 rown">
       <div class="col-xs-1"></div>
-      <h3 id="viewTitle" class="col-xs-6 col-xs-offset-3">Mail Generator</h3>
-      <h2>{{ 'HEADLINE' | translate }}</h2>
+      <h3 id="viewTitle" class="col-xs-6 col-xs-offset-3">{{ 'title_mail' | translate }}</h3>
     </div>
     <label for="lenguage">Lenguage:
       <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.value as language.name  for language in data.languages track by language.value" ng-change="cambiarIdioma (data.selectedLanguage)">
@@ -25,7 +24,7 @@
                 </tr>
               </table>
             </div>
-            <div class="col-xs-7 textTemplSel">{{template.name_template}}<br/>Date: {{template.created_at}}</div>
+            <div class="col-xs-7 textTemplSel">{{template.name_template}}<br/>{{ 'date' | translate }}: {{template.created_at}}</div>
           </div></a></div><a id="refTemplateGenerator" href="#/templateGenerator">
         <div id="createTemplate" class="col-xs-12 templateSelector">
           <div class="col-xs-5 icono">
@@ -35,7 +34,7 @@
               </tr>
             </table>
           </div>
-          <div class="col-xs-7 textTemplSel">Create a new Template</div>
+          <div class="col-xs-7 textTemplSel">{{ 'new_template' | translate }}</div>
         </div></a>
     </div>
     <!-- Toolbar for template selector in mobile versions-->
@@ -46,12 +45,12 @@
             <button id="templatesButton" type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Templates<span class="caret"></span></button>
             <div class="scroolTool dropdown-menu"><a href="#" ng-repeat="template in templateList">
                 <div ng-click="loadTemplate(template.id_template)" class="col-xs-12 textTemplSel templateSelector">{{template.id_template}}<br/>Date:<br/>{{template.created_at}}</div></a><a href="#/templateGenerator">
-                <div class="col-xs-12 textTemplSel templateSelector">Create a new Template</div></a></div>
+                <div class="col-xs-12 textTemplSel templateSelector">{{ 'new_template' | translate }}</div></a></div>
           </div>
         </div>
         <!--Dropdown menu for variables-->
         <div id="variables" ng-keydown="closeDropdown($event)" class="dropdown col-lg-12 col-md-12 col-sm-12 col-xs-9">
-          <button id="variablesButton" type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Variables<span class="caret"></span></button>
+          <button id="variablesButton" type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ 'variables' | translate }}<span class="caret"></span></button>
           <form id="variablesForm" class="dropdown-menu form-horizontal">
             <div ng-repeat="variable in templateVariables" class="form-group">
               <label for="{{variable[0]}}" class="col-xs-2 control-label">{{variable[0]}}</label>
@@ -73,18 +72,18 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Email settings</h4>
+        <h4 class="modal-title">{{ 'email_settings' | translate }}</h4>
       </div>
       <div class="modal-body"></div>
       <form name="sendMailForm" class="form-horizontal">
         <div ng-class=" { 'has-error' : sendMailForm.email.$invalid &amp;&amp; sendMailForm.email.$dirty, 'has-success' : sendMailForm.email.$valid} " class="form-group has-feedback">
-          <label for="email" class="col-sm-2 control-label">Email:</label>
+          <label for="email" class="col-sm-2 control-label">{{ 'email' | translate }}:</label>
           <div class="col-sm-8">
             <input id="emailInput" type="text" ng-model="email" name="email" placeholder="&lt;name&gt;mail@example.com,&lt;name&gt;other@example.com" ng-pattern="/^((&lt;[a-z]+&gt;)?[.a-zA-ZáéíóúÁÉÍÓÚñÑ_0-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12})(,((&lt;[a-z]+&gt;)?[.a-zA-ZáéíóúÁÉÍÓÚñÑ_0-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12}))*$/" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : sendMailForm.email.$valid, 'glyphicon-remove' : sendMailForm.email.$invalid &amp;&amp; sendMailForm.email.$dirty}" class="glyphicon form-control-feedback"></span>
           </div>
         </div>
         <div ng-class=" { 'has-error' : sendMailForm.subject.$invalid &amp;&amp; sendMailForm.subject.$dirty, 'has-success': sendMailForm.subject.$valid} " class="form-group has-feedback">
-          <label for="subjectInput" class="col-sm-2 control-label">Subject:</label>
+          <label for="subjectInput" class="col-sm-2 control-label">{{ 'subject' | translate }}:</label>
           <div class="col-sm-8">
             <input id="subjectInput" type="text" ng-model="subject" placeholder="subject" name="subject" ng-pattern="/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9][a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,50}$/" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : sendMailForm.subject.$valid, 'glyphicon-remove' : sendMailForm.subject.$invalid &amp;&amp; sendMailForm.subject.$dirty}" class="glyphicon form-control-feedback"></span>
           </div>
@@ -92,7 +91,7 @@
       </form>
       <div class="modal-footer">
         <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
-        <button type="button" ng-click="sendMail()" ng-disabled="validateForm()" class="btn btn-success">Send</button>
+        <button type="button" ng-click="sendMail()" ng-disabled="validateForm()" class="btn btn-success">{{ 'send' | translate }}</button>
       </div>
     </div>
   </div>

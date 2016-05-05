@@ -2,21 +2,13 @@
 <div id="templateGenerator">
   <div class="row">
     <div id="templateGeneratorHeader" class="col-xs-12 rown"><a ng-href="#/mailGenerator">
-        <button type="button" class="btn btn-success col-xs-1"> Back</button></a>
-      <button type="button" ng-click="newTemplate()" class="btn btn-success col-xs-1"> New</button>
-<<<<<<< HEAD
-      <h3 class="col-xs-5 col-xs-offset-2">Mail template generator</h3>
+        <button type="button" class="btn btn-success col-xs-1"> {{ 'back' | translate }}</button></a>
+      <button type="button" ng-click="newTemplate()" class="btn btn-success col-xs-1"> {{ 'new' | translate }}</button>
+      <h3 class="col-xs-5 col-xs-offset-2">{{ 'title_template' | translate }}</h3>
       <label for="lenguage">Lenguage:</label>
-      <select id="lenguage" name="lenguage" onchange="aquí llamo a la api (lenguage)">
-        <option value="en" selected="selected">English</option>
-        <option value="es">Spanish</option>
-      </select>
-      <button type="button" data-toggle="modal" data-target="#saveTemplate" class="btn btn-success col-xs-1 col-xs-offset-1">Save</button>
-=======
-      <h3 class="col-xs-4 col-xs-offset-1">Mail template generator</h3>
+      <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.value as language.name  for language in data.languages track by language.value" ng-change="cambiarIdioma (data.selectedLanguage)"></select>
       <button type="button" ng-click="changeMobile()" class="btn btn-success col-xs-1"> Mobile</button>
-      <button type="button" data-toggle="modal" data-target="#saveTemplate" onfocus="$(this).blur();" class="btn btn-success col-xs-1 col-xs-offset-1">Save</button>
->>>>>>> feature-implement-mobile
+      <button type="button" data-toggle="modal" data-target="#saveTemplate" onfocus="$(this).blur();" class="btn btn-success col-xs-1 col-xs-offset-1">{{ 'save' | translate }}</button>
     </div>
   </div>
   <div class="row">
@@ -44,10 +36,10 @@
       <ul>
         <li gridster-item="element" ng-repeat="element in elementList" data-gridsterId="{{element.gridsterId}}" data-innerBrNodes="{{element.innerBrNodes}}" class="widgetContainer"><span ng-click="deleteItem($index)" class="fa fa-trash trashIcon"></span><span ng-mousedown="gridsterOpts.draggable.enabled = true" ng-mouseup="gridsterOpts.draggable.enabled = false" ng-mouseleave="gridsterOpts.draggable.enabled = false" class="fa fa-arrows fa-lg arrowIcon"></span>
           <div ng-click="openTinymce($event)" ng-resizable="ng-resizable" class="tinymceContainer"> 
-            <h1 ng-if="element.type === &quot;h1&quot; " class="widgetContent">Big title</h1>
-            <h2 ng-if="element.type === &quot;h2&quot;" class="widgetContent">Middle title</h2>
-            <h3 ng-if="element.type === &quot;h3&quot;" ng-init="implementTinymce(tinyMceTextOpts)" ng-blur="destroyTinyMce()" class="widgetContent">Small title</h3>
-            <p ng-if="element.type === &quot;p&quot;" ng-init="implementTinymce(tinyMceTextOpts)" ng-blur="destroyTinyMce()" class="widgetContent">Paragraph</p>
+            <h1 ng-if="element.type === &quot;h1&quot; " class="widgetContent">{{ 'big_title' | translate }}</h1>
+            <h2 ng-if="element.type === &quot;h2&quot;" class="widgetContent">{{ 'middle_title' | translate }}</h2>
+            <h3 ng-if="element.type === &quot;h3&quot;" ng-init="implementTinymce(tinyMceTextOpts)" ng-blur="destroyTinyMce()" class="widgetContent">{{ 'small_title' | translate }}</h3>
+            <p ng-if="element.type === &quot;p&quot;" ng-init="implementTinymce(tinyMceTextOpts)" ng-blur="destroyTinyMce()" class="widgetContent">{{ 'paragraph' | translate }}</p>
           </div><img ng-if="element.type === &quot;img&quot;" style="background-image: url({{element.src}});" class="widgetContent imageOnWidget"/><a ng-if="element.type === &quot;a&quot;" ng-href="{{element.href}}" class="widgetContent">{{element.text}}</a>
         </li>
       </ul>
@@ -60,20 +52,20 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Save Template</h4>
+        <h4 class="modal-title">{{ 'save_template' | translate }}</h4>
       </div>
       <div class="modal-body"></div>
       <form name="saveTemplateForm" class="form-horizontal">
         <div ng-class=" { 'has-error' : saveTemplateForm.name_template.$invalid &amp;&amp; saveTemplateForm.name_template.$dirty, 'has-success' : saveTemplateForm.name_template.$valid} " class="form-group has-feedback">
-          <label for="nameTemplate" class="col-sm-2 control-label">Template name:</label>
+          <label for="nameTemplate" class="col-sm-2 control-label">{{ 'template_name' | translate }}:</label>
           <div class="col-sm-8">
             <input id="nameTemplate" type="text" ng-model="name_template" name="name_template" placeholder="Name of the Template" ng-pattern="/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9][a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,50}$/" autofocus="autofocus" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : saveTemplateForm.name_template.$valid, 'glyphicon-remove' : saveTemplateForm.name_template.$invalid &amp;&amp; saveTemplateForm.name_template.$dirty}" class="glyphicon form-control-feedback"></span>
           </div>
         </div>
       </form>
       <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
-        <button type="button" ng-click="saveTemplate()" ng-disabled="validateTemForm()" class="btn btn-success">Save</button>
+        <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
+        <button type="button" ng-click="saveTemplate()" ng-disabled="validateTemForm()" class="btn btn-success">{{ 'save' | translate }}</button>
       </div>
     </div>
   </div>
@@ -84,14 +76,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Image settings</h4>
+        <h4 class="modal-title">{{ 'image_settings' | translate }}</h4>
       </div>
       <div class="modal-body">
         <div ng-file-reader="ng-file-reader" on-readed="onReaded(event, file)" read-method="readMethod" multiple="multiple"></div>
       </div>
       <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
-        <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
+        <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
+        <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
       </div>
     </div>
   </div>

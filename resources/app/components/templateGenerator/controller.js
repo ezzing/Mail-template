@@ -2,9 +2,9 @@
 
     'use strict';
     angular.module('mailTemplate').controller('templateGeneratorCtrl', templateGeneratorCtrl);
-    templateGeneratorCtrl.$inject = ['$scope', '$http', '$window'];
+    templateGeneratorCtrl.$inject = ['$scope', '$http', '$window', '$translate'];
     
-    function templateGeneratorCtrl ($scope, $http, $window) {
+    function templateGeneratorCtrl ($scope, $http, $window, $translate) {
 
         $("h3").click(function() {
             $http.get('getTemplate/4').then(function (response) {
@@ -28,6 +28,17 @@
             $scope.elementList = [];
         }
 
+        $scope.data = {
+            'languages': [
+                {'value': "en", 'name': 'english'},
+                {'value': "es", 'name': 'spanish'}
+            ],
+        'selectedLanguage': {'value': "en"}
+        };
+        
+        $scope.cambiarIdioma = function (lang) {
+            $translate.use(lang);
+        };        
         // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
         $scope.validateTemForm = validateTemForm;

@@ -212,9 +212,9 @@
 
     'use strict';
     angular.module('mailTemplate').controller('templateGeneratorCtrl', templateGeneratorCtrl);
-    templateGeneratorCtrl.$inject = ['$scope', '$http', '$window'];
+    templateGeneratorCtrl.$inject = ['$scope', '$http', '$window', '$translate'];
     
-    function templateGeneratorCtrl ($scope, $http, $window) {
+    function templateGeneratorCtrl ($scope, $http, $window, $translate) {
 
         $("h3").click(function() {
             $http.get('getTemplate/4').then(function (response) {
@@ -238,6 +238,17 @@
             $scope.elementList = [];
         }
 
+        $scope.data = {
+            'languages': [
+                {'value': "en", 'name': 'english'},
+                {'value': "es", 'name': 'spanish'}
+            ],
+        'selectedLanguage': {'value': "en"}
+        };
+        
+        $scope.cambiarIdioma = function (lang) {
+            $translate.use(lang);
+        };        
         // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
         $scope.validateTemForm = validateTemForm;
@@ -688,19 +699,8 @@
     
     
     function multilenguageConfig ($translateProvider) {
-        $translateProvider.useUrlLoader('/getLanguages');
+        $translateProvider.useUrlLoader('/getLanguage');
         $translateProvider.preferredLanguage('en');
-        /*
-        $translateProvider.translations('en', {
-          HEADLINE: 'Hello there, This is my awesome app!',
-          INTRO_TEXT: 'And it has i18n support!'
-        })
-        .translations('de', {
-          HEADLINE: 'Hey, das ist meine großartige App!',
-          INTRO_TEXT: 'Und sie untersützt mehrere Sprachen!'
-        });
-        $translateProvider.preferredLanguage('de');
-        */
     }
     
     /**
