@@ -52,10 +52,10 @@
         
         $scope.data = {
             'languages': [
-                {'value': "en", 'name': 'english'},
-                {'value': "es", 'name': 'spanish'}
+                {'value': 'en', 'name': 'english'},
+                {'value': 'es', 'name': 'spanish'}
             ],
-        'selectedLanguage': {'value': "en"}
+            'selectedLanguage': {'value': 'en'}
         };
         
         $scope.cambiarIdioma = function (lang) {
