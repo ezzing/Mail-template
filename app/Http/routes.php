@@ -38,4 +38,5 @@ Route::get('/getCreatedTemplates', 'TemplateController@getCreatedTemplates');
 
 Route::get('/getTemplate/{id}', 'TemplateController@getTemplate');
 
-Route::get('/getLanguages', 'TemplateController@getLanguages');
+Route::get('/getLanguage/{code}', 'MultilanguageController@getLanguage');
+

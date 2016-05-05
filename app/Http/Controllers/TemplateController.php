@@ -70,9 +70,10 @@ class TemplateController extends Controller
 
             // Save data at database
             Template::create(array(
-                'name_template' => $template->name_template,
-                'html' => $html,
-                'icon' => $template->icon
+                'name_template' => $template -> name_template,
+                'html'          => $html,
+                'icon'          => $template -> icon,
+                'gridster'      => $template -> gridster
             ));
 
             // Returning success message

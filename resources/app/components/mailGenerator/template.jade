@@ -78,7 +78,7 @@ div#sendMail.modal.fade(ng-keydown='saveOnEnter($event)')
                 div.form-group.has-feedback(ng-class=" { 'has-error' : sendMailForm.email.$invalid && sendMailForm.email.$dirty, 'has-success' : sendMailForm.email.$valid} ")
                     label.col-sm-2.control-label(for='email') Email:
                     div.col-sm-8
-                        input#emailInput.form-control(type='text' ng-model='email' name='email'  placeholder='<name>mail@example.com,<name>other@example.com' ng-pattern='/^((<[a-z]+>)?[\.a-zA-ZáéíóúÁÉÍÓÚñÑ_0-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12})(,((<[a-z]+>)?[\.a-zA-ZáéíóúÁÉÍÓÚñÑ_0-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12}))*$/' autofocus=true required)
+                        input#emailInput.form-control(type='text' ng-model='email' name='email'  placeholder='<name>mail@example.com,<name>other@example.com' ng-pattern='/^((<[a-z]+>)?[\.a-zA-ZáéíóúÁÉÍÓÚñÑ_0-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12})(,((<[a-z]+>)?[\.a-zA-ZáéíóúÁÉÍÓÚñÑ_0-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12}))*$/' required)
                         span.glyphicon.form-control-feedback(ng-class="{'glyphicon-ok' : sendMailForm.email.$valid, 'glyphicon-remove' : sendMailForm.email.$invalid && sendMailForm.email.$dirty}")
                 div.form-group.has-feedback(ng-class=" { 'has-error' : sendMailForm.subject.$invalid && sendMailForm.subject.$dirty, 'has-success': sendMailForm.subject.$valid} ")
                     label.col-sm-2.control-label(for='subjectInput') Subject:

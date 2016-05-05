@@ -9,7 +9,8 @@
        select#lenguage(name='lenguage'  onchange='aquí llamo a la api (lenguage)')
         option(value='en' selected) English
         option(value='es') Spanish
-       button(type='button' data-toggle='modal' data-target='#saveTemplate').btn.btn-success.col-xs-1.col-xs-offset-1 Save
+       button(type='button' ng-click='changeMobile()').btn.btn-success.col-xs-1  Mobile
+       button(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();").btn.btn-success.col-xs-1.col-xs-offset-1 Save
     .row
       #templateGeneratorToolbar.col-xs-1
         ul#mobileList
@@ -72,7 +73,7 @@ div#askForImg.modal.fade
                 button.btn.btn-warning(type='button' data-dismiss='modal') Close
 
 // Modal window for a new variable
-div#setVariables.modal.fade(style='z-index: 999999;')
+div#setVariables.modal.fade
     div.modal-dialog.modal-lg
         div.modal-content
             div.modal-header
@@ -84,7 +85,7 @@ div#setVariables.modal.fade(style='z-index: 999999;')
                 div.form-group
                     label.col-sm-2.control-label(for='variableName') Variable Name:
                     div.col-sm-8
-                        input#variableName.form-control(type='text' ng-model='variableName' name='variableName'  placeholder='Name of the Variable' autofocus=true)
+                        input#variableName.form-control(type='text' ng-model='variableName' name='variableName'  placeholder='Name of the Variable')
             div.modal-footer
                 button.btn.btn-warning(type='button' data-dismiss='modal') Close
                 button.btn.btn-success(type='button' ng-click='escribirVariable()') Set
