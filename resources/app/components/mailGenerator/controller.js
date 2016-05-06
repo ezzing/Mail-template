@@ -34,11 +34,11 @@
                 {'value': 'en', 'name': 'english'},
                 {'value': 'es', 'name': 'spanish'}
             ],
-            'selectedLanguage': {'value': 'en'}
+            'selectedLanguage': {'value': 'en', 'name': 'english'}
         };
         
         $scope.cambiarIdioma = function (lang) {
-            $translate.use(lang);
+            $translate.use(lang.value);
         };
         
         /*
