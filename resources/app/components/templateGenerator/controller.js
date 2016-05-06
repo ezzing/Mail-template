@@ -2,21 +2,10 @@
 
     'use strict';
     angular.module('mailTemplate').controller('templateGeneratorCtrl', templateGeneratorCtrl);
-    templateGeneratorCtrl.$inject = ['$scope', '$http', '$window'];
+    templateGeneratorCtrl.$inject = ['$scope', '$http', '$window', '$timeout'];
     
-    function templateGeneratorCtrl ($scope, $http, $window) {
+    function templateGeneratorCtrl ($scope, $http, $window, $timeout) {
 
-        $("h3").click(function() {
-        });
-
-        /*
-         * This function resize the editor to a mobile size
-         */
-        function changeMobile () {
-            editHtml();
-        }
-
-        $scope.texto = [];
         // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
         $scope.validateTemForm = validateTemForm;
@@ -29,8 +18,7 @@
         $scope.escribirVariable = escribirVariable;
         $scope.variableName= '';
         $scope.saveOnEnter = saveOnEnter;
-        $scope.changeMobile = changeMobile;
-        $scope.gridsterready = false;
+        $scope.texto = [];
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -462,7 +450,9 @@
                     pos = html[4].getElementsByTagName("li")[i].getAttribute("data-gridsterid");
                     $scope.texto[pos] = html[4].getElementsByTagName("li")[i].getElementsByTagName("div")[0].getElementsByClassName("widgetContent ng-scope")[0].innerHTML;
                 }
-                //editHtml();
+                $timeout(function(){
+                    editHtml();
+                })
             });
         }
 
@@ -470,14 +460,12 @@
          * This function introduce the text into the gridster elements
          */
         function editHtml(){
-            console.log($("#templateGeneratorBody ul").html());
             for (var i = 0; i < $scope.texto.length; i++){
                 if ($scope.texto[i] != null && $scope.gridsterready == true) {
                     var route = "#templateGeneratorBody ul li[data-gridsterid='" + i + "'] div.tinymceContainer .widgetContent";
                     $(route).html($scope.texto[i]);
                 }
             }
-            //$scope.gridsterready = false;
         }
 
         /*
@@ -500,8 +488,5 @@
             }
         }
         chargeEditTemplate();
-        //$("#templateGeneratorBody ul").on('change', editHtml());
-        editHtml();
-        $(document).ready(console.log($("#templateGeneratorBody").html()));
     }
 })();
