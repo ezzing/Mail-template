@@ -124,7 +124,6 @@
             mailData = JSON.stringify(mailData);
             
             // Print actual request to debug with postman
-            console.log(mailData);
 
             // Sending mail
             $http.post('mail', {
