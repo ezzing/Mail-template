@@ -33,7 +33,7 @@ class MultilanguageController extends Controller
             ->where('languages_text.id_language', '=', $id_language)
             ->join('languages', 'languages_text.id_language', '=', 'languages.id_language')
             ->join('languages_keys', 'languages_text.id_key', '=', 'languages_keys.id_key')
-            ->pluck('key', 'text');
+            ->pluck('text', 'key');
 
         return $languages;
     }

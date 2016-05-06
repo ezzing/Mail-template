@@ -35,6 +35,16 @@ class TemplateController extends Controller
             'templates' => $selectedHtml[0]
         ], 200);
     }
+
+    /*
+ * This function receives id data from front, and returns html of the id_template
+ */
+    public function getTemplate2($id)
+    {
+        $selectedHtml = DB::table('templates')->where('id_template', '=', $id)->select('html_edit', 'gridster')->get();
+
+        return $selectedHtml;
+    }
     
     /*
      * This function receives template data from front, validates the data, and if it is correct, store in the database.
@@ -49,6 +59,7 @@ class TemplateController extends Controller
             'name_template' => array('required', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ1-9][a-zA-ZáéíóúÁÉÍÓÚñÑ1-9 ]{3,50}$/'),
             'html' => array('required'),//,'regex:/((<script>){1}.*(<\/script>){1})/'
             'icon' => array('required'),
+            'edit' => array('required'),
         ]);
 
 
@@ -71,8 +82,9 @@ class TemplateController extends Controller
             Template::create(array(
                 'name_template' => $template -> name_template,
                 'html'          => $html,
+                'html_edit'     => $template -> html_edit,
                 'icon'          => $template -> icon,
-                'gridster'      => $template -> gridster
+                'gridster'      => $template -> edit
             ));
 
             // Returning success message

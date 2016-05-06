@@ -19,7 +19,7 @@
         });
 
         $scope.loadTemplate = loadTemplate;
-
+        $scope.id = null;
         $scope.validateForm = validateForm;
        
         $scope.sendMail = sendMail;
@@ -35,6 +35,7 @@
          */
         
         function loadTemplate (id) {
+            $scope.id = "?id=" + id;
             $http.get('getTemplate/' + id).then(function (response) {
                 // Getting new template
                 var htmlTemplate = response.data.templates || '<h1> No template received from server</h1>';

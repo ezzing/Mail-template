@@ -7,27 +7,16 @@
     function templateGeneratorCtrl ($scope, $http, $window) {
 
         $("h3").click(function() {
-            $http.get('getTemplate/4').then(function (response) {
-                console.log(response.data.templates);
-            });
-            /*
-            var Json = angular.fromJson($scope.gridsters);
-            console.log(Json[1]);
-            $scope.elementList.push(Json[0]);
-            $scope.elementList.push(Json[1]);
-            $scope.$digest();
-            */
         });
 
         /*
          * This function resize the editor to a mobile size
          */
         function changeMobile () {
-            $scope.gridsters = angular.toJson($scope.elementList);
-            console.log($scope.gridsters);
-            $scope.elementList = [];
+            editHtml();
         }
 
+        $scope.texto = [];
         // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
         $scope.validateTemForm = validateTemForm;
@@ -41,6 +30,7 @@
         $scope.variableName= '';
         $scope.saveOnEnter = saveOnEnter;
         $scope.changeMobile = changeMobile;
+        $scope.gridsterready = false;
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -142,7 +132,7 @@
             'fontsize_formats': '8pt 10pt 12pt 14pt 18pt 24pt 36pt 42pt 72pt',
             'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
         };
-        
+
         function escribirVariable() {
             console.log($scope.variableName);
             tinymce.activeEditor.execCommand('mceInsertContent', false, '<span class="variables" style="color: red; background: yellow; font-weight: bold" contenteditable="false">{{' + $scope.variableName + '}}</span>');
@@ -268,20 +258,23 @@
             html2canvas(screenshot, {
                 onrendered: function(canvas) {
                     // Getting the cleaning HTML
+                    var gridster = angular.toJson($scope.elementList);
+                    console.log(gridster);
                     var icon = canvas.toDataURL();
                     var html = cleanHTML();
+                    var html_edit = $("#templateGeneratorBody").html();
+                    console.log(html_edit);
                     // Getting template data
-                    var gridster = JSON.stringify($scope.elementList);
-                    console.log(gridster);
                     var templateData = {
                         'name_template': $scope.name_template,
                         'icon': icon,
                         'html': html,
-                        'gridster': gridster
+                        'html_edit': html_edit,
+                        'edit': gridster
                     };
 
                     // Parsing js object to string
-                    templateData = JSON.stringify(templateData);
+                    var templateData = JSON.stringify(templateData);
 
                     // Ajax request to sabe new template
                     $http.post('saveTemplate', {
@@ -452,5 +445,63 @@
         $("#setVariables, #saveTemplate").on('shown.bs.modal', function(){
             $('input:text:visible:first', this).focus();
         });
+
+        /*
+         * This function get the template to edit it
+         */
+        function editGridster(id){
+            $http.get('getTemplate2/' + id).then(function (response) {
+                var html = response.data[0].html_edit;
+                var gridster = angular.fromJson(response.data[0].gridster);
+                for (var i = 0; i < gridster.length; i++){
+                    $scope.elementList.push(gridster[i]);
+                }
+                html = $(html);
+                var pos = null;
+                for (var i = 0; i < html[4].getElementsByTagName("li").length; i++){
+                    pos = html[4].getElementsByTagName("li")[i].getAttribute("data-gridsterid");
+                    $scope.texto[pos] = html[4].getElementsByTagName("li")[i].getElementsByTagName("div")[0].getElementsByClassName("widgetContent ng-scope")[0].innerHTML;
+                }
+                //editHtml();
+            });
+        }
+
+        /*
+         * This function introduce the text into the gridster elements
+         */
+        function editHtml(){
+            console.log($("#templateGeneratorBody ul").html());
+            for (var i = 0; i < $scope.texto.length; i++){
+                if ($scope.texto[i] != null && $scope.gridsterready == true) {
+                    var route = "#templateGeneratorBody ul li[data-gridsterid='" + i + "'] div.tinymceContainer .widgetContent";
+                    $(route).html($scope.texto[i]);
+                }
+            }
+            //$scope.gridsterready = false;
+        }
+
+        /*
+         * This function evaluate if the edit bottom has been clicked
+         */
+        function chargeEditTemplate(){
+            var paramstr = window.location.hash;
+            var paramarr = paramstr.split("&");
+            var params = {};
+            // Extract the variable
+            for (var i = 0; i < paramarr.length; i++) {
+                var tmparr = paramarr[i].split("=");
+                params[tmparr[0]] = tmparr[1];
+            }
+            // If the id is define, introduce the template to edit it
+            if (params['#/templateGenerator?id']){
+                var id = params['#/templateGenerator?id'];
+                $scope.gridsterready = true;
+                editGridster(id);
+            }
+        }
+        chargeEditTemplate();
+        //$("#templateGeneratorBody ul").on('change', editHtml());
+        editHtml();
+        $(document).ready(console.log($("#templateGeneratorBody").html()));
     }
 })();

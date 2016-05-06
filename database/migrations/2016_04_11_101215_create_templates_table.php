@@ -17,8 +17,9 @@ class CreateTemplatesTable extends Migration
             $table->increments('id_template')->primary;
             $table->string('name_template');
             $table->longText('html');
+            $table->longText('html_edit')->nullable();
             $table->longText('icon');
-            $table->longText('gridster')->nullable;
+            $table->string('gridster');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
         });
