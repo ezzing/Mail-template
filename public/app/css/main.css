@@ -9,11 +9,13 @@
 }
 #templateGenerator #templateGeneratorHeader #title {
   margin-top: 4vh;
+  white-space: nowrap;
+  overflow: hidden;
 }
 #templateGenerator #templateGeneratorHeader #buttonsWrapper {
   margin-top: 5vh;
 }
-#templateGenerator #templateGeneratorHeader #buttonsWrapper button {
+#templateGenerator #templateGeneratorHeader #buttonsWrapper button, #templateGenerator #templateGeneratorHeader #buttonsWrapper span {
   float: right;
   margin-right: 10px;
 }
@@ -105,12 +107,21 @@
 }
 #emailGenerator #emailGeneratorHeader #title {
   margin-top: 4vh;
+  white-space: nowrap;
+  overflow: hidden;
 }
 #emailGenerator #emailGeneratorHeader button#sendButton {
   float: right;
   margin-top: 5vh;
   width: 40%;
   white-space: nowrap;
+}
+#emailGenerator #emailGeneratorHeader #buttonsWrapper {
+  margin-top: 5vh;
+}
+#emailGenerator #emailGeneratorHeader #buttonsWrapper button, #emailGenerator #emailGeneratorHeader #buttonsWrapper span {
+  float: right;
+  margin-right: 10px;
 }
 #emailGenerator #emailGeneratorBody {
   border: 1px solid grey;
@@ -204,11 +215,22 @@
   padding: 0px;
   border: none;
 }
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbarButton .scroolTool {
+  padding: 0px;
+}
 #emailGenerator #emailGeneratorBody #emailGeneratorToolbarButton #templatesButton {
-  background-color: #e6e6e6;
+  background-color: #5cb85c;
+  color: white;
   border: 1px solid grey;
-  color: black;
   min-width: 100%;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbarButton .templateSelector {
+  background-color: #000066;
+  color: white;
+  border: 1px solid #925E5E;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbarButton #newTemplateBtn {
+  background-color: #5cb85c;
 }
 #emailGenerator #emailGeneratorBody #emailGeneratorMain {
   margin: 0px;

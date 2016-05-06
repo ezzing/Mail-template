@@ -2,21 +2,22 @@
 <div id="templateGenerator">
   <!--header-->
   <div id="templateGeneratorHeader" class="row">
-    <div id="lenguageSelector" class="col-xs-4">
+    <div id="lenguageSelector" class="col-xs-4">   
       <form class="form-horizontal">
-        <label for="lenguage" class="control-label col-xs-4">Lenguage:</label>
+        <div class="col-xs-1"><a ng-href="#/mailGenerator">
+            <!-- button.btn.btn-success(type='button') {{ 'back' | translate }}--><span role="button" ng-click="newTemplate()" style="color: white" class="fa fa-arrow-circle-left fa-2x">               </span></a></div>
+        <label for="lenguage" class="control-label col-xs-3">Lenguage:</label>
         <div class="col-xs-8 col-sm-6 col-lg-4">
           <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.value as language.name  for language in data.languages track by language.value" ng-change="cambiarIdioma (data.selectedLanguage)" class="form-control">       </select>
         </div>
       </form>
     </div>
     <div id="title" class="col-xs-4">
-      <h3 id="viewTitle" class="col-xs-6 col-xs-offset-3">{{ 'title_mail' | translate }}            </h3>
+      <h4 id="viewTitle" class="col-xs-7 col-xs-offset-2">{{ 'title_template' | translate }}            </h4>
     </div>
-    <div id="buttonsWrapper" class="col-xs-4"><a ng-href="#/mailGenerator">
-        <button type="button" class="btn btn-success">{{ 'back' | translate }}</button></a>
-      <button type="button" ng-click="newTemplate()" class="btn btn-success">{{ 'new' | translate }}</button>
-      <button type="button" data-toggle="modal" data-target="#saveTemplate" onfocus="$(this).blur();" class="btn btn-success">{{ 'save' | translate }}</button>
+    <div id="buttonsWrapper" class="col-xs-4">
+      <!-- button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}-->
+      <!-- button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}--><span role="button" ng-click="newTemplate()" class="fa fa-trash fa-2x"></span><span role="button" class="fa fa-edit fa-2x">           </span><span role="button" ng-click="newTemplate()" data-toggle="modal" data-target="#saveTemplate" onfocus="$(this).blur();" class="fa fa-save fa-2x"></span>
     </div>
     <!-- body    -->
   </div>
@@ -91,7 +92,6 @@
         <div ng-file-reader="ng-file-reader" on-readed="onReaded(event, file)" read-method="readMethod" multiple="multiple"></div>
       </div>
       <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
         <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
       </div>
     </div>

@@ -447,7 +447,7 @@
          * This function restart the edition of a template
          */
         function newTemplate () {
-            $("#templateGeneratorBody ul li").remove();
+            $("#templateGeneratorMain ul li").remove();
             $scope.elementList = [];
         }
         

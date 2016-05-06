@@ -10,11 +10,12 @@
         </div>
       </form>
     </div>
-    <div id="title" class="col-xs-6">
-      <h3 id="viewTitle" class="col-xs-6 col-xs-offset-3">{{ 'title_mail' | translate }}            </h3>
+    <div id="title" class="col-xs-4">
+      <h4 id="viewTitle" class="col-xs-7 col-xs-offset-2">{{ 'title_mail' | translate }}            </h4>
     </div>
-    <div class="col-xs-2">
-      <button id="sendButton" type="button" data-toggle="modal" data-target="#sendMail" onfocus="$(this).blur();" class="btn btn-success">{{ 'send' | translate }}       </button>
+    <div id="buttonsWrapper" class="col-xs-4">
+      <!-- button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}-->
+      <!-- button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}--><span role="button" data-toggle="modal" data-target="#sendMail" onfocus="$(this).blur();" class="fa fa-envelope fa-2x">                   </span><span role="button" class="fa fa-edit fa-2x">           </span>
     </div>
   </div>
   <!-- Body      -->
@@ -52,8 +53,8 @@
         <div class="dropdown">
           <button id="templatesButton" type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Templates<span class="caret"></span></button>
           <div class="scroolTool dropdown-menu"><a href="#" ng-repeat="template in templateList">
-              <div ng-click="loadTemplate(template.id_template)" class="col-xs-12 textTemplSel templateSelector">{{template.id_template}}<br/>Date:<br/>{{template.created_at}}</div></a><a href="#/templateGenerator">
-              <div class="col-xs-12 textTemplSel templateSelector">{{ 'new_template' | translate }}        </div></a></div>
+              <div ng-click="loadTemplate(template.id_template)" class="col-xs-12 textTemplSel templateSelector">{{template.name_template}}<br/>Date:<br/>{{template.created_at}}</div></a><a href="#/templateGenerator">
+              <div id="newTemplateBtn" class="col-xs-12 textTemplSel templateSelector">{{ 'new_template' | translate }}        </div></a></div>
         </div>
       </div>
       <!--Dropdown menu for variables-->

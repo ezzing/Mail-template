@@ -11,10 +11,12 @@
        
        #title {
            margin-top: 4vh;
+           white-space: nowrap;
+           overflow: hidden;
        }       
        #buttonsWrapper{
            margin-top: 5vh;
-           button {
+           button, span {
             float: right;
             margin-right: 10px;
            }

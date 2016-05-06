@@ -6,10 +6,14 @@ div#emailGenerator
                 label.control-label.col-xs-4(for='lenguage') Lenguage:
                 div.col-xs-8.col-sm-6.col-lg-4
                     select#lenguage.form-control(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.value as language.name  for language in data.languages track by language.value' ng-change='cambiarIdioma (data.selectedLanguage)')
-        div#title.col-xs-6
-            h3#viewTitle.col-xs-6.col-xs-offset-3 {{ 'title_mail' | translate }}            
-        div.col-xs-2
-            button#sendButton.btn.btn-success(type='button'  data-toggle='modal' data-target='#sendMail' onfocus="$(this).blur();") {{ 'send' | translate }}       
+        div#title.col-xs-4
+            h4#viewTitle.col-xs-7.col-xs-offset-2 {{ 'title_mail' | translate }}            
+        div#buttonsWrapper.col-xs-4
+            // button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}
+            // button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}
+            span.fa.fa-envelope.fa-2x(role='button'  data-toggle='modal' data-target='#sendMail' onfocus="$(this).blur();")                    
+            span.fa.fa-edit.fa-2x(role='button')            
+
 
       // Body      
       div#emailGeneratorBody.row           
@@ -50,13 +54,13 @@ div#emailGenerator
                 div.scroolTool.dropdown-menu
                   a(href='#'  ng-repeat='template in templateList')
                     div.col-xs-12.textTemplSel.templateSelector(ng-click='loadTemplate(template.id_template)')
-                        |{{template.id_template}}
+                        |{{template.name_template}}
                         br
                         |Date:
                         br
                         |{{template.created_at}}
                   a(href='#/templateGenerator')
-                    div.col-xs-12.textTemplSel.templateSelector
+                    div#newTemplateBtn.col-xs-12.textTemplSel.templateSelector
                         |{{ 'new_template' | translate }}        
             //Dropdown menu for variables
             div#variables.dropdown.col-xs-9.col-sm-12(ng-keydown='closeDropdown($event)')

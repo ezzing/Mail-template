@@ -10,6 +10,8 @@
        }
        #title {
            margin-top: 4vh;
+           white-space: nowrap;
+           overflow: hidden;           
        }
        button#sendButton {
            float: right;
@@ -17,6 +19,13 @@
            width: 40%;
             white-space: nowrap;
        }
+       #buttonsWrapper{
+           margin-top: 5vh;
+           button, span {
+            float: right;
+            margin-right: 10px;
+           }
+       }       
     }
     
     #emailGeneratorBody {
@@ -110,12 +119,23 @@
              margin: 0px;
              padding: 0px;
              border: none;
+             .scroolTool {
+                 padding: 0px;
+             }
                 #templatesButton {
-                  background-color: #e6e6e6;
+                  background-color: #5cb85c;
+                  color: white;
                   border: 1px solid grey;
-                  color: black;
                   min-width: 100%;
-                }              
+                }
+                .templateSelector {
+                    background-color: #000066;
+                    color: white;
+                    border: 1px solid #925E5E;
+                }
+                #newTemplateBtn {
+                    background-color: #5cb85c;
+                }
            }
 
 

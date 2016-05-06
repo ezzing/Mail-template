@@ -1,18 +1,24 @@
 div#templateGenerator
     //header
     div#templateGeneratorHeader.row
-        div#lenguageSelector.col-xs-4
+        div#lenguageSelector.col-xs-4    
             form.form-horizontal
-                label.control-label.col-xs-4(for='lenguage') Lenguage:
+                div.col-xs-1
+                    a(ng-href='#/mailGenerator')
+                        // button.btn.btn-success(type='button') {{ 'back' | translate }}
+                        span.fa.fa-arrow-circle-left.fa-2x(role='button' ng-click='newTemplate()' style='color: white')                
+                label.control-label.col-xs-3(for='lenguage') Lenguage:
                 div.col-xs-8.col-sm-6.col-lg-4
                     select#lenguage.form-control(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.value as language.name  for language in data.languages track by language.value' ng-change='cambiarIdioma (data.selectedLanguage)')        
         div#title.col-xs-4
-            h3#viewTitle.col-xs-6.col-xs-offset-3 {{ 'title_mail' | translate }}            
+            h4#viewTitle.col-xs-7.col-xs-offset-2 {{ 'title_template' | translate }}            
         div#buttonsWrapper.col-xs-4
-            a(ng-href='#/mailGenerator')
-                button.btn.btn-success(type='button') {{ 'back' | translate }}
-            button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}
-            button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}
+            // button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}
+            // button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}
+            span.fa.fa-trash.fa-2x(role='button' ng-click='newTemplate()')
+            span.fa.fa-edit.fa-2x(role='button')            
+            span.fa.fa-save.fa-2x(role='button' ng-click='newTemplate()' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();")
+
 
 
         // body    
@@ -74,7 +80,6 @@ div#askForImg.modal.fade
             div.modal-body
                 div(ng-file-reader on-readed="onReaded(event, file)" read-method="readMethod"  multiple)
             div.modal-footer
-                button.btn.btn-warning(type='button' data-dismiss='modal') {{ 'close' | translate }}
                 button.btn.btn-warning(type='button' data-dismiss='modal') {{ 'close' | translate }}
 
 // Modal window for a new variable
