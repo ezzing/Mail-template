@@ -6,7 +6,8 @@
             'ngRoute',
             'ngLodash',
             'gridster',
-            'ngFileReader'
+            'ngFileReader',
+            'pascalprecht.translate'
         ])
         .run(['$rootScope', '$state', '$stateParams', '$window',
             function ($rootScope, $state, $stateParams, $window) {
@@ -24,9 +25,9 @@
     
     angular.module('mailTemplate').controller('mailGeneratorCtrl', mailGeneratorCtrl);
     
-    mailGeneratorCtrl.$inject = ['$scope', '$http', '$compile'];
+    mailGeneratorCtrl.$inject = ['$scope', '$http', '$compile', '$translate'];
 
-    function mailGeneratorCtrl ($scope, $http, $compile) {
+    function mailGeneratorCtrl ($scope, $http, $compile, $translate) {
         
         // Loading templates and saving in $scope.templateList in order to use it on div#emailGeneratorToolbar
         $http.get('/getCreatedTemplates').then(function (response) {
@@ -48,6 +49,18 @@
         
         $scope.closeDropdown = closeDropdown;
         $scope.saveOnEnter = saveOnEnter;
+        
+        $scope.data = {
+            'languages': [
+                {'value': 'en', 'name': 'english'},
+                {'value': 'es', 'name': 'spanish'}
+            ],
+            'selectedLanguage': {'value': 'en'}
+        };
+        
+        $scope.cambiarIdioma = function (lang) {
+            $translate.use(lang);
+        };
         
         /*
          * This function loads clicked template on #actualTemplate container, checks for variables on it, and loads them on dropdown menu
@@ -200,10 +213,22 @@
 
     'use strict';
     angular.module('mailTemplate').controller('templateGeneratorCtrl', templateGeneratorCtrl);
-    templateGeneratorCtrl.$inject = ['$scope', '$http', '$window', '$timeout'];
-    
-    function templateGeneratorCtrl ($scope, $http, $window, $timeout) {
 
+    templateGeneratorCtrl.$inject = ['$scope', '$http', '$window', '$translate', '$timeout'];
+    
+    function templateGeneratorCtrl ($scope, $http, $window, $translate, $timeout) {
+
+        $scope.data = {
+            'languages': [
+                {'value': "en", 'name': 'english'},
+                {'value': "es", 'name': 'spanish'}
+            ],
+        'selectedLanguage': {'value': "en"}
+        };
+        
+        $scope.cambiarIdioma = function (lang) {
+            $translate.use(lang);
+        };        
         // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
         $scope.validateTemForm = validateTemForm;
@@ -217,6 +242,7 @@
         $scope.variableName= '';
         $scope.saveOnEnter = saveOnEnter;
         $scope.texto = [];
+        $scope.gridsterCont = 0;
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -353,8 +379,8 @@
          */
         function cleanHTML () {
             // Extract the created template
-            var template = document.getElementById('templateGeneratorBody').getElementsByTagName("ul")[0];
-            var originalTemplate = document.getElementById('templateGeneratorBody').innerHTML;
+            var template = document.getElementById('templateGeneratorMain').getElementsByTagName("ul")[0];
+            var originalTemplate = document.getElementById('templateGeneratorMain').innerHTML;
             // Extract the lis
             var li = template.getElementsByTagName("li");
             // If exists Li
@@ -362,7 +388,7 @@
                 // clean all the lis
                 for (var i = 0; i < li.length ; i++){
                     // Change the proporcion of the li to introduce in the database
-                    var maxwidth = $("#templateGeneratorBody").width();
+                    var maxwidth = $("#templateGeneratorMain").width();
                     // Change the width
                     var styles = li[i].getAttribute("style");
                     var start = styles.search("width");
@@ -431,7 +457,7 @@
                 }
             }
             template = "<ul style='top: 25px; position: absolute; width: 100%; height: 100%;'>" + template.innerHTML + "</ul>";
-            document.getElementById('templateGeneratorBody').innerHTML = originalTemplate;
+            document.getElementById('templateGeneratorMain').innerHTML = originalTemplate;
             return template;
         }
         
@@ -440,16 +466,14 @@
          */
         function saveTemplate () {
             // Take a screenshot form the template for the icon
-            var screenshot = document.getElementById('templateGeneratorBody');
+            var screenshot = document.getElementById('templateGeneratorMain');
             html2canvas(screenshot, {
                 onrendered: function(canvas) {
                     // Getting the cleaning HTML
                     var gridster = angular.toJson($scope.elementList);
-                    console.log(gridster);
                     var icon = canvas.toDataURL();
                     var html = cleanHTML();
-                    var html_edit = $("#templateGeneratorBody").html();
-                    console.log(html_edit);
+                    var html_edit = $("#templateGeneratorMain").html();
                     // Getting template data
                     var templateData = {
                         'name_template': $scope.name_template,
@@ -553,9 +577,10 @@
                 'type': element,
                 'sizeX': 4,
                 'sizeY': 1,
-                'gridsterId': $scope.elementList.length,
+                'gridsterId': $scope.gridsterCont,
                 'innerBrNodes': 1
             });
+            $scope.gridsterCont++;
         }
         /*
          * This functions validates form displayed when link button is clicked on the toolbar and returns
@@ -588,7 +613,8 @@
                 'type': 'img',
                 'src': $scope.img,
                 'sizeX': 1,
-                'sizeY': 1
+                'sizeY': 1,
+                'gridsterId': $scope.gridsterCont
             });
             $('#askForImg').modal('hide');
         }
@@ -615,8 +641,9 @@
          * This function restart the edition of a template
          */
         function newTemplate () {
-            $("#templateGeneratorBody ul li").remove();
+            $("#templateGeneratorMain ul li").remove();
             $scope.elementList = [];
+            $scope.gridsterCont = 0;
         }
         
         // This functions saves a new template when enter is pressed on modal window, and form is validated
@@ -639,14 +666,17 @@
             $http.get('getTemplate2/' + id).then(function (response) {
                 var html = response.data[0].html_edit;
                 var gridster = angular.fromJson(response.data[0].gridster);
+                $scope.gridsterCont = gridster[gridster.length-1].gridsterId + 1;
                 for (var i = 0; i < gridster.length; i++){
                     $scope.elementList.push(gridster[i]);
                 }
                 html = $(html);
                 var pos = null;
                 for (var i = 0; i < html[4].getElementsByTagName("li").length; i++){
-                    pos = html[4].getElementsByTagName("li")[i].getAttribute("data-gridsterid");
-                    $scope.texto[pos] = html[4].getElementsByTagName("li")[i].getElementsByTagName("div")[0].getElementsByClassName("widgetContent ng-scope")[0].innerHTML;
+                    if (!html[4].getElementsByTagName("li")[i].getElementsByTagName("img")) {
+                        pos = html[4].getElementsByTagName("li")[i].getAttribute("data-gridsterid");
+                        $scope.texto[pos] = html[4].getElementsByTagName("li")[i].getElementsByTagName("div")[0].getElementsByClassName("widgetContent ng-scope")[0].innerHTML;
+                    }
                 }
                 $timeout(function(){
                     editHtml();
@@ -660,7 +690,7 @@
         function editHtml(){
             for (var i = 0; i < $scope.texto.length; i++){
                 if ($scope.texto[i] != null && $scope.gridsterready == true) {
-                    var route = "#templateGeneratorBody ul li[data-gridsterid='" + i + "'] div.tinymceContainer .widgetContent";
+                    var route = "#templateGeneratorMain ul li[data-gridsterid='" + i + "'] div.tinymceContainer .widgetContent";
                     $(route).html($scope.texto[i]);
                 }
             }
@@ -688,6 +718,7 @@
         chargeEditTemplate();
     }
 })();
+
 (function () {
     'use strict';
     angular
@@ -705,7 +736,15 @@
     
     angular.module('mailTemplate').config(URLConfig);
 
+    angular.module('mailTemplate').config(multilenguageConfig);
+    multilenguageConfig.$inject = ['$translateProvider'];
     URLConfig.$inject = ['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider'];
+    
+    
+    function multilenguageConfig ($translateProvider) {
+        $translateProvider.useUrlLoader('/getLanguage');
+        $translateProvider.preferredLanguage('en');
+    }
     
     /**
      * URL Configurator

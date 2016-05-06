@@ -4,7 +4,15 @@
     
     angular.module('mailTemplate').config(URLConfig);
 
+    angular.module('mailTemplate').config(multilenguageConfig);
+    multilenguageConfig.$inject = ['$translateProvider'];
     URLConfig.$inject = ['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider'];
+    
+    
+    function multilenguageConfig ($translateProvider) {
+        $translateProvider.useUrlLoader('/getLanguage');
+        $translateProvider.preferredLanguage('en');
+    }
     
     /**
      * URL Configurator

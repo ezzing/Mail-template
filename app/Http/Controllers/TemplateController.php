@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Models\Template;
 use Illuminate\Support\Facades\DB;
@@ -12,33 +11,34 @@ use Validator;
 
 class TemplateController extends Controller
 {
-    
     /*
      * This function returns all the templates save in the database
      */
-    public function getCreatedTemplates()
+
+    public function getCreatedTemplates ()
     {
         $table = DB::select('select id_template, name_template, created_at, icon from templates');
         return response()->json([
-            'templates' => $table
-        ], 200);
+                    'templates' => $table
+                        ], 200);
     }
-    
+
     /*
      * This function receives id data from front, and returns html of the id_template
      */
-    public function getTemplate($id)
+
+    public function getTemplate ($id)
     {
         $selectedHtml = DB::table('templates')->where('id_template', '=', $id)->pluck('html');
 
         return response()->json([
-            'templates' => $selectedHtml[0]
-        ], 200);
+                    'templates' => $selectedHtml[0]
+                        ], 200);
     }
-
+    
     /*
- * This function receives id data from front, and returns html of the id_template
- */
+    * This function receives id data from front, and returns html of the id_template
+    */
     public function getTemplate2($id)
     {
         $selectedHtml = DB::table('templates')->where('id_template', '=', $id)->select('html_edit', 'gridster')->get();
@@ -52,7 +52,7 @@ class TemplateController extends Controller
     public function saveTemplate ()
     {
         // Recovering template data object
-        $template= json_decode(Input::get('template'));
+        $template = json_decode(Input::get('template'));
 
         //Defining custom validator to work with $template JSON object and not a Request object
         $validator = Validator::make((array)$template, [
@@ -62,20 +62,18 @@ class TemplateController extends Controller
             'edit' => array('required'),
         ]);
 
-
-
         // Returning fail message if validation fails
-        if ($validator -> fails ()) {
-            return response() -> json ([
-                'status' => 'fail'
-            ], 200);
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'fail'
+                            ], 200);
         }
         // Saving template if validation success
         else {
             // If the html have any script tag, delete it
-            $html = $template -> html;
-            if ($html.contains("&lt;script&gt;")){
-                $html = preg_replace('/((&lt;script&gt;){1}.*(&lt;\/script&gt;){1})/',"",$html);
+            $html = $template->html;
+            if ($html . contains("&lt;script&gt;")) {
+                $html = preg_replace('/((&lt;script&gt;){1}.*(&lt;\/script&gt;){1})/', "", $html);
             }
 
             // Save data at database
@@ -88,9 +86,9 @@ class TemplateController extends Controller
             ));
 
             // Returning success message
-            return response() -> json ([
-                'status' => 'success'
-            ], 200);
+            return response()->json([
+                        'status' => 'success'
+                            ], 200);
         }
     }
 }

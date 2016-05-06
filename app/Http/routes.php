@@ -40,4 +40,4 @@ Route::get('/getTemplate/{id}', 'TemplateController@getTemplate');
 
 Route::get('/getTemplate2/{id}', 'TemplateController@getTemplate2');
 
-Route::get('/getLanguage/{code}', 'MultilanguageController@getLanguage');
+Route::get('/getLanguage/', 'MultilanguageController@getLanguage');

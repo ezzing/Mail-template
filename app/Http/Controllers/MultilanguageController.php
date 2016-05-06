@@ -23,8 +23,9 @@ class MultilanguageController extends Controller
      * @param $code
      * @return mixed
      */
-    public function getLanguage($code)
+    public function getLanguage()
     {
+        $code = Input::get('lang');
         // Extract the id of the selected language
         $id_language = DB::table('languages')->where('code', '=', $code)->pluck('id_language');
 
@@ -34,7 +35,6 @@ class MultilanguageController extends Controller
             ->join('languages', 'languages_text.id_language', '=', 'languages.id_language')
             ->join('languages_keys', 'languages_text.id_key', '=', 'languages_keys.id_key')
             ->pluck('text', 'key');
-
         return $languages;
     }
 }

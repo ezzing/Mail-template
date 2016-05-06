@@ -19,7 +19,7 @@ class CreateTemplatesTable extends Migration
             $table->longText('html');
             $table->longText('html_edit')->nullable();
             $table->longText('icon');
-            $table->string('gridster');
+            $table->longText('gridster');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
         });
