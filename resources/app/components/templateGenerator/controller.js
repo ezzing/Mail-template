@@ -16,7 +16,7 @@
         };
         
         $scope.cambiarIdioma = function (lang) {
-            $translate.use(lang);
+            $translate.use(lang.value);
         };        
         // All controller functions are declared here
         $scope.saveTemplate = saveTemplate;
@@ -32,6 +32,7 @@
         $scope.saveOnEnter = saveOnEnter;
         $scope.texto = [];
         $scope.gridsterCont = 0;
+        $scope.gridsterready = false;
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -462,7 +463,7 @@
                 html = $(html);
                 var pos = null;
                 for (var i = 0; i < html[4].getElementsByTagName("li").length; i++){
-                    if (!html[4].getElementsByTagName("li")[i].getElementsByTagName("img")) {
+                    if (html[4].getElementsByTagName("li")[i].getElementsByTagName("img").length === 0) {
                         pos = html[4].getElementsByTagName("li")[i].getAttribute("data-gridsterid");
                         $scope.texto[pos] = html[4].getElementsByTagName("li")[i].getElementsByTagName("div")[0].getElementsByClassName("widgetContent ng-scope")[0].innerHTML;
                     }
@@ -477,6 +478,7 @@
          * This function introduce the text into the gridster elements
          */
         function editHtml(){
+            console.log($scope.texto);
             for (var i = 0; i < $scope.texto.length; i++){
                 if ($scope.texto[i] != null && $scope.gridsterready == true) {
                     var route = "#templateGeneratorMain ul li[data-gridsterid='" + i + "'] div.tinymceContainer .widgetContent";

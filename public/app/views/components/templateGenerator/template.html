@@ -8,7 +8,7 @@
             <!-- button.btn.btn-success(type='button') {{ 'back' | translate }}--><span role="button" ng-click="newTemplate()" style="color: white" class="fa fa-arrow-circle-left fa-2x">               </span></a></div>
         <label for="lenguage" class="control-label col-xs-3">Lenguage:</label>
         <div class="col-xs-8 col-sm-6 col-lg-4">
-          <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.value as language.name  for language in data.languages track by language.value" ng-change="cambiarIdioma (data.selectedLanguage)" class="form-control">       </select>
+          <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.name  for language in data.languages track by language.value" ng-change="cambiarIdioma (data.selectedLanguage)" class="form-control"></select>
         </div>
       </form>
     </div>

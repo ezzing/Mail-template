@@ -34,11 +34,11 @@
                 {'value': 'en', 'name': 'english'},
                 {'value': 'es', 'name': 'spanish'}
             ],
-            'selectedLanguage': {'value': 'en'}
+            'selectedLanguage': {'value': 'en', 'name': 'english'}
         };
         
         $scope.cambiarIdioma = function (lang) {
-            $translate.use(lang);
+            $translate.use(lang.value);
         };
         
         /*
@@ -103,7 +103,6 @@
             mailData = JSON.stringify(mailData);
             
             // Print actual request to debug with postman
-            console.log(mailData);
 
             // Sending mail
             $http.post('mail', {

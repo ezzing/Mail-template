@@ -10,7 +10,7 @@ div#templateGenerator
                         span.fa.fa-arrow-circle-left.fa-2x(role='button' ng-click='newTemplate()' style='color: white')                
                 label.control-label.col-xs-3(for='lenguage') Lenguage:
                 div.col-xs-8.col-sm-6.col-lg-4
-                    select#lenguage.form-control(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.value as language.name  for language in data.languages track by language.value' ng-change='cambiarIdioma (data.selectedLanguage)')        
+                    select#lenguage.form-control(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.name  for language in data.languages track by language.value' ng-change='cambiarIdioma (data.selectedLanguage)')
         div#title.col-xs-4
             h4#viewTitle.col-xs-7.col-xs-offset-2 {{ 'title_template' | translate }}            
         div#buttonsWrapper.col-xs-4
