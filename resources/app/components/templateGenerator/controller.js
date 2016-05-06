@@ -6,28 +6,6 @@
     
     function templateGeneratorCtrl ($scope, $http, $window, $translate) {
 
-        $("h3").click(function() {
-            $http.get('getTemplate/4').then(function (response) {
-                console.log(response.data.templates);
-            });
-            /*
-            var Json = angular.fromJson($scope.gridsters);
-            console.log(Json[1]);
-            $scope.elementList.push(Json[0]);
-            $scope.elementList.push(Json[1]);
-            $scope.$digest();
-            */
-        });
-
-        /*
-         * This function resize the editor to a mobile size
-         */
-        function changeMobile () {
-            $scope.gridsters = angular.toJson($scope.elementList);
-            console.log($scope.gridsters);
-            $scope.elementList = [];
-        }
-
         $scope.data = {
             'languages': [
                 {'value': "en", 'name': 'english'},
@@ -51,7 +29,6 @@
         $scope.escribirVariable = escribirVariable;
         $scope.variableName= '';
         $scope.saveOnEnter = saveOnEnter;
-        $scope.changeMobile = changeMobile;
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -188,8 +165,8 @@
          */
         function cleanHTML () {
             // Extract the created template
-            var template = document.getElementById('templateGeneratorBody').getElementsByTagName("ul")[0];
-            var originalTemplate = document.getElementById('templateGeneratorBody').innerHTML;
+            var template = document.getElementById('templateGeneratorMain').getElementsByTagName("ul")[0];
+            var originalTemplate = document.getElementById('templateGeneratorMain').innerHTML;
             // Extract the lis
             var li = template.getElementsByTagName("li");
             // If exists Li
@@ -197,7 +174,7 @@
                 // clean all the lis
                 for (var i = 0; i < li.length ; i++){
                     // Change the proporcion of the li to introduce in the database
-                    var maxwidth = $("#templateGeneratorBody").width();
+                    var maxwidth = $("#templateGeneratorMain").width();
                     // Change the width
                     var styles = li[i].getAttribute("style");
                     var start = styles.search("width");
@@ -266,7 +243,7 @@
                 }
             }
             template = "<ul style='top: 25px; position: absolute; width: 100%; height: 100%;'>" + template.innerHTML + "</ul>";
-            document.getElementById('templateGeneratorBody').innerHTML = originalTemplate;
+            document.getElementById('templateGeneratorMain').innerHTML = originalTemplate;
             return template;
         }
         
@@ -275,7 +252,7 @@
          */
         function saveTemplate () {
             // Take a screenshot form the template for the icon
-            var screenshot = document.getElementById('templateGeneratorBody');
+            var screenshot = document.getElementById('templateGeneratorMain');
             html2canvas(screenshot, {
                 onrendered: function(canvas) {
                     // Getting the cleaning HTML
