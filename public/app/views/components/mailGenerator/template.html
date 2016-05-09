@@ -15,7 +15,7 @@
     </div>
     <div id="buttonsWrapper" class="col-xs-4">
       <!-- button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}-->
-      <!-- button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}--><span role="button" data-toggle="modal" data-target="#sendMail" onfocus="$(this).blur();" class="fa fa-envelope fa-2x"></span><a ng-href="#/templateGenerator{{id}}"><span role="button" style="color: white;" class="fa fa-edit fa-2x"></span></a>
+      <!-- button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}--><span role="button" ng-click="deleteTemplate(selectedId)" class="fa fa-trash fa-2x"></span><span role="button" data-toggle="modal" data-target="#sendMail" onfocus="$(this).blur();" class="fa fa-envelope fa-2x"></span><a ng-href="#/templateGenerator{{id}}"><span role="button" style="color: white;" class="fa fa-edit fa-2x"></span></a>
     </div>
   </div>
   <!-- Body      -->
@@ -24,15 +24,16 @@
     <div id="emailGeneratorToolbar" class="col-xs-3">
       <div class="scroolTool">
         <div href="#" ng-repeat="template in templateList">
-          <div ng-click="loadTemplate(template.id_template)" class="templateSelector row">
-            <div class="col-xs-5 icono">
+          <div class="templateSelector row">
+            <div ng-click="loadTemplate(template.id_template)" class="col-xs-5 icono">
               <table>
                 <tr>
                   <td><img ng-src="{{template.icon}}" class="img-responsive"/></td>
                 </tr>
               </table>
             </div>
-            <div class="col-xs-7 textTemplSel">{{template.name_template}}<br/>{{ 'date' | translate }}: {{template.created_at}}</div>
+            <div class="iconsContainer"><a ng-href="#/templateGenerator?id={{template.id_template}}"><span role="button" class="fa fa-edit">                      </span></a><span role="button" ng-click="deleteTemplate(template.id_template)" class="fa fa-trash"></span></div>
+            <div ng-click="loadTemplate(template.id_template)" class="col-xs-7 textTemplSel">{{template.name_template}}<br/>{{ 'date' | translate }}: {{template.created_at}}</div>
           </div>
         </div>
       </div><a id="refTemplateGenerator" href="#/templateGenerator">

@@ -91,4 +91,21 @@ class TemplateController extends Controller
                             ], 200);
         }
     }
+    
+    public function deleteTemplate ()
+    {
+        // Recovering template id
+        $target =Input::get('data');      
+        
+        
+       //  DB::enableQueryLog();        
+        // Removing template
+        $num = DB::update("DELETE FROM templates where id_template = $target");
+       // dd(DB::getQueryLog());
+
+        return response () -> json ([
+            'borradas' => $num,
+            'status' => 'success'
+        ],200);
+    }
 }

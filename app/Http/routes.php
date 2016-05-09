@@ -41,3 +41,5 @@ Route::get('/getTemplate/{id}', 'TemplateController@getTemplate');
 Route::get('/getTemplate2/{id}', 'TemplateController@getTemplate2');
 
 Route::get('/getLanguage/', 'MultilanguageController@getLanguage');
+
+Route::post('/deleteTemplate','TemplateController@deleteTemplate');

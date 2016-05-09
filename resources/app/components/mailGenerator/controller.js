@@ -28,6 +28,27 @@
         
         $scope.closeDropdown = closeDropdown;
         $scope.saveOnEnter = saveOnEnter;
+        $scope.deleteTemplate = deleteTemplate;
+        
+        function deleteTemplate (targetId) {
+            console.log(targetId);
+            $http.post('/deleteTemplate', {'data':targetId}).then(
+                function (response) {
+                    console.log($scope.templateList);
+                    $scope.templateList.filter( function (obj, index) {
+                        if (obj.id_template == targetId) {
+                            $scope.templateList.splice(index, 1);
+                        }
+                    });
+                    if (targetId === $scope.selectedId) {
+                        $('#actualTemplate').empty();
+                    }
+                },
+                function () {
+                    //
+                }
+            );
+        }
         
         $scope.data = {
             'languages': [
@@ -47,6 +68,7 @@
          */
         
         function loadTemplate (id) {
+            $scope.selectedId = id;
             $scope.id = "?id=" + id;
             $http.get('getTemplate/' + id).then(function (response) {
                 // Getting new template

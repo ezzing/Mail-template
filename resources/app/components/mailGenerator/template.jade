@@ -11,6 +11,7 @@ div#emailGenerator
         div#buttonsWrapper.col-xs-4
             // button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}
             // button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}
+            span.fa.fa-trash.fa-2x(role='button'  ng-click='deleteTemplate(selectedId)')
             span.fa.fa-envelope.fa-2x(role='button'  data-toggle='modal' data-target='#sendMail' onfocus="$(this).blur();")
             a(ng-href='#/templateGenerator{{id}}')
                 span.fa.fa-edit.fa-2x(role='button' style='color: white;')
@@ -21,13 +22,17 @@ div#emailGenerator
         div#emailGeneratorToolbar.col-xs-3
             div.scroolTool
                 div(href='#' ng-repeat='template in templateList')
-                    div.templateSelector.row(ng-click='loadTemplate(template.id_template)')
-                        div.col-xs-5.icono
+                    div.templateSelector.row
+                        div.col-xs-5.icono(ng-click='loadTemplate(template.id_template)')
                             table
                                 tr
                                     td
                                         img.img-responsive(ng-src='{{template.icon}}')
-                        div.col-xs-7.textTemplSel
+                        div.iconsContainer
+                            a(ng-href='#/templateGenerator?id={{template.id_template}}')
+                                span.fa.fa-edit(role='button')                       
+                            span.fa.fa-trash(role='button'  ng-click='deleteTemplate(template.id_template)')
+                        div.col-xs-7.textTemplSel(ng-click='loadTemplate(template.id_template)')
                             |{{template.name_template}}
                             br
                             |{{ 'date' | translate }}: {{template.created_at}}
