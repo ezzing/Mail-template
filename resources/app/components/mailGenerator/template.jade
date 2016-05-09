@@ -9,13 +9,10 @@ div#emailGenerator(ng-init='loadTemplates()')
         div#title.col-xs-4
             h4#viewTitle.col-xs-7.col-xs-offset-2 {{ 'title_mail' | translate }}            
         div#buttonsWrapper.col-xs-4
-            // button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}
-            // button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}
             span.fa.fa-trash.fa-2x(role='button'  ng-click='deleteTemplate(selectedTemplate)')
             span.fa.fa-envelope.fa-2x(role='button'  data-toggle='modal' data-target='#sendMail' onfocus="$(this).blur();")
             a(ng-href='#/templateGenerator?id={{selectedTemplate}}')
                 span.fa.fa-edit.fa-2x(role='button' style='color: white;')
-
       // Body      
       div#emailGeneratorBody.row           
         //Toolbar
@@ -45,7 +42,6 @@ div#emailGenerator(ng-init='loadTemplates()')
                                     img#newTemplateImg.img-responsive(src='/app/img/plantilla.png')
                     div.col-xs-7.textTemplSel
                         |{{ 'new_template' | translate }}
-
         //main section
         div#emailGeneratorMain.col-xs-12.col-sm-9.row
             #emailGeneratorToolbarButton.navbar-toggle.collapsed.col-xs-3
@@ -72,7 +68,6 @@ div#emailGenerator(ng-init='loadTemplates()')
                         label.col-xs-1.control-label(for='{{variable[0]}}') {{variable[0]}}
                         div.col-xs-10
                             input.form-control(ng-model='variable[1]' id='{{variable[0]}}' ng-change='changeVariables()')
-                    
             // Div that contains the preview of the email
             #actualTemplate
  

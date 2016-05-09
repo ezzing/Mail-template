@@ -1,42 +1,40 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\User;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Input;
 use Validator;
 
+/**
+ * This class manages email sending
+ */
 class MailController extends Controller 
 {      
     
-    /*
-     * This function receives email data from front, validates the data, and if it is correct it sends the email.
-     */
+/**
+ * sendEmail --> Sends received email to target
+ * @return array --> asociative array with the final status of request
+ */
     public function sendEmail ()
     {
-        // Recovering mail data object
+        // Recovers mail data object
         $mailData= json_decode(Input::get('emailData'));
-
-        //Defining custom validator to work with $mailData  JSON object and not a Request object
+        //Defines validator object
         $validator = Validator::make((array)$mailData, [
            'email' => array('required', 'regex:/^((<[a-z]+>)?[\.a-zA-ZáéíóúÁÉÍÓÚñÑ_1-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12})(,((<[a-z]+>)?[\.a-zA-ZáéíóúÁÉÍÓÚñÑ_1-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12}))*$/'),
            'subject' => array('required', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ1-9][a-zA-ZáéíóúÁÉÍÓÚñÑ1-9 ]{3,50}$/')
         ]);
-        
-        // Returning fail message if validation fails
+        // Returns fail message if validation fails
         if ($validator -> fails ()) {
             return response() -> json ([
                 'status' => 'fail'
             ], 200);
         }
-        // Sending email if validation success
+        // Sends email if validation success
         else {
             // Split string of emails into an array of emails
             $allMails = explode (',', $mailData->email);
-
             // For each mail in $allMails, actual name and target of each mail are getted, and then the email is sent
             foreach ($allMails as $mail) {
                 $separatorPosition = strpos($mail, '>');
