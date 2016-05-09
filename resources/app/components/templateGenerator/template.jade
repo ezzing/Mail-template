@@ -17,7 +17,7 @@ div#templateGenerator
             // button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}
             // button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}
             span.fa.fa-trash.fa-2x(role='button' ng-click='newTemplate()')
-            span.fa.fa-save.fa-2x(role='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();")
+            span.fa.fa-save.fa-2x(role='button' data-toggle='modal' data-target='{{saveOrReplace}}' onfocus="$(this).blur();")
 
         // body    
       div#templateGeneratorBody.row    
@@ -66,6 +66,22 @@ div#saveTemplate.modal.fade(ng-keydown='saveOnEnter($event)')
             div.modal-footer
                 button.btn.btn-warning(type='button' data-dismiss='modal') {{ 'close' | translate }}
                 button.btn.btn-success(type='button' ng-click='saveTemplate()' ng-disabled='validateTemForm()') {{ 'save' | translate }}
+
+// Modal window for replace a template
+div#replaceTemplate.modal.fade(ng-keydown='replaceOnEnter($event)')
+    div.modal-dialog.modal-lg
+        div.modal-content
+            div.modal-header
+                button.close(type='button' data-dismiss='modal' aria-label='close')
+                    span(aria-hidden='true') &times;
+                h4.modal-title {{ 'replace_template' | translate }}
+            div.modal-body
+                h3.modal-title {{ 'replace_template_question' | translate }}
+                button.btn.btn-warning(type='button' ng-click='replaceTemplate()') {{ 'replace_template' | translate }}
+                button.btn.btn-success(type='button' data-dismiss='modal' data-target='#saveTemplate') {{ 'save_template' | translate }}
+            div.modal-footer
+                button.btn.btn-warning(type='button' data-dismiss='modal') {{ 'close' | translate }}
+
 
 // Modal window for asking for a image
 div#askForImg.modal.fade

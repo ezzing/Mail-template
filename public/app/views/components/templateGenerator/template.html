@@ -17,7 +17,7 @@
     </div>
     <div id="buttonsWrapper" class="col-xs-4">
       <!-- button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}-->
-      <!-- button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}--><span role="button" ng-click="newTemplate()" class="fa fa-trash fa-2x"></span><span role="button" data-toggle="modal" data-target="#saveTemplate" onfocus="$(this).blur();" class="fa fa-save fa-2x"></span>
+      <!-- button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}--><span role="button" ng-click="newTemplate()" class="fa fa-trash fa-2x"></span><span role="button" data-toggle="modal" data-target="{{saveOrReplace}}" onfocus="$(this).blur();" class="fa fa-save fa-2x"></span>
     </div>
     <!-- body    -->
   </div>
@@ -76,6 +76,25 @@
       <div class="modal-footer">
         <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
         <button type="button" ng-click="saveTemplate()" ng-disabled="validateTemForm()" class="btn btn-success">{{ 'save' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal window for replace a template-->
+<div id="replaceTemplate" ng-keydown="replaceOnEnter($event)" class="modal fade">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ 'replace_template' | translate }}</h4>
+      </div>
+      <div class="modal-body">
+        <h3 class="modal-title">{{ 'replace_template_question' | translate }}</h3>
+        <button type="button" ng-click="replaceTemplate()" class="btn btn-warning">{{ 'replace_template' | translate }}</button>
+        <button type="button" data-dismiss="modal" data-target="#saveTemplate" class="btn btn-success">{{ 'save_template' | translate }}</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
       </div>
     </div>
   </div>

@@ -6,6 +6,8 @@
     templateGeneratorCtrl.$inject = ['$scope', '$http', '$window', '$translate', '$timeout'];
     
     function templateGeneratorCtrl ($scope, $http, $window, $translate, $timeout) {
+        // Able scroll
+        $("body").css('overflow-y', 'scroll');
 
         $scope.data = {
             'languages': [
@@ -33,6 +35,8 @@
         $scope.texto = [];
         $scope.gridsterCont = 0;
         $scope.gridsterready = false;
+        $scope.id = null;
+        $scope.saveOrReplace = '#saveTemplate';
         
         // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
@@ -182,7 +186,7 @@
                     // Change the width
                     var styles = li[i].getAttribute("style");
                     var start = styles.search("width");
-                    var sub = styles.substring(start, start + 14);
+                    var sub = styles.substring(start, start + 17);
                     var end = sub.search("px");
                     var width = sub.substring(7 , end);
                     width = Math.round(width*100/maxwidth);
@@ -191,7 +195,7 @@
                     // Change the left position
                     styles = li[i].getAttribute("style");
                     start = styles.search("left");
-                    sub = styles.substring(start, start + 13);
+                    sub = styles.substring(start, start + 16);
                     end = sub.search("px");
                     var left = sub.substring(6 , end);
                     left = Math.round(left*100/maxwidth);
@@ -246,7 +250,7 @@
                     }
                 }
             }
-            template = "<ul style='top: 25px; position: absolute; width: 100%; height: 100%;'>" + template.innerHTML + "</ul>";
+            template = "<ul style='top: 34px; position: absolute; width: 100%; height: 90%;'>" + template.innerHTML + "</ul>";
             document.getElementById('templateGeneratorMain').innerHTML = originalTemplate;
             return template;
         }
@@ -452,8 +456,8 @@
         /*
          * This function get the template to edit it
          */
-        function editGridster(id){
-            $http.get('getTemplate2/' + id).then(function (response) {
+        function editGridster(){
+            $http.get('getTemplate2/' + $scope.id).then(function (response) {
                 var html = response.data[0].html_edit;
                 var gridster = angular.fromJson(response.data[0].gridster);
                 $scope.gridsterCont = gridster[gridster.length-1].gridsterId + 1;
@@ -478,7 +482,6 @@
          * This function introduce the text into the gridster elements
          */
         function editHtml(){
-            console.log($scope.texto);
             for (var i = 0; i < $scope.texto.length; i++){
                 if ($scope.texto[i] != null && $scope.gridsterready == true) {
                     var route = "#templateGeneratorMain ul li[data-gridsterid='" + i + "'] div.tinymceContainer .widgetContent";
@@ -501,11 +504,81 @@
             }
             // If the id is define, introduce the template to edit it
             if (params['#/templateGenerator?id']){
-                var id = params['#/templateGenerator?id'];
+                $scope.id = params['#/templateGenerator?id'];
+                $scope.saveOrReplace = '#replaceTemplate';
                 $scope.gridsterready = true;
-                editGridster(id);
+                editGridster();
             }
         }
         chargeEditTemplate();
+
+        /*
+         * This function evaluate if the edit bottom has been clicked
+         */
+        function replaceTemplate(){
+            // Take a screenshot form the template for the icon
+            var screenshot = document.getElementById('templateGeneratorMain');
+            html2canvas(screenshot, {
+                onrendered: function(canvas) {
+                    // Getting the cleaning HTML
+                    var gridster = angular.toJson($scope.elementList);
+                    var icon = canvas.toDataURL();
+                    var html = cleanHTML();
+                    var html_edit = $("#templateGeneratorMain").html();
+                    // Getting template data
+                    var templateData = {
+                        'id': $scope.id,
+                        'icon': icon,
+                        'html': html,
+                        'html_edit': html_edit,
+                        'edit': gridster
+                    };
+
+                    // Parsing js object to string
+                    var templateData = JSON.stringify(templateData);
+
+                    // Ajax request to sabe new template
+                    $http.post('replaceTemplate', {
+                        'template': templateData
+                    }).then(function (response) {
+                        // If ajax call success but it returns a fail state
+                        if (response.data.status === 'fail') {
+                            swal({
+                                'title': 'error!',
+                                'text': 'server could not validate your data!',
+                                'type': 'error',
+                                'confirmButtomText': 'close'
+                            });
+                        }
+                        // If ajax call success and it return a success state
+                        else {
+                            swal({
+                                'title': 'success!',
+                                'text': 'Your template has been replace!',
+                                'type': 'success',
+                                'confirmButtomText': 'cool'
+                            }, function() {
+                                // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
+                                $window.location.href = "http://mailtemplate.app:8000/#/mailGenerator";
+                            });
+                            // Hide the modal
+                            $('#saveTemplate').modal('hide');
+
+                            // This removes the has-error class added when the input data was removed setting the form state to pristine
+                            $scope.saveTemplateForm.$setPristine();
+
+                        }
+                    }, function () {
+                        // If ajax call does not success
+                        swal({
+                            'title': 'error!',
+                            'text': 'Something is wrong with the server, please try again latter',
+                            'type': 'error',
+                            'confirmButtomText': 'close'
+                        });
+                    });
+                }});
+        }
+
     }
 })();

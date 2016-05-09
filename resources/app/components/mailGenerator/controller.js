@@ -7,6 +7,8 @@
     mailGeneratorCtrl.$inject = ['$scope', '$http', '$compile', '$translate'];
 
     function mailGeneratorCtrl ($scope, $http, $compile, $translate) {
+        // Disable the scroll
+        $("body").css('overflow', 'hidden');
         
         // Loading templates and saving in $scope.templateList in order to use it on div#emailGeneratorToolbar
         $http.get('/getCreatedTemplates').then(function (response) {

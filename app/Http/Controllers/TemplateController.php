@@ -91,4 +91,52 @@ class TemplateController extends Controller
                             ], 200);
         }
     }
+
+    /*
+ * This function replace the edited template
+ */
+    public function replaceTemplate ()
+    {
+        // Recovering template data object
+        $template = json_decode(Input::get('template'));
+
+        //Defining custom validator to work with $template JSON object and not a Request object
+        $validator = Validator::make((array)$template, [
+            'id' => array('required', 'regex:/^[0-9]+$/'),
+            'html' => array('required'),//,'regex:/((<script>){1}.*(<\/script>){1})/'
+            'icon' => array('required'),
+            'edit' => array('required'),
+        ]);
+
+        // Returning fail message if validation fails
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fail'
+            ], 200);
+        }
+        // Replacing template if validation success
+        else {
+            // If the html have any script tag, delete it
+            $html = $template->html;
+            if ($html . contains("&lt;script&gt;")) {
+                $html = preg_replace('/((&lt;script&gt;){1}.*(&lt;\/script&gt;){1})/', "", $html);
+            }
+
+            // Replace the template
+            DB::table('templates')
+                ->where('id', $template -> id)
+                ->update(array(
+                    'html'          => $html,
+                    'html_edit'     => $template -> html_edit,
+                    'icon'          => $template -> icon,
+                    'gridster'      => $template -> edit
+                ));
+
+            // Returning success message
+            return response()->json([
+                'status' => 'success'
+            ], 200);
+        }
+    }
+
 }

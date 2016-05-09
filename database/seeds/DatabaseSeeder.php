@@ -190,103 +190,125 @@ class LanguageTextAppSeeder extends Seeder
             'id_key' => '13',
             'text' => 'Párrafo'
         ));
-        // save key
+        // replace_template key
         LanguageText::create(array(
             'id_language' => '1',
             'id_key' => '14',
-            'text' => 'Save'
+            'text' => 'Replace the template'
         ));
         LanguageText::create(array(
             'id_language' => '2',
             'id_key' => '14',
+            'text' => 'Reemplazar la plantilla'
+        ));
+        // replace_template_question key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '15',
+            'text' => 'Do you want to replace the template?'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '15',
+            'text' => '¿Quiere reemplazar la plantilla?'
+        ));
+        // save key
+        LanguageText::create(array(
+            'id_language' => '1',
+            'id_key' => '16',
+            'text' => 'Save'
+        ));
+        LanguageText::create(array(
+            'id_language' => '2',
+            'id_key' => '16',
             'text' => 'Guardar'
         ));
         // save_template key
         LanguageText::create(array(
             'id_language' => '1',
-            'id_key' => '15',
+            'id_key' => '17',
             'text' => 'Save template'
         ));
         LanguageText::create(array(
             'id_language' => '2',
-            'id_key' => '15',
+            'id_key' => '17',
             'text' => 'Guardar plantilla'
         ));
         // send key
         LanguageText::create(array(
             'id_language' => '1',
-            'id_key' => '16',
+            'id_key' => '18',
             'text' => 'Send'
         ));
         LanguageText::create(array(
             'id_language' => '2',
-            'id_key' => '16',
+            'id_key' => '18',
             'text' => 'Enviar'
         ));
         // small_title key
         LanguageText::create(array(
             'id_language' => '1',
-            'id_key' => '17',
+            'id_key' => '19',
             'text' => 'Small title'
         ));
         LanguageText::create(array(
             'id_language' => '2',
-            'id_key' => '17',
+            'id_key' => '19',
             'text' => 'Título pequeño'
         ));
         // subject key
         LanguageText::create(array(
             'id_language' => '1',
-            'id_key' => '18',
+            'id_key' => '20',
             'text' => 'Subject'
         ));
         LanguageText::create(array(
             'id_language' => '2',
-            'id_key' => '18',
+            'id_key' => '20',
             'text' => 'Asunto'
         ));
         // template_name key
         LanguageText::create(array(
             'id_language' => '1',
-            'id_key' => '19',
+            'id_key' => '21',
             'text' => 'Template name'
         ));
         LanguageText::create(array(
             'id_language' => '2',
-            'id_key' => '19',
+            'id_key' => '21',
             'text' => 'Nombre de la plantilla'
         ));
         // title_mail key
         LanguageText::create(array(
             'id_language' => '1',
-            'id_key' => '20',
+            'id_key' => '22',
             'text' => 'Mail generator'
         ));
         LanguageText::create(array(
             'id_language' => '2',
-            'id_key' => '20',
+            'id_key' => '22',
             'text' => 'Generador de E-mails'
         ));
         // title_template key
         LanguageText::create(array(
             'id_language' => '1',
-            'id_key' => '21',
+            'id_key' => '23',
             'text' => 'Mail template generator'
         ));
         LanguageText::create(array(
             'id_language' => '2',
-            'id_key' => '21',
+            'id_key' => '23',
             'text' => 'Generador de plantillas de E-mails'
         ));
         // variable key
         LanguageText::create(array(
             'id_language' => '1',
-            'id_key' => '22',
+            'id_key' => '24',
             'text' => 'Variables'
         ));
         LanguageText::create(array(
             'id_language' => '2',
-            'id_key' => '22',
+            'id_key' => '24',
             'text' => 'Variables'
         ));
 
@@ -349,6 +371,12 @@ class LanguageKeyAppSeeder extends Seeder
         ));
         LanguageKey::create(array(
             'key' => 'paragraph'
+        ));
+        LanguageKey::create(array(
+            'key' => 'replace_template'
+        ));
+        LanguageKey::create(array(
+            'key' => 'replace_template_question'
         ));
         LanguageKey::create(array(
             'key' => 'save'
