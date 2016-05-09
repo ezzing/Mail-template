@@ -18,7 +18,7 @@ class MailController extends Controller
     public function sendEmail ()
     {
         // Recovering mail data object
-        $mailData= json_decode(Input::get('mailData'));
+        $mailData= json_decode(Input::get('emailData'));
 
         //Defining custom validator to work with $mailData  JSON object and not a Request object
         $validator = Validator::make((array)$mailData, [
