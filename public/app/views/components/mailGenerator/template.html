@@ -1,22 +1,19 @@
 
-<div id="emailGenerator">
+<div id="emailGenerator" ng-init="loadTemplates()">
   <!-- Header-->
   <div id="emailGeneratorHeader" class="row">
     <div id="lenguageSelector" class="col-xs-4">
       <form class="form-horizontal">
         <label for="lenguage" class="control-label col-xs-4">Lenguage:</label>
         <div class="col-xs-8 col-sm-6 col-lg-4">
-          <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.name  for language in data.languages track by language.value" ng-change="cambiarIdioma (data.selectedLanguage)" class="form-control"></select>
+          <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.name  for language in data.languages track by language.value" ng-change="changeLanguage(data.selectedLanguage)" class="form-control"></select>
         </div>
       </form>
     </div>
     <div id="title" class="col-xs-4">
       <h4 id="viewTitle" class="col-xs-7 col-xs-offset-2">{{ 'title_mail' | translate }}            </h4>
     </div>
-    <div id="buttonsWrapper" class="col-xs-4">
-      <!-- button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}-->
-      <!-- button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}--><span role="button" data-toggle="modal" data-target="#sendMail" onfocus="$(this).blur();" class="fa fa-envelope fa-2x"></span><a ng-href="#/templateGenerator{{id}}"><span role="button" style="color: white;" class="fa fa-edit fa-2x"></span></a>
-    </div>
+    <div id="buttonsWrapper" class="col-xs-4"><span role="button" ng-click="deleteTemplate(selectedTemplate)" class="fa fa-trash fa-2x"></span><span role="button" data-toggle="modal" data-target="#sendMail" onfocus="$(this).blur();" class="fa fa-envelope fa-2x"></span><a ng-href="#/templateGenerator?id={{selectedTemplate}}"><span role="button" style="color: white;" class="fa fa-edit fa-2x"></span></a></div>
   </div>
   <!-- Body      -->
   <div id="emailGeneratorBody" class="row">          
@@ -24,15 +21,16 @@
     <div id="emailGeneratorToolbar" class="col-xs-3">
       <div class="scroolTool">
         <div href="#" ng-repeat="template in templateList">
-          <div ng-click="loadTemplate(template.id_template)" class="templateSelector row">
-            <div class="col-xs-5 icono">
+          <div class="templateSelector row">
+            <div ng-click="loadTemplate(template.id_template)" class="col-xs-5 icono">
               <table>
                 <tr>
                   <td><img ng-src="{{template.icon}}" class="img-responsive"/></td>
                 </tr>
               </table>
             </div>
-            <div class="col-xs-7 textTemplSel">{{template.name_template}}<br/>{{ 'date' | translate }}: {{template.created_at}}</div>
+            <div class="iconsContainer"><a ng-href="#/templateGenerator?id={{template.id_template}}"><span role="button" class="fa fa-edit">                      </span></a><span role="button" ng-click="deleteTemplate(template.id_template)" class="fa fa-trash"></span></div>
+            <div ng-click="loadTemplate(template.id_template)" class="col-xs-7 textTemplSel">{{template.name_template}}<br/>{{ 'date' | translate }}: {{template.created_at}}</div>
           </div>
         </div>
       </div><a id="refTemplateGenerator" href="#/templateGenerator">
@@ -75,7 +73,7 @@
   </div>
 </div>
 <!-- Modal window for sending an email-->
-<div id="sendMail" ng-keydown="saveOnEnter($event)" class="modal fade">
+<div id="sendMail" ng-keydown="sendOnEnter($event)" class="modal fade">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -99,7 +97,7 @@
       </form>
       <div class="modal-footer">
         <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
-        <button type="button" ng-click="sendMail()" ng-disabled="validateForm()" class="btn btn-success">{{ 'send' | translate }}</button>
+        <button type="button" ng-click="sendEmail()" ng-disabled="disableSendingButton()" class="btn btn-success">{{ 'send' | translate }}</button>
       </div>
     </div>
   </div>

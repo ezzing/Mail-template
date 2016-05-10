@@ -169,6 +169,16 @@
   width: 100%;
   cursor: pointer;
 }
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar .templateSelector .iconsContainer {
+  z-index: 100;
+  margin: 10px;
+  position: absolute;
+  right: 0px;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar .templateSelector .iconsContainer span {
+  color: white;
+  margin-right: 5px;
+}
 #emailGenerator #emailGeneratorBody #emailGeneratorToolbar .templateSelector .textTemplSel {
   padding-top: 5%;
 }

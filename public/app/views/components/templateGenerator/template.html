@@ -90,8 +90,8 @@
       </div>
       <div class="modal-body">
         <h3 class="modal-title">{{ 'replace_template_question' | translate }}</h3>
-        <button type="button" ng-click="replaceTemplate()" class="btn btn-warning">{{ 'replace_template' | translate }}</button>
-        <button type="button" data-dismiss="modal" data-target="#saveTemplate" class="btn btn-success">{{ 'save_template' | translate }}</button>
+        <button type="button" ng-click="updateTemplate()" class="btn btn-warning">{{ 'replace_template' | translate }}</button>
+        <button type="button" data-dismiss="modal" ng-click="openSave()" class="btn btn-success">{{ 'save_template' | translate }}</button>
       </div>
       <div class="modal-footer">
         <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
@@ -135,7 +135,7 @@
       </form>
       <div class="modal-footer">
         <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
-        <button type="button" ng-click="escribirVariable()" class="btn btn-success">Set</button>
+        <button type="button" ng-click="setVariable()" class="btn btn-success">Set</button>
       </div>
     </div>
   </div>

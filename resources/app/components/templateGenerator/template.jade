@@ -77,8 +77,8 @@ div#replaceTemplate.modal.fade(ng-keydown='replaceOnEnter($event)')
                 h4.modal-title {{ 'replace_template' | translate }}
             div.modal-body
                 h3.modal-title {{ 'replace_template_question' | translate }}
-                button.btn.btn-warning(type='button' ng-click='replaceTemplate()') {{ 'replace_template' | translate }}
-                button.btn.btn-success(type='button' data-dismiss='modal' data-target='#saveTemplate') {{ 'save_template' | translate }}
+                button.btn.btn-warning(type='button' ng-click='updateTemplate()') {{ 'replace_template' | translate }}
+                button.btn.btn-success(type='button' data-dismiss='modal' ng-click='openSave()') {{ 'save_template' | translate }}
             div.modal-footer
                 button.btn.btn-warning(type='button' data-dismiss='modal') {{ 'close' | translate }}
 
@@ -112,4 +112,4 @@ div#setVariables.modal.fade
                         input#variableName.form-control(type='text' ng-model='variableName' name='variableName'  placeholder='Name of the Variable')
             div.modal-footer
                 button.btn.btn-warning(type='button' data-dismiss='modal') Close
-                button.btn.btn-success(type='button' ng-click='escribirVariable()') Set
+                button.btn.btn-success(type='button' ng-click='setVariable()') Set

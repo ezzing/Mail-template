@@ -9,18 +9,7 @@
         // Able scroll
         $("body").css('overflow-y', 'scroll');
 
-        $scope.data = {
-            'languages': [
-                {'value': "en", 'name': 'english'},
-                {'value': "es", 'name': 'spanish'}
-            ],
-        'selectedLanguage': {'value': "en"}
-        };
-        
-        $scope.cambiarIdioma = function (lang) {
-            $translate.use(lang.value);
-        };        
-        // All controller functions are declared here
+        // Declaring all scope methods
         $scope.saveTemplate = saveTemplate;
         $scope.validateTemForm = validateTemForm;
         $scope.createTextElement = createTextElement;
@@ -29,18 +18,28 @@
         $scope.onReaded = onReaded;
         $scope.openTinymce = openTinymce;
         $scope.newTemplate = newTemplate;
-        $scope.escribirVariable = escribirVariable;
-        $scope.variableName= '';
+        $scope.setVariable = setVariable;
         $scope.saveOnEnter = saveOnEnter;
+        $scope.updateTemplate = updateTemplate;
+        $scope.openSave = openSave;
+        $scope.changeLanguage = changeLanguage;
+
+        // Declaring all scope properties   
+        $scope.variableName= '';
         $scope.texto = [];
         $scope.gridsterCont = 0;
         $scope.gridsterready = false;
         $scope.id = null;
         $scope.saveOrReplace = '#saveTemplate';
-        
-        // All controller properties are declared here
         $scope.readMethod = 'readAsDataURL';
         $scope.elementList = [];
+        $scope.data = {
+            'languages': [
+                {'value': "en", 'name': 'english'},
+                {'value': "es", 'name': 'spanish'}
+            ],
+        'selectedLanguage': {'value': "en"}
+        };
         $scope.gridsterOpts = {
             'columns': 24,
             'pushing': true,
@@ -66,11 +65,6 @@
             'resizable': {
                 'enabled': true,
                 'handles': ['se']
-                /*
-                 * 'start': function(event, $element, widget) {},
-                'resize': function(event, $element, widget) {},
-                'stop': function(event, $element, widget) {}
-                */
             },
             'draggable': {
                 'enabled': false,
@@ -138,13 +132,6 @@
             'fontsize_formats': '8pt 10pt 12pt 14pt 18pt 24pt 36pt 42pt 72pt',
             'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
         };
-
-        function escribirVariable() {
-            console.log($scope.variableName);
-            tinymce.activeEditor.execCommand('mceInsertContent', false, '<span class="variables" style="color: red; background: yellow; font-weight: bold" contenteditable="false">{{' + $scope.variableName + '}}</span>');
-            $("#setVariables").modal('hide');
-            $scope.variableName = '';
-        }
         $scope.tinyMceImgOpts = {
             'selector': '.imageExample',
             'inline': true,
@@ -159,16 +146,34 @@
             'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
         };
 
-        /*
-         * This function validates the fields in the mail sending form
+        /**
+         * changeLanguage: changes current language
+         * @param {string} lang --> Selected language
+         */
+        function changeLanguage (lang) {
+            $translate.use(lang.value);
+        }
+        
+        /**
+         * setVariable: introduce the variable into the selected text
+         */
+        function setVariable () {
+            tinymce.activeEditor.execCommand('mceInsertContent', false, '<span class="variables" style="color: red; background: yellow; font-weight: bold" contenteditable="false">{{' + $scope.variableName + '}}</span>');
+            $("#setVariables").modal('hide');
+            $scope.variableName = '';
+        }
+
+        /**
+         * validateForm: validates form displayed when save button is clicked on the toolbar and returns
+         *               the disability status for saving button.
          * @returns {Boolean}
          */
         function validateTemForm () {
             return $scope.saveTemplateForm.name_template.$invalid ? true : '';
         }
 
-        /*
-         * This function clean the HTML code to store it
+        /**
+         * cleanHTML: clean the HTML code to store it
          * @returns {string}
          */
         function cleanHTML () {
@@ -255,8 +260,8 @@
             return template;
         }
         
-        /*
-         * This function saves the  new template when button in header is clicked
+        /**
+         * saveTemplate: store the template at DataBase
          */
         function saveTemplate () {
             // Take a screenshot form the template for the icon
@@ -270,6 +275,7 @@
                     var html_edit = $("#templateGeneratorMain").html();
                     // Getting template data
                     var templateData = {
+                        'id': $scope.id,
                         'name_template': $scope.name_template,
                         'icon': icon,
                         'html': html,
@@ -278,7 +284,7 @@
                     };
 
                     // Parsing js object to string
-                    var templateData = JSON.stringify(templateData);
+                    templateData = JSON.stringify(templateData);
 
                     // Ajax request to sabe new template
                     $http.post('saveTemplate', {
@@ -326,11 +332,12 @@
                     });
                 }});
         }
-        /*
-        * This Function extract the url of the insert image
-        * @param input {type} HTML Element
-        * @param field_name {type} string
-        * @param win {type} window Object
+        
+        /**
+         * readURL: extract the url of the insert image
+         * @param input {type} HTML Element
+         * @param field_name {type} string
+         * @param win {type} window Object
          */
         function readURL (input, field_name, win) {
             if (input.files && input.files[0]) {
@@ -342,8 +349,12 @@
             }
         }
 
-        /*
-        * This Function expand the browser file to insert an image
+        /**
+         * myFileBrowser: expand the browser file to insert an image
+         * @param {string} field_name --> field name
+         * @param {string} url --> url og the img
+         * @param {type} type --> type
+         * @param {type} win --> window Object
          */
         function myFileBrowser (field_name, url, type, win) {
             var elemId = 'img';
@@ -359,14 +370,12 @@
             win.document.getElementById(field_name).value = 'Without file';
         }
         
-        /*
-         * This function creates a new gridster element when a button in the toolbar is clicked. It is used
+        /**
+         * createTextElement: creates a new gridster element when a button in the toolbar is clicked. It is used
          * for all buttons, so it receives as an argument which elements needs to be created.
          * @param {type} element
-         * @returns {undefined}
          */
-        function createTextElement (element) {
-            
+        function createTextElement (element) {            
             $scope.elementList.push({
                 'type': element,
                 'sizeX': 4,
@@ -376,8 +385,9 @@
             });
             $scope.gridsterCont++;
         }
-        /*
-         * This functions validates form displayed when link button is clicked on the toolbar and returns
+        
+        /**
+         * validateForm: validates form displayed when link button is clicked on the toolbar and returns
          * the disability status for sending button.
          * @returns {Boolean}
          */
@@ -387,18 +397,19 @@
                 return true;
             }
         }
-    /*
-     * This function is used to delete a gridster element when trash icon is clicked
-     * @param {type} index
-     * @returns {undefined}
-     */
+        /**
+         * deleteItem: delete a gridster element when trash icon is clicked
+         * @param {type} index
+         */
         function deleteItem (index) {
             $scope.elementList.splice(index, 1);
         }
         
-        /*
-         * This function is used to create a gridster img element, in which the image source is used
+        /**
+         * onReaded: create a gridster img element, in which the image source is used
          * as background.
+         * @param {type} e --> QUE ES ESTO????
+         * @param {string} file --> src of the img
          */
         function onReaded (e, file) {
             $scope.img = e.target.result;
@@ -412,9 +423,11 @@
             });
             $('#askForImg').modal('hide');
         }
-        /*
-         *  This function opens tinymce menu wuen a gridster widget is clicked
+        
+        /**
+         *  openTinymce: opens tinymce menu when a gridster widget is clicked
          *   It also selects default text to change it
+         *   @param {event} event --> manage event
          */
         function openTinymce (event) {
             var selection = $window.getSelection();
@@ -431,16 +444,18 @@
                 selection.addRange(range);
             }
         }
-        /*
-         * This function restart the edition of a template
+        /**
+         * newTemplate: restart the edition of the template
          */
         function newTemplate () {
             $("#templateGeneratorMain ul li").remove();
             $scope.elementList = [];
             $scope.gridsterCont = 0;
         }
-        
-        // This functions saves a new template when enter is pressed on modal window, and form is validated
+
+        /**
+         * saveOnEnter: saves a new template when enter is pressed on modal window, and form is validated
+         */
         function saveOnEnter (event) {
             if (event.keyCode === 13 &&
                  $('#saveTemplate .btn-success').is(':enabled')) {
@@ -448,16 +463,18 @@
             }
         }
 
-        // Focus the first input on the modal window
+        /**
+         * Focus the first input on the modal window when a modal is open
+         */
         $("#setVariables, #saveTemplate").on('shown.bs.modal', function(){
             $('input:text:visible:first', this).focus();
         });
 
-        /*
-         * This function get the template to edit it
+        /**
+         * editGridster: get the template to edit it
          */
-        function editGridster(){
-            $http.get('getTemplate2/' + $scope.id).then(function (response) {
+        function editGridster () {
+            $http.get('getTemplateToEdit/' + $scope.id).then(function (response) {
                 var html = response.data[0].html_edit;
                 var gridster = angular.fromJson(response.data[0].gridster);
                 $scope.gridsterCont = gridster[gridster.length-1].gridsterId + 1;
@@ -478,10 +495,10 @@
             });
         }
 
-        /*
-         * This function introduce the text into the gridster elements
+        /**
+         * editHTML: introduce the text into the gridster elements
          */
-        function editHtml(){
+        function editHtml () {
             for (var i = 0; i < $scope.texto.length; i++){
                 if ($scope.texto[i] != null && $scope.gridsterready == true) {
                     var route = "#templateGeneratorMain ul li[data-gridsterid='" + i + "'] div.tinymceContainer .widgetContent";
@@ -490,10 +507,10 @@
             }
         }
 
-        /*
-         * This function evaluate if the edit bottom has been clicked
+        /**
+         * chargeEditTemplate: evaluate if the edit bottom has been clicked on Mail Generator
          */
-        function chargeEditTemplate(){
+        function chargeEditTemplate () {
             var paramstr = window.location.hash;
             var paramarr = paramstr.split("&");
             var params = {};
@@ -510,12 +527,11 @@
                 editGridster();
             }
         }
-        chargeEditTemplate();
-
-        /*
-         * This function evaluate if the edit bottom has been clicked
+        
+        /**
+         * updateTemplate: update the template that has been edited
          */
-        function replaceTemplate(){
+        function updateTemplate () {
             // Take a screenshot form the template for the icon
             var screenshot = document.getElementById('templateGeneratorMain');
             html2canvas(screenshot, {
@@ -535,10 +551,10 @@
                     };
 
                     // Parsing js object to string
-                    var templateData = JSON.stringify(templateData);
+                    templateData = JSON.stringify(templateData);
 
                     // Ajax request to sabe new template
-                    $http.post('replaceTemplate', {
+                    $http.post('updateTemplate', {
                         'template': templateData
                     }).then(function (response) {
                         // If ajax call success but it returns a fail state
@@ -554,15 +570,13 @@
                         else {
                             swal({
                                 'title': 'success!',
-                                'text': 'Your template has been replace!',
+                                'text': 'Your template have been updated!',
                                 'type': 'success',
                                 'confirmButtomText': 'cool'
                             }, function() {
                                 // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
                                 $window.location.href = "http://mailtemplate.app:8000/#/mailGenerator";
                             });
-                            // Hide the modal
-                            $('#saveTemplate').modal('hide');
 
                             // This removes the has-error class added when the input data was removed setting the form state to pristine
                             $scope.saveTemplateForm.$setPristine();
@@ -581,4 +595,15 @@
         }
 
     }
+
+    /**
+     * openSave: open modal window saveTemplate
+     */
+    function openSave () {
+        $("#saveTemplate").modal('show');
+    }
+
+    // Execute the function chargeEditTemplate
+    chargeEditTemplate ();
+
 })();
