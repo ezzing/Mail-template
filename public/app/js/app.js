@@ -825,6 +825,8 @@
                                 // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
                                 $window.location.href = "http://mailtemplate.app:8000/#/mailGenerator";
                             });
+                            // Hide the modal
+                            $('#replaceTemplate').modal('hide');
 
                             // This removes the has-error class added when the input data was removed setting the form state to pristine
                             $scope.saveTemplateForm.$setPristine();
@@ -842,13 +844,12 @@
                 }});
         }
 
-    }
-
-    /**
-     * openSave: open modal window saveTemplate
-     */
-    function openSave () {
-        $("#saveTemplate").modal('show');
+        /**
+         * openSave: open modal window saveTemplate
+         */
+        function openSave () {
+            $("#saveTemplate").modal('show');
+        }
     }
 })();
 
