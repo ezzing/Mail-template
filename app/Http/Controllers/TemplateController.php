@@ -72,7 +72,6 @@ class TemplateController extends Controller
             'name_template' => array('required', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ1-9][a-zA-ZáéíóúÁÉÍÓÚñÑ1-9 ]{3,50}$/'),
             'html' => array('required'),//,'regex:/((<script>){1}.*(<\/script>){1})/'
             'icon' => array('required'),
-            'edit' => array('required'),
             'gridster' => array('required')
         ]);
 
@@ -96,7 +95,7 @@ class TemplateController extends Controller
                 'html'          => $html,
                 'html_edit'     => $template -> html_edit,
                 'icon'          => $template -> icon,
-                'gridster'      => $template -> edit
+                'gridster'      => $template -> gridster
             ));
 
             // Returning success message
@@ -146,7 +145,7 @@ class TemplateController extends Controller
                     'html'          => $html,
                     'html_edit'     => $template -> html_edit,
                     'icon'          => $template -> icon,
-                    'gridster'      => $template -> edit
+                    'gridster'      => $template -> gridster
                 ));
 
             // Returning success message

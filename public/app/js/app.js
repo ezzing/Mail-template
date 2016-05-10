@@ -522,12 +522,11 @@
                     var html_edit = $("#templateGeneratorMain").html();
                     // Getting template data
                     var templateData = {
-                        'id': $scope.id,
                         'name_template': $scope.name_template,
                         'icon': icon,
                         'html': html,
                         'html_edit': html_edit,
-                        'edit': gridster
+                        'gridster': gridster
                     };
 
                     // Parsing js object to string
@@ -796,7 +795,7 @@
                         'icon': icon,
                         'html': html,
                         'html_edit': html_edit,
-                        'edit': gridster
+                        'gridster': gridster
                     };
 
                     // Parsing js object to string
