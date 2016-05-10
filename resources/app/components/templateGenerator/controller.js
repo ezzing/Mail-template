@@ -527,6 +527,8 @@
                 editGridster();
             }
         }
+        // Execute the function chargeEditTemplate
+        chargeEditTemplate();
         
         /**
          * updateTemplate: update the template that has been edited
@@ -602,8 +604,4 @@
     function openSave () {
         $("#saveTemplate").modal('show');
     }
-
-    // Execute the function chargeEditTemplate
-    chargeEditTemplate ();
-
 })();
