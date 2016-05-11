@@ -4,9 +4,7 @@
     mailGeneratorCtrl.$inject = ['$scope', '$http', '$translate'];
 
     function mailGeneratorCtrl ($scope, $http, $translate) {
-        // Disable the scroll
-        $("body").css('overflow', 'hidden');
-        
+
         // Declaring all scope methods
         $scope.loadTemplates = loadTemplates;
         $scope.loadTemplate = loadTemplate;
@@ -21,7 +19,7 @@
 
         // Declaring all scope properties
         $scope.selectedTemplate = null;
-        $scope.templateVariables = [];
+        $scope.templateVariables = null;
         $scope.templateList = null;
         $scope.data = {
             'languages': [
@@ -33,7 +31,7 @@
 
                 
        /**
-        * loadTemplates: this function loads the template list when view is initialized
+        * loadTemplates : this function loads the template list when view is initialized
         */
         function loadTemplates () {
             $http.get('/getCreatedTemplates').then(function (response) {
@@ -43,9 +41,10 @@
         
         
         /*
-         * loadTemplate: loads clicked template on #actualTemplate container, checks for variables
+         * loadTemplate : loads clicked template on #actualTemplate container, checks for variables
          * on it, and loads them on dropdown menu.
-         * @param {string} templateId --> id of the template that has been clicked
+         *
+         * @param {string} templateId : id of the template that has been clicked
          */
         function loadTemplate (templateId) {
             // Save template id on scope so its reachable to remove it or edit it
@@ -82,9 +81,10 @@
         
         
         /**
-        * deleteTemplate: removes a template from the database and updates $scope.templateList
+        * deleteTemplate : removes a template from the database and updates $scope.templateList
         * removing deleted template from it, so no referesh is necessary.
-         * @param {string} templateId --> id of the template that is going to be removed
+        *
+         * @param {string} templateId : id of the template that is going to be removed
          */
         function deleteTemplate (templateId) {
             $http.post('/deleteTemplate', {'data': templateId}).then(function () {
@@ -103,8 +103,9 @@
         
       
         /**
-         * changeLanguage: changes current language
-         * @param {string} lang --> Selected language
+         * changeLanguage : changes current language
+         *
+         * @param {string} lang : Selected language
          */
         function changeLanguage (lang) {
             $translate.use(lang.value);
@@ -112,9 +113,10 @@
         
         
         /**
-         * disableSendingButton: validates enables or disables email sending button checking if
+         * disableSendingButton : validates enables or disables email sending button checking if
          * sendMailForm inputs are valid or invalid.
-         * @returns {Boolean} --> true if form is invalid, false if form is valid
+         *
+         * @returns {Boolean} : true if form is invalid, false if form is valid
          */
         function disableSendingButton () {
             if ($scope.sendMailForm.email.$invalid || $scope.sendMailForm.subject.$invalid) {
@@ -124,7 +126,7 @@
         
         
         /**
-         * sendEmail: sends current #actualTemplate content as an email to one or multiple targets
+         * sendEmail : sends current #actualTemplate content as an email to one or multiple targets
          */
         function sendEmail () {
             $('#sendMail .spin').show();
@@ -179,13 +181,13 @@
         }
 
 
-/**
- * changeVariables: Updates variables in template when they are changed on the form. This should be done
- * automatically by angular data binding, but as variables are added after dom is compiled by angular,
- * and no way of recompiling dom has been found, data binding on variables needs to be manually
- * implemented with js through this function. This function is called when a variable value
- * is modified on dropdown variables menu.
- */
+        /**
+         * changeVariables : Updates variables in template when they are changed on the form. This should be done
+         * automatically by angular data binding, but as variables are added after dom is compiled by angular,
+         * and no way of recompiling dom has been found, data binding on variables needs to be manually
+         * implemented with js through this function. This function is called when a variable value
+         * is modified on dropdown variables menu.
+         */
         function changeVariables () {
             // Get name and value of variable that has been modified on dropdown menu
             var NameVariable = this.variable[0];
@@ -202,8 +204,8 @@
         
                
         /**
-         * closeDropdown: Closes variables dropdown menu when enter is pressed
-         * @param {type} event --> keypress event that triggers this functions
+         * closeDropdown : Closes variables dropdown menu when enter is pressed
+         * @param {type} event : Keypress event that triggers this function
          */
         function closeDropdown (event) {
             (event.keyCode === 13) ? $('div#variables').removeClass('open') : '';
@@ -211,8 +213,9 @@
         
                 
        /**
-        * sendOnEnter: triggers $scope.sendEmail() when enter is pressed on #sendMail modal window
-        * @param {type} event
+        * sendOnEnter : triggers $scope.sendEmail() when enter is pressed on #sendMail modal window
+        *
+        * @param {type} event : Keypress event that triggers this function
         */
         function sendOnEnter (event) {
             if (event.keyCode === 13 && $('#sendMail .btn-success').is(':enabled')) {
@@ -224,5 +227,8 @@
         $('#sendMail').on('shown.bs.modal', function () {
             $('input:text:visible:first', this).focus();
         });
+        
+        // Disabling scroll bar that is added when coming back from templateGenerator view
+        $('body').css('overflow', 'hidden');
     }
 })();

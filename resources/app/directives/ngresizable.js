@@ -55,7 +55,7 @@
                         var actualBrNodes = $(element).children().first().children('br').length;
                         
                         // Get previus saved number of br elements
-                        var lastBrCheck =  $(element).parent('li').attr('data-innerBrNodes');
+                        var lastBrCheck = $(element).parent('li').attr('data-innerBrNodes');
                         
                         // Compare it with previus saved number of br elements
                         if (actualBrNodes < lastBrCheck) {
