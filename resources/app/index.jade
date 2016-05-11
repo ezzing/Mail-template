@@ -3,16 +3,14 @@ html(lang="en", ng-app="mailTemplate")
     head
         meta(charset= 'utf-8')
         meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
-        title Mail generator
+        title Email manager
         link(rel='stylesheet', href='app/css/main.css')
         link(rel='stylesheet', href='app/css/styles/Bootstrap/css/bootstrap.css')
         link(rel='stylesheet', href='app/css/styles/sweetalert.css')
         link(rel='stylesheet', href='app/css/styles/angular-gridster.min.css')
-        link(rel='stylesheet', property='stylesheet' href='app/css/styles/font-awesome/css/font-awesome.css')        
-    body
-        #app
-            section
-                .wrapper(ui-view="").container-fluid
+        link(rel='stylesheet', property='stylesheet' href='app/css/styles/font-awesome/css/font-awesome.css')
+    body(style='padding-right:  0px')
+        main#app.wrapper.container-fluid(ui-view="")
         script(src='app/js/base.js')
         script(src='app/js/app.js')
         
