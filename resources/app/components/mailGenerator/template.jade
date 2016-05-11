@@ -1,33 +1,35 @@
-div#emailGenerator
+div#emailGenerator(ng-init='loadTemplates()')
       // Header
       div#emailGeneratorHeader.row
         div#lenguageSelector.col-xs-4
             form.form-horizontal
                 label.control-label.col-xs-4(for='lenguage') Lenguage:
                 div.col-xs-8.col-sm-6.col-lg-4
-                    select#lenguage.form-control(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.name  for language in data.languages track by language.value' ng-change='cambiarIdioma (data.selectedLanguage)')
+                    select#lenguage.form-control(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.name  for language in data.languages track by language.value' ng-change='changeLanguage(data.selectedLanguage)')
         div#title.col-xs-4
             h4#viewTitle.col-xs-7.col-xs-offset-2 {{ 'title_mail' | translate }}            
         div#buttonsWrapper.col-xs-4
-            // button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}
-            // button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}
+            span.fa.fa-trash.fa-2x(role='button'  ng-click='deleteTemplate(selectedTemplate)')
             span.fa.fa-envelope.fa-2x(role='button'  data-toggle='modal' data-target='#sendMail' onfocus="$(this).blur();")
-            a(ng-href='#/templateGenerator{{id}}')
+            a(ng-href='#/templateGenerator?id={{selectedTemplate}}')
                 span.fa.fa-edit.fa-2x(role='button' style='color: white;')
-
       // Body      
       div#emailGeneratorBody.row           
         //Toolbar
         div#emailGeneratorToolbar.col-xs-3
-            div.scroolTool
+            div.scroolTool(ng-hide="templateList.length < 1")
                 div(href='#' ng-repeat='template in templateList')
-                    div.templateSelector.row(ng-click='loadTemplate(template.id_template)')
-                        div.col-xs-5.icono
+                    div.templateSelector.row
+                        div.col-xs-5.icono(ng-click='loadTemplate(template.id_template)')
                             table
                                 tr
                                     td
                                         img.img-responsive(ng-src='{{template.icon}}')
-                        div.col-xs-7.textTemplSel
+                        div.iconsContainer
+                            a(ng-href='#/templateGenerator?id={{template.id_template}}')
+                                span.fa.fa-edit(role='button')                       
+                            span.fa.fa-trash(role='button'  ng-click='deleteTemplate(template.id_template)')
+                        div.col-xs-7.textTemplSel(ng-click='loadTemplate(template.id_template)')
                             |{{template.name_template}}
                             br
                             |{{ 'date' | translate }}: {{template.created_at}}
@@ -40,7 +42,6 @@ div#emailGenerator
                                     img#newTemplateImg.img-responsive(src='/app/img/plantilla.png')
                     div.col-xs-7.textTemplSel
                         |{{ 'new_template' | translate }}
-
         //main section
         div#emailGeneratorMain.col-xs-12.col-sm-9.row
             #emailGeneratorToolbarButton.navbar-toggle.collapsed.col-xs-3
@@ -66,14 +67,12 @@ div#emailGenerator
                     div.form-group(ng-repeat='variable in templateVariables')
                         label.col-xs-1.control-label(for='{{variable[0]}}') {{variable[0]}}
                         div.col-xs-10
-                            input.form-control(ng-model='variable[1]' id='{{variable[0]}}', ng-change='changeVariables()')
-                    
+                            input.form-control(ng-model='variable[1]' id='{{variable[0]}}' ng-change='changeVariables()')
             // Div that contains the preview of the email
             #actualTemplate
- 
 
 // Modal window for sending an email
-div#sendMail.modal.fade(ng-keydown='saveOnEnter($event)')
+div#sendMail.modal.fade(ng-keydown='sendOnEnter($event)')
     div.modal-dialog.modal-lg
         div.modal-content
             div.modal-header
@@ -93,5 +92,6 @@ div#sendMail.modal.fade(ng-keydown='saveOnEnter($event)')
                         input#subjectInput.form-control(type='text' ng-model='subject'  placeholder='subject' name='subject' ng-pattern='/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9][a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,50}$/' required)                        
                         span.glyphicon.form-control-feedback(ng-class="{'glyphicon-ok' : sendMailForm.subject.$valid, 'glyphicon-remove' : sendMailForm.subject.$invalid && sendMailForm.subject.$dirty}")
             div.modal-footer
+                span.spin.fa.fa-spinner.fa-spin(style='display:none')                
                 button.btn.btn-warning(type='button' data-dismiss='modal') Close
-                button.btn.btn-success(type='button' ng-click='sendMail()' ng-disabled='validateForm()') {{ 'send' | translate }}
+                button.btn.btn-success(type='button' ng-click='sendEmail()' ng-disabled='disableSendingButton()') {{ 'send' | translate }}

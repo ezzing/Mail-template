@@ -20,36 +20,28 @@
 
 
 (function () {
-
     'use strict';
-    
     angular.module('mailTemplate').controller('mailGeneratorCtrl', mailGeneratorCtrl);
-    
-    mailGeneratorCtrl.$inject = ['$scope', '$http', '$compile', '$translate'];
+    mailGeneratorCtrl.$inject = ['$scope', '$http', '$translate'];
 
-    function mailGeneratorCtrl ($scope, $http, $compile, $translate) {
-        
-        // Loading templates and saving in $scope.templateList in order to use it on div#emailGeneratorToolbar
-        $http.get('/getCreatedTemplates').then(function (response) {
-            $scope.templateList = response.data.templates;
-        });
+    function mailGeneratorCtrl ($scope, $http, $translate) {
 
-        // Focus Modal Window Send Mail
-        $("#sendMail").on('shown.bs.modal', function(){
-            $('input:text:visible:first', this).focus();
-        });
-
+        // Declaring all scope methods
+        $scope.loadTemplates = loadTemplates;
         $scope.loadTemplate = loadTemplate;
-        $scope.id = null;
-        $scope.validateForm = validateForm;
-       
-        $scope.sendMail = sendMail;
-        
+        $scope.deleteTemplate = deleteTemplate;
+        $scope.changeLanguage = changeLanguage;
+        $scope.disableSendingButton = disableSendingButton;
+        $scope.sendEmail = sendEmail;
         $scope.changeVariables = changeVariables;
-        
         $scope.closeDropdown = closeDropdown;
-        $scope.saveOnEnter = saveOnEnter;
-        
+        $scope.sendOnEnter = sendOnEnter;
+
+
+        // Declaring all scope properties
+        $scope.selectedTemplate = null;
+        $scope.templateVariables = null;
+        $scope.templateList = null;
         $scope.data = {
             'languages': [
                 {'value': 'en', 'name': 'english'},
@@ -57,78 +49,121 @@
             ],
             'selectedLanguage': {'value': 'en', 'name': 'english'}
         };
+
+                
+       /**
+        * loadTemplates : this function loads the template list when view is initialized
+        */
+        function loadTemplates () {
+            $http.get('/getCreatedTemplates').then(function (response) {
+                $scope.templateList = response.data.templates;
+            });
+        }
         
-        $scope.cambiarIdioma = function (lang) {
-            $translate.use(lang.value);
-        };
         
         /*
-         * This function loads clicked template on #actualTemplate container, checks for variables on it, and loads them on dropdown menu
-         * @param {type} id
+         * loadTemplate : loads clicked template on #actualTemplate container, checks for variables
+         * on it, and loads them on dropdown menu.
+         *
+         * @param {string} templateId : id of the template that has been clicked
          */
-        
-        function loadTemplate (id) {
-            $scope.id = "?id=" + id;
-            $http.get('getTemplate/' + id).then(function (response) {
-                // Getting new template
+        function loadTemplate (templateId) {
+            // Save template id on scope so its reachable to remove it or edit it
+            $scope.selectedTemplate = templateId;
+            $http.get('getTemplate/' + templateId).then(function (response) {
+                // Stores template content
                 var htmlTemplate = response.data.templates || '<h1> No template received from server</h1>';
-                console.log('loading...' + id);
-                // If there is some '{{' string on template
+                // Remove possible variables saved from previous template
+                $scope.templateVariables = [];
+                /*
+                 * Searchs for '{{' on template content, because this is how variables are identified. If some result
+                 * is found, content between '{{' and '}}' is stored on $scope.templateVariables. Each variable
+                 * needs to be stored as an array with two elements to use them for label and input
+                 * tags separately, so them not get binded through angular.
+                 */
                 if (htmlTemplate.search('{{') !== -1) {
                     var startOfVariable = null;
                     var endOfVariable = null;
                     var variable = null;
-                    $scope.templateVariables = [];
                     do {
                         startOfVariable = htmlTemplate.search('{{');
                         endOfVariable = htmlTemplate.search('}}');
                         variable = htmlTemplate.substring(startOfVariable + 2, endOfVariable);
                         $scope.templateVariables.push([variable, variable]);
                         htmlTemplate = htmlTemplate.substring(0, startOfVariable) +
-                            '<label for=' + variable + ' ' + 'class="variables">' + variable + '</label>' +
+                            '<label for=' + variable + ' class="variables">' + variable + '</label>' +
                             htmlTemplate.substring(endOfVariable + 2, htmlTemplate.length);
                     } while (htmlTemplate.search('{{') !== -1);
                 }
-                    // Injecting new template in DOM
-                    $('#actualTemplate').html(htmlTemplate);
-
-                    // Compiling the new DOM content to enable angular on it
-                    $compile($('#actualTemplate').contents())($scope);
+                // Loads template content on #actualTemplate container
+                $('#actualTemplate').html(htmlTemplate);
             });
         }
         
-        /*
-         * This function validates the fields in the mail sending form
-         * @returns {Boolean}
+        
+        /**
+        * deleteTemplate : removes a template from the database and updates $scope.templateList
+        * removing deleted template from it, so no referesh is necessary.
+        *
+         * @param {string} templateId : id of the template that is going to be removed
          */
-        function validateForm () {
-            if (
-                $scope.sendMailForm.email.$invalid ||
-                $scope.sendMailForm.subject.$invalid) {
+        function deleteTemplate (templateId) {
+            $http.post('/deleteTemplate', {'data': templateId}).then(function () {
+                // Search for element on $scope.template whose id_template is the same as removed id
+                $scope.templateList.filter(function (obj, index) {
+                    if (obj.id_template === templateId) {
+                        $scope.templateList.splice(index, 1);
+                        // If removed template is current template, #actualTemplate content is erased
+                        if (templateId === $scope.selectedTemplate) {
+                            $('#actualTemplate').empty();
+                        }
+                    }
+                });
+            });
+        }
+        
+      
+        /**
+         * changeLanguage : changes current language
+         *
+         * @param {string} lang : Selected language
+         */
+        function changeLanguage (lang) {
+            $translate.use(lang.value);
+        }
+        
+        
+        /**
+         * disableSendingButton : validates enables or disables email sending button checking if
+         * sendMailForm inputs are valid or invalid.
+         *
+         * @returns {Boolean} : true if form is invalid, false if form is valid
+         */
+        function disableSendingButton () {
+            if ($scope.sendMailForm.email.$invalid || $scope.sendMailForm.subject.$invalid) {
                 return true;
             }
         }
         
-       /*
-         * This function sends the email when button in header is clicked
+        
+        /**
+         * sendEmail : sends current #actualTemplate content as an email to one or multiple targets
          */
-        function sendMail () {
-            // Getting mail data
-            var mailData = {
+        function sendEmail () {
+            $('#sendMail .spin').show();
+            // Recovering mail data
+            var emailData = {
                 'email': $scope.email,
                 'subject': $scope.subject,
                 'htmlContent': document.getElementById('actualTemplate').innerHTML
             };
-
-            // Parsing js object to string
-            mailData = JSON.stringify(mailData);
-            
-            // Print actual request to debug with postman
-
+            // Parsing mailData object to string
+            emailData = JSON.stringify(emailData);
             // Sending mail
-            $http.post('mail', {
-                'mailData': mailData
+            $http.post('email', {
+                'emailData': emailData
             }).then(function (response) {
+                $('#sendMail .spin').hide();
                 // If ajax call success but it returns a fail state
                 if (response.data.status === 'fail') {
                     swal({
@@ -146,19 +181,15 @@
                         'type': 'success',
                         'confirmButtomText': 'cool'
                     });
-
                     // Hide the modal
                     $('#sendMail').modal('hide');
-                    
                     // Clear the modal data
                     $scope.name = '';
                     $scope.email = '';
                     $scope.subject = '';
-
                     // This removes the has-error class added when the input data was removed setting the form state to pristine
                     $scope.sendMailForm.$setPristine();
                 }
-
             }, function () {
                 // If ajax call does not success
                 swal({
@@ -170,65 +201,67 @@
             });
         }
 
-        /*
-         * This function set the variables of the template when the user change it on the form
+
+        /**
+         * changeVariables : Updates variables in template when they are changed on the form. This should be done
+         * automatically by angular data binding, but as variables are added after dom is compiled by angular,
+         * and no way of recompiling dom has been found, data binding on variables needs to be manually
+         * implemented with js through this function. This function is called when a variable value
+         * is modified on dropdown variables menu.
          */
         function changeVariables () {
-
-            // Getting the name of the variable and the value
+            // Get name and value of variable that has been modified on dropdown menu
             var NameVariable = this.variable[0];
             var ValueVariable = this.variable[1];
-
-            // Getting the labels of the html
-            var labels = angular.element(document).find("label");
-            
-            // Search and modify the label that the is modifing
-            for (var i = 0; i < labels.length; i++){
-                if (labels[i].getAttribute("for") === NameVariable && labels[i].getAttribute("class") === "variables"){
+            // Get all labels on #actualTemplate content (variables are stored on templates inside label tags)
+            var labels = angular.element('#actualTemplate').find('label');
+            // Search and modify  on #actualTemplate the variable that user has modified
+            for (var i = 0;i < labels.length;i++) {
+                if (labels[i].getAttribute('for') === NameVariable && labels[i].getAttribute('class') === 'variables') {
                     labels[i].innerHTML = ValueVariable;
                 }
             }
-
         }
         
-        /*
-         * This function close the dropdown variables menu when hit enter
+               
+        /**
+         * closeDropdown : Closes variables dropdown menu when enter is pressed
+         * @param {type} event : Keypress event that triggers this function
          */
         function closeDropdown (event) {
             (event.keyCode === 13) ? $('div#variables').removeClass('open') : '';
         }
-        // This functions saves a new template when enter is pressed on modal window, and form is validated
-        function saveOnEnter (event) {
-            if (event.keyCode === 13 &&
-                 $('#sendMail .btn-success').is(':enabled')) {       
-                $scope.sendMail();
+        
+                
+       /**
+        * sendOnEnter : triggers $scope.sendEmail() when enter is pressed on #sendMail modal window
+        *
+        * @param {type} event : Keypress event that triggers this function
+        */
+        function sendOnEnter (event) {
+            if (event.keyCode === 13 && $('#sendMail .btn-success').is(':enabled')) {
+                $scope.sendEmail();
             }
-        }        
+        }
+        
+        //  Fix to focus on emial input when #sendMail modal is opened
+        $('#sendMail').on('shown.bs.modal', function () {
+            $('input:text:visible:first', this).focus();
+        });
+        
+        // Disabling scroll bar that is added when coming back from templateGenerator view
+        $('body').css('overflow', 'hidden');
     }
 })();
 
-
 (function () {
-
     'use strict';
     angular.module('mailTemplate').controller('templateGeneratorCtrl', templateGeneratorCtrl);
-
     templateGeneratorCtrl.$inject = ['$scope', '$http', '$window', '$translate', '$timeout'];
     
     function templateGeneratorCtrl ($scope, $http, $window, $translate, $timeout) {
 
-        $scope.data = {
-            'languages': [
-                {'value': "en", 'name': 'english'},
-                {'value': "es", 'name': 'spanish'}
-            ],
-        'selectedLanguage': {'value': "en"}
-        };
-        
-        $scope.cambiarIdioma = function (lang) {
-            $translate.use(lang.value);
-        };        
-        // All controller functions are declared here
+        // Declaring all scope methods
         $scope.saveTemplate = saveTemplate;
         $scope.validateTemForm = validateTemForm;
         $scope.createTextElement = createTextElement;
@@ -237,16 +270,28 @@
         $scope.onReaded = onReaded;
         $scope.openTinymce = openTinymce;
         $scope.newTemplate = newTemplate;
-        $scope.escribirVariable = escribirVariable;
-        $scope.variableName= '';
+        $scope.setVariable = setVariable;
         $scope.saveOnEnter = saveOnEnter;
+        $scope.updateTemplate = updateTemplate;
+        $scope.openSave = openSave;
+        $scope.changeLanguage = changeLanguage;
+
+        // Declaring all scope properties
+        $scope.variableName = '';
         $scope.texto = [];
         $scope.gridsterCont = 0;
         $scope.gridsterready = false;
-        
-        // All controller properties are declared here
+        $scope.id = null;
+        $scope.saveOrReplace = '#saveTemplate';
         $scope.readMethod = 'readAsDataURL';
         $scope.elementList = [];
+        $scope.data = {
+            'languages': [
+                {'value': 'en', 'name': 'english'},
+                {'value': 'es', 'name': 'spanish'}
+            ],
+            'selectedLanguage': {'value': 'en'}
+        };
         $scope.gridsterOpts = {
             'columns': 24,
             'pushing': true,
@@ -272,36 +317,31 @@
             'resizable': {
                 'enabled': true,
                 'handles': ['se']
-                /*
-                 * 'start': function(event, $element, widget) {},
-                'resize': function(event, $element, widget) {},
-                'stop': function(event, $element, widget) {}
-                */
             },
             'draggable': {
                 'enabled': false,
                 'handle': '.my-class',
                 'start': function (event, $element, widget) {
-                    // Create a new property on widget to store initial row
+                    // Creates a new property on widget to store initial row
                     widget.initialRow = widget.row;
                 },
                 'drag': function (event, $element, widget) {
-                    // Declare array too store all columns occupied by the clicked widget
+                    // Declares array too store all columns occupied by the clicked widget
                     var columnsOccupied = [widget.col];
-                    // Inject occupied columns on the previous array
+                    // Injects occupied columns on the previous array
                     for (var counter = 1;counter <= widget.sizeX;counter++) {
                         columnsOccupied.push(widget.col + counter);
                     }
-                    // For each gridster element,  we check if it ocuppies the inmediate row below  to the selected widget
+                    // For each gridster element,  checks if it ocuppies the inmediate row below  to the selected widget
                     angular.forEach($scope.elementList, function (value) {
                         if (value.row === widget.sizeY + widget.row) {
-                            // Declare array to store all columns occupied by the widget below the clicked widget
+                            // Declares array to store all columns occupied by the widget below the clicked widget
                             var columnsOccupiedByTheBelowOne = [value.col];
-                            // Inject occupied columns on the previous array
+                            // Injects occupied columns on the previous array
                             for (var counter = 1;counter < value.sizeX;counter++) {
                                 columnsOccupiedByTheBelowOne.push(value.col + counter);
                             }
-                            // Check if any of the elements of array  columnsOccupiedByTheBelowOne is inside columnsOccupied array
+                            // Checks if any of the elements of array  columnsOccupiedByTheBelowOne is inside columnsOccupied array
                             for (var i = 0;i < columnsOccupiedByTheBelowOne.length;i++) {
                                 if ($.inArray(columnsOccupiedByTheBelowOne[i], columnsOccupied) !== -1 && widget.row > widget.initialRow) {
                                     // If that is the case, the widget below our clicked widget is moved to the previous row
@@ -311,7 +351,6 @@
                         }
                     });
                 }
-                // 'stop': function (event, $element, widget) {}
             }
         };
         $scope.tinyMceTextOpts = {
@@ -335,8 +374,8 @@
                     'text': 'Variable',
                     'icon': false,
                     'onclick': function () {
-                        $("#setVariables").modal('show');
-                        $("#variableName").focus();
+                        $('#setVariables').modal('show');
+                        $('#variableName').focus();
                     }
                 });
             },
@@ -344,13 +383,6 @@
             'fontsize_formats': '8pt 10pt 12pt 14pt 18pt 24pt 36pt 42pt 72pt',
             'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
         };
-
-        function escribirVariable() {
-            console.log($scope.variableName);
-            tinymce.activeEditor.execCommand('mceInsertContent', false, '<span class="variables" style="color: red; background: yellow; font-weight: bold" contenteditable="false">{{' + $scope.variableName + '}}</span>');
-            $("#setVariables").modal('hide');
-            $scope.variableName = '';
-        }
         $scope.tinyMceImgOpts = {
             'selector': '.imageExample',
             'inline': true,
@@ -365,127 +397,153 @@
             'imagetools_cors_hosts': ['www.tinymce.com', 'codepen.io']
         };
 
-        /*
-         * This function validates the fields in the mail sending form
-         * @returns {Boolean}
+
+        /**
+         * changeLanguage: changes current language
+         *
+         * @param {string} lang : Selected language
+         */
+        function changeLanguage (lang) {
+            $translate.use(lang.value);
+        }
+        
+        
+        /**
+         * setVariable : introduces the variable into the selected text
+         */
+        function setVariable () {
+            tinymce.activeEditor.execCommand('mceInsertContent', false, '<span class="variables" style="color: red; background: yellow; font-weight: bold" contenteditable="false">{{' + $scope.variableName + '}}</span>');
+            $('#setVariables').modal('hide');
+            $scope.variableName = '';
+        }
+
+
+        /**
+         * validateForm : validates form displayed when save button is clicked on the toolbar and returns
+         * the disability status for saving button.
+         *
+         * @returns {Boolean} : true if form is invalid and save button must be disabled, false if that is no the case
          */
         function validateTemForm () {
             return $scope.saveTemplateForm.name_template.$invalid ? true : '';
         }
 
-        /*
-         * This function clean the HTML code to store it
-         * @returns {string}
+
+        /**
+         * cleanHTML : cleans the HTML code to store it
+         *
+         * @returns {string} : cleaned html string
          */
         function cleanHTML () {
             // Extract the created template
-            var template = document.getElementById('templateGeneratorMain').getElementsByTagName("ul")[0];
+            var template = document.getElementById('templateGeneratorMain').getElementsByTagName('ul')[0];
             var originalTemplate = document.getElementById('templateGeneratorMain').innerHTML;
             // Extract the lis
-            var li = template.getElementsByTagName("li");
+            var li = template.getElementsByTagName('li');
             // If exists Li
-            if (li.length !== 0){
+            if (li.length !== 0) {
                 // clean all the lis
-                for (var i = 0; i < li.length ; i++){
+                for (var i = 0;i < li.length;i++) {
                     // Change the proporcion of the li to introduce in the database
-                    var maxwidth = $("#templateGeneratorMain").width();
+                    var maxwidth = $('#templateGeneratorMain').width();
                     // Change the width
-                    var styles = li[i].getAttribute("style");
-                    var start = styles.search("width");
-                    var sub = styles.substring(start, start + 14);
-                    var end = sub.search("px");
-                    var width = sub.substring(7 , end);
-                    width = Math.round(width*100/maxwidth);
-                    styles = styles.substring(0 , start) + "width: " + width + "%" + styles.substring(start + end + 2, styles.length) + " display: block; position: absolute;";
-                    li[i].setAttribute("style", styles);
+                    var styles = li[i].getAttribute('style');
+                    var start = styles.search('width');
+                    var sub = styles.substring(start, start + 17);
+                    var end = sub.search('px');
+                    var width = sub.substring(7, end);
+                    width = Math.round(width * 100 / maxwidth);
+                    styles = styles.substring(0, start) + 'width: ' + width + '%' + styles.substring(start + end + 2, styles.length) + 'display: block; position: absolute;';
+                    li[i].setAttribute('style', styles);
                     // Change the left position
-                    styles = li[i].getAttribute("style");
-                    start = styles.search("left");
-                    sub = styles.substring(start, start + 13);
-                    end = sub.search("px");
-                    var left = sub.substring(6 , end);
-                    left = Math.round(left*100/maxwidth);
-                    styles = styles.substring(0 , start) + "left: " + left + "%" + styles.substring(start + end + 2, styles.length);
-                    li[i].setAttribute("style", styles);
-                    li[i].removeAttribute("gridster-item");
-                    li[i].removeAttribute("ng-repeat");
-                    li[i].removeAttribute("ng-switch");
-                    li[i].removeAttribute("on");
-                    li[i].removeAttribute("class");
+                    styles = li[i].getAttribute('style');
+                    start = styles.search('left');
+                    sub = styles.substring(start, start + 16);
+                    end = sub.search('px');
+                    var left = sub.substring(6, end);
+                    left = Math.round(left * 100 / maxwidth);
+                    styles = styles.substring(0, start) + 'left: ' + left + '%' + styles.substring(start + end + 2, styles.length);
+                    li[i].setAttribute('style', styles);
+                    li[i].removeAttribute('gridster-item');
+                    li[i].removeAttribute('ng-repeat');
+                    li[i].removeAttribute('ng-switch');
+                    li[i].removeAttribute('on');
+                    li[i].removeAttribute('class');
                     li[i].removeChild(li[i].firstChild);
                     li[i].removeChild(li[i].firstChild);
                     li[i].removeChild(li[i].lastChild);
-                    var div = li[i].getElementsByTagName("div")[0];
-                    div.removeAttribute("ng-click");
-                    div.setAttribute("class", "tinymceWidget");
-                    div.removeAttribute("contenteditable");
-                    div.removeAttribute("spellcheck");
+                    var div = li[i].getElementsByTagName('div')[0];
+                    div.removeAttribute('ng-click');
+                    div.setAttribute('class', 'tinymceWidget');
+                    div.removeAttribute('contenteditable');
+                    div.removeAttribute('spellcheck');
                     // if there are divs
-                    if (div.getElementsByClassName("widgetContent")[0]) {
-                        div.getElementsByClassName("widgetContent")[0].removeAttribute("ng-if");
+                    if (div.getElementsByClassName('widgetContent')[0]) {
+                        div.getElementsByClassName('widgetContent')[0].removeAttribute('ng-if');
                     }
                     // If there are a P
-                    if (div.getElementsByTagName("p")[0]){
-                        div.getElementsByTagName("p")[0].setAttribute("style", "margin-top: 20px; ");
+                    if (div.getElementsByTagName('p')[0]) {
+                        div.getElementsByTagName('p')[0].setAttribute('style', 'margin-top: 20px;');
                     }
                     // If there are a img
-                    if (li[i].getElementsByTagName("img")) {
-                        var img = li[i].getElementsByTagName("img");
-                        for (var z = 0; z < img.length; z++) {
-                            if (img[z].getAttribute("class") === null) {
+                    if (li[i].getElementsByTagName('img')) {
+                        var img = li[i].getElementsByTagName('img');
+                        for (var z = 0;z < img.length;z++) {
+                            if (img[z].getAttribute('class') === null) {
                                 var canvas = document.createElement('canvas');
                                 var maxwidthli = li[i].offsetWidth;
-                                var widthimg = Math.round(img[z].naturalWidth*100/maxwidthli);
-                                canvas.width = widthimg; // or 'width' if you want a special/scaled size
-                                canvas.height = img[z].naturalHeight; // or 'height' if you want a special/scaled size
-                                img[z].removeAttribute("ng-if");
+                                var widthimg = Math.round(img[z].naturalWidth * 100 / maxwidthli);
+                                canvas.width = widthimg;
+                                canvas.height = img[z].naturalHeight;
+                                img[z].removeAttribute('ng-if');
                                 canvas.getContext('2d').drawImage(img[z], 0, 0);
-                                img[z].setAttribute("src", canvas.toDataURL());
-                                li[i].setAttribute("style", li[i].getAttribute("style") + " overflow: hidden;");
-                            } else {
-                                img[z].removeAttribute("ng-if");
-                                img[z].setAttribute("style", img[z].getAttribute("style") + " background-size: cover; height: 100%; width: 100%;");
-                                img[z].removeAttribute("class");
+                                img[z].setAttribute('src', canvas.toDataURL());
+                                li[i].setAttribute('style', li[i].getAttribute('style') + ' overflow: hidden;');
+                            }
+                            else {
+                                img[z].removeAttribute('ng-if');
+                                img[z].setAttribute('style', img[z].getAttribute('style') + ' background-size: cover; height: 100%; width: 100%;');
+                                img[z].removeAttribute('class');
                             }
                         }
                     }
-                    var variables = div.getElementsByClassName("variables");
-                    for (var j = 0; j < variables.length ; j++) {
-                        variables[j].removeAttribute("data-mce-style");
-                        variables[j].removeAttribute("style");
+                    var variables = div.getElementsByClassName('variables');
+                    for (var j = 0;j < variables.length;j++) {
+                        variables[j].removeAttribute('data-mce-style');
+                        variables[j].removeAttribute('style');
                     }
                 }
             }
-            template = "<ul style='top: 25px; position: absolute; width: 100%; height: 100%;'>" + template.innerHTML + "</ul>";
+            template = '<ul style="top: 34px; position: absolute; width: 100%; height: 90%;">' + template.innerHTML + '</ul>';
             document.getElementById('templateGeneratorMain').innerHTML = originalTemplate;
             return template;
         }
         
-        /*
-         * This function saves the  new template when button in header is clicked
+        
+        /**
+         * saveTemplate : store the template at DataBase
          */
         function saveTemplate () {
+            $('#saveTemplate .spin').show();
             // Take a screenshot form the template for the icon
             var screenshot = document.getElementById('templateGeneratorMain');
             html2canvas(screenshot, {
-                onrendered: function(canvas) {
+                'onrendered': function (canvas) {
                     // Getting the cleaning HTML
                     var gridster = angular.toJson($scope.elementList);
                     var icon = canvas.toDataURL();
                     var html = cleanHTML();
-                    var html_edit = $("#templateGeneratorMain").html();
+                    var html_edit = $('#templateGeneratorMain').html();
                     // Getting template data
                     var templateData = {
                         'name_template': $scope.name_template,
                         'icon': icon,
                         'html': html,
                         'html_edit': html_edit,
-                        'edit': gridster
+                        'gridster': gridster
                     };
-
                     // Parsing js object to string
-                    var templateData = JSON.stringify(templateData);
-
+                    templateData = JSON.stringify(templateData);
                     // Ajax request to sabe new template
                     $http.post('saveTemplate', {
                         'template': templateData
@@ -506,20 +564,18 @@
                                 'text': 'Your template is save!',
                                 'type': 'success',
                                 'confirmButtomText': 'cool'
-                            }, function() {
-                            // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
-                             $window.location.href = "http://mailtemplate.app:8000/#/mailGenerator";
+                            }, function () {
+                                // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
+                                $window.location.href = 'http://mailtemplate.app:8000/#/mailGenerator';
                             });
                             // Hide the modal
                             $('#saveTemplate').modal('hide');
-
+                            $('saveTemplate .spin').show();
                             // Clear the modal data
                             $scope.name_template = '';
                             $scope.icon_template = '';
-
                             // This removes the has-error class added when the input data was removed setting the form state to pristine
                             $scope.saveTemplateForm.$setPristine();
-
                         }
                     }, function () {
                         // If ajax call does not success
@@ -532,11 +588,13 @@
                     });
                 }});
         }
-        /*
-        * This Function extract the url of the insert image
-        * @param input {type} HTML Element
-        * @param field_name {type} string
-        * @param win {type} window Object
+        
+        /**
+         * readURL : extract the url of the insert image
+         *
+         * @param input {type} HTML Element
+         * @param field_name {type} string
+         * @param win {type} window Object
          */
         function readURL (input, field_name, win) {
             if (input.files && input.files[0]) {
@@ -548,8 +606,13 @@
             }
         }
 
-        /*
-        * This Function expand the browser file to insert an image
+        /**
+         * myFileBrowser: expand the browser file to insert an image
+         *
+         * @param {string} field_name : field name
+         * @param {string} url : url og the img
+         * @param {type} type : type
+         * @param {type} win  : window Object
          */
         function myFileBrowser (field_name, url, type, win) {
             var elemId = 'img';
@@ -565,14 +628,13 @@
             win.document.getElementById(field_name).value = 'Without file';
         }
         
-        /*
-         * This function creates a new gridster element when a button in the toolbar is clicked. It is used
+        /**
+         * createTextElement : creates a new gridster element when a button in the toolbar is clicked. It is used
          * for all buttons, so it receives as an argument which elements needs to be created.
+         *
          * @param {type} element
-         * @returns {undefined}
          */
         function createTextElement (element) {
-            
             $scope.elementList.push({
                 'type': element,
                 'sizeX': 4,
@@ -582,9 +644,11 @@
             });
             $scope.gridsterCont++;
         }
-        /*
-         * This functions validates form displayed when link button is clicked on the toolbar and returns
+        
+        /**
+         * validateForm: validates form displayed when link button is clicked on the toolbar and returns
          * the disability status for sending button.
+         *
          * @returns {Boolean}
          */
         function validateForm () {
@@ -593,18 +657,21 @@
                 return true;
             }
         }
-    /*
-     * This function is used to delete a gridster element when trash icon is clicked
-     * @param {type} index
-     * @returns {undefined}
-     */
+        /**
+         * deleteItem: delete a gridster element when trash icon is clicked
+         *
+         * @param {type} index
+         */
         function deleteItem (index) {
             $scope.elementList.splice(index, 1);
         }
         
-        /*
-         * This function is used to create a gridster img element, in which the image source is used
+        /**
+         * onReaded: create a gridster img element, in which the image source is used
          * as background.
+         *
+         * @param {event} e
+         * @param {string} file : src of the img
          */
         function onReaded (e, file) {
             $scope.img = e.target.result;
@@ -618,9 +685,13 @@
             });
             $('#askForImg').modal('hide');
         }
-        /*
-         *  This function opens tinymce menu wuen a gridster widget is clicked
+        
+        
+        /**
+         *  openTinymce: opens tinymce menu when a gridster widget is clicked
          *   It also selects default text to change it
+         *
+         *   @param {event} event :manage event
          */
         function openTinymce (event) {
             var selection = $window.getSelection();
@@ -637,59 +708,68 @@
                 selection.addRange(range);
             }
         }
-        /*
-         * This function restart the edition of a template
+        
+        
+        /**
+         * newTemplate: restart the edition of the template
          */
         function newTemplate () {
             $("#templateGeneratorMain ul li").remove();
             $scope.elementList = [];
             $scope.gridsterCont = 0;
         }
-        
-        // This functions saves a new template when enter is pressed on modal window, and form is validated
+
+
+        /**
+         * saveOnEnter: saves a new template when enter is pressed on modal window, and form is validated
+         */
         function saveOnEnter (event) {
             if (event.keyCode === 13 &&
                  $('#saveTemplate .btn-success').is(':enabled')) {
                 $scope.saveTemplate();
             }
         }
-
-        // Focus the first input on the modal window
-        $("#setVariables, #saveTemplate").on('shown.bs.modal', function(){
+        
+        
+        /**
+         * Focus the first input on the modal window when a modal is open
+         */
+        $('#setVariables, #saveTemplate').on('shown.bs.modal', function () {
             $('input:text:visible:first', this).focus();
         });
 
-        /*
-         * This function get the template to edit it
+
+        /**
+         * editGridster : get the template to edit it
          */
-        function editGridster(id){
-            $http.get('getTemplate2/' + id).then(function (response) {
+        function editGridster () {
+            $http.get('getTemplateToEdit/' + $scope.id).then(function (response) {
                 var html = response.data[0].html_edit;
                 var gridster = angular.fromJson(response.data[0].gridster);
-                $scope.gridsterCont = gridster[gridster.length-1].gridsterId + 1;
-                for (var i = 0; i < gridster.length; i++){
+                $scope.gridsterCont = gridster[gridster.length - 1].gridsterId + 1;
+                for (var i = 0;i < gridster.length;i++) {
                     $scope.elementList.push(gridster[i]);
                 }
                 html = $(html);
                 var pos = null;
-                for (var i = 0; i < html[4].getElementsByTagName("li").length; i++){
-                    if (html[4].getElementsByTagName("li")[i].getElementsByTagName("img").length === 0) {
-                        pos = html[4].getElementsByTagName("li")[i].getAttribute("data-gridsterid");
-                        $scope.texto[pos] = html[4].getElementsByTagName("li")[i].getElementsByTagName("div")[0].getElementsByClassName("widgetContent ng-scope")[0].innerHTML;
+                for (var i = 0;i < html[4].getElementsByTagName('li').length;i++) {
+                    if (html[4].getElementsByTagName('li')[i].getElementsByTagName('img').length === 0) {
+                        pos = html[4].getElementsByTagName('li')[i].getAttribute('data-gridsterid');
+                        $scope.texto[pos] = html[4].getElementsByTagName('li')[i].getElementsByTagName('div')[0].getElementsByClassName('widgetContent ng-scope')[0].innerHTML;
                     }
                 }
-                $timeout(function(){
+                $timeout(function () {
                     editHtml();
-                })
+                });
             });
         }
 
-        /*
-         * This function introduce the text into the gridster elements
+
+        /**
+         * editHTML : introduce the text into the gridster elements
          */
-        function editHtml(){
-            console.log($scope.texto);
-            for (var i = 0; i < $scope.texto.length; i++){
+        function editHtml () {
+            for (var i = 0;i < $scope.texto.length;i++) {
                 if ($scope.texto[i] != null && $scope.gridsterready == true) {
                     var route = "#templateGeneratorMain ul li[data-gridsterid='" + i + "'] div.tinymceContainer .widgetContent";
                     $(route).html($scope.texto[i]);
@@ -697,26 +777,114 @@
             }
         }
 
-        /*
-         * This function evaluate if the edit bottom has been clicked
+
+        /**
+         * chargeEditTemplate: evaluate if the edit bottom has been clicked on Mail Generator
          */
-        function chargeEditTemplate(){
+        function chargeEditTemplate () {
             var paramstr = window.location.hash;
-            var paramarr = paramstr.split("&");
+            var paramarr = paramstr.split('&');
             var params = {};
             // Extract the variable
-            for (var i = 0; i < paramarr.length; i++) {
-                var tmparr = paramarr[i].split("=");
+            for (var i = 0;i < paramarr.length;i++) {
+                var tmparr = paramarr[i].split('=');
                 params[tmparr[0]] = tmparr[1];
             }
             // If the id is define, introduce the template to edit it
-            if (params['#/templateGenerator?id']){
-                var id = params['#/templateGenerator?id'];
+            if (params['#/templateGenerator?id']) {
+                $scope.id = params['#/templateGenerator?id'];
+                $scope.saveOrReplace = '#replaceTemplate';
                 $scope.gridsterready = true;
-                editGridster(id);
+                editGridster();
             }
         }
+        // Execute the function chargeEditTemplate
         chargeEditTemplate();
+        
+        
+        
+        /**
+         * updateTemplate: update the template that has been edited
+         */
+        function updateTemplate () {
+            $('#replaceTemplate .spin').show();
+            // Take a screenshot form the template for the icon
+            var screenshot = document.getElementById('templateGeneratorMain');
+            html2canvas(screenshot, {
+                'onrendered': function (canvas) {
+                    // Getting the cleaning HTML
+                    var gridster = angular.toJson($scope.elementList);
+                    var icon = canvas.toDataURL();
+                    var html = cleanHTML();
+                    var html_edit = $('#templateGeneratorMain').html();
+                    // Getting template data
+                    var templateData = {
+                        'id': $scope.id,
+                        'icon': icon,
+                        'html': html,
+                        'html_edit': html_edit,
+                        'gridster': gridster
+                    };
+                    // Parsing js object to string
+                    templateData = JSON.stringify(templateData);
+                    // Ajax request to sabe new template
+                    $http.post('updateTemplate', {
+                        'template': templateData
+                    }).then(function (response) {
+                        // If ajax call success but it returns a fail state
+                        if (response.data.status === 'fail') {
+                            swal({
+                                'title': 'error!',
+                                'text': 'server could not validate your data!',
+                                'type': 'error',
+                                'confirmButtomText': 'close'
+                            });
+                        }
+                        // If ajax call success and it return a success state
+                        else {
+                            swal({
+                                'title': 'success!',
+                                'text': 'Your template have been updated!',
+                                'type': 'success',
+                                'confirmButtomText': 'cool'
+                            }, function () {
+                                // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
+                                $window.location.href = 'http://mailtemplate.app:8000/#/mailGenerator';
+                            });
+                            // Hide the modal
+                            $('#replaceTemplate').modal('hide');
+                            $('#replaceTemplate .spin').hide();
+                            // This removes the has-error class added when the input data was removed setting the form state to pristine
+                            $scope.saveTemplateForm.$setPristine();
+                        }
+                    }, function () {
+                        // If ajax call does not success
+                        swal({
+                            'title': 'error!',
+                            'text': 'Something is wrong with the server, please try again latter',
+                            'type': 'error',
+                            'confirmButtomText': 'close'
+                        });
+                    });
+                }});
+        }
+
+
+        /**
+         * openSave : open modal window saveTemplate
+         */
+        function openSave () {
+            $('#saveTemplate').modal('show');
+        }
+
+        /**
+         * Resize Toolbar when template is resize
+         */
+        $('#templateGeneratorMain').resize(function () {
+            $('#templateGeneratorToolbar').css({'height': $('#templateGeneratorMain').height()});
+        });
+        // Able scroll
+        $('body').css('overflow-y', 'scroll');
     }
 })();
 
@@ -725,8 +893,8 @@
     angular
         .module('mailTemplate')
         .constant('BASEPATH', {
-            apiURL: '[your API URL]',
-            webURL: '[your WEB URL]'
+            'apiURL': '[your API URL]',
+            'webURL': '[your WEB URL]'
         });
 })();
 
@@ -755,31 +923,32 @@
      * @param helper
      * @constructor
      */
-    function URLConfig($stateProvider, $locationProvider, $urlRouterProvider, helper) {
+    function URLConfig ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         
         // Disabling HTML5
         $locationProvider.html5Mode(false);
 
-        // default 
+        // default
         $urlRouterProvider.otherwise('/mailGenerator');
 
         // Defining route to mailGenerator
         $stateProvider
             .state('mailGenerator', {
-                url: '/mailGenerator',
-                templateUrl: helper.basepath('components', 'mailGenerator'),
-                controller: 'mailGeneratorCtrl'
+                'url': '/mailGenerator',
+                'templateUrl': helper.basepath('components', 'mailGenerator'),
+                'controller': 'mailGeneratorCtrl'
             });
             
-        // Defining route to templateGenerator    
+        // Defining route to templateGenerator
         $stateProvider
             .state('templateGenerator', {
-                url: '/templateGenerator',
-                templateUrl: helper.basepath('components', 'templateGenerator'),
-                controller: 'templateGeneratorCtrl'
-            });            
+                'url': '/templateGenerator',
+                'templateUrl': helper.basepath('components', 'templateGenerator'),
+                'controller': 'templateGeneratorCtrl'
+            });
     }
 })();
+
 (function () {
     angular.module('mailTemplate').directive('ngResizable', function () {
         return {
@@ -837,7 +1006,7 @@
                         var actualBrNodes = $(element).children().first().children('br').length;
                         
                         // Get previus saved number of br elements
-                        var lastBrCheck =  $(element).parent('li').attr('data-innerBrNodes');
+                        var lastBrCheck = $(element).parent('li').attr('data-innerBrNodes');
                         
                         // Compare it with previus saved number of br elements
                         if (actualBrNodes < lastBrCheck) {
@@ -883,80 +1052,12 @@
                         if ($(element).children().first().html() === '<br>') {
                             $(element).children().first().html('&nbsp');
                         }
-                        
-     /*
-                        // We check if tinymce is smaller than gridster
-                        if (tinymceHeight + 40 < gridsterHeight) {
-                            
-                            console.log ('ahora se borraría --> tinymce: ' + tinymceHeight + ' gridster: ' + gridsterHeight);
-                            
-                            // we get id of li node where gridster is implemented
-                            var gridsterId = $(element).parent('li').attr('data-gridsterId');
-
-                            // we get gridster element we need to change its sizeY
-                            var gridsterElement = $scope.elementList[gridsterId];
-                            
-                           // HERE is where we need to trigger resize event on gridster widger so it only increases one time. It strangely triggers on mouseover over arrows icon
-                            $scope.$apply(function () {
-                                gridsterElement.sizeY -= 1;
-                                console.log('new height: ' + gridsterElement.sizeY);
-                            });
-                        }
-*/
                     }
                 });
             }
         };
     });
 })();
-
-
-/* This is how it was done watching keypress events. Problem was that we want to check adding or deleting br tags, not keypressing enter key
-(function () {
-    angular.module('mailTemplate').directive('ngResizable', function () {
-        return {
-            'restrict': 'A',
-            'link': function ($scope, element) {
-                element.bind('keydown', function (event) {
-              // We check if keypressed is enter
-                    if (event.keyCode === 13) {
-           
-                        // We get the tinymce height
-                        var tinymceHeight = $(element).children().first().height();
-                        // we get gridster height
-                        var gridsterHeight = $(element).parent('li').height();
-
-                        // We check if tinymce height is bigger than gridster height
-                        if (tinymceHeight > gridsterHeight) {
-                            console.log('SI ENTRA --> altura tinymce: ' + tinymceHeight + ' altura gridster: ' + gridsterHeight);
-
-                            // we get id of li node where gridster is implemented
-                            var gridsterId = $(element).parent('li').attr('data-gridsterId');
-
-                            // we get gridster element we need to change its sizeY
-                            var gridsterElement = $scope.elementList[gridsterId];
-
-                            // we increase gridster rows until its smaller or equal to tinymce height
-                            var diff = Math.ceil((tinymceHeight - gridsterHeight) / 100);
-
-                           // HERE is where we need to trigger resize event on gridster widger so it only increases one time. It strangely triggers on mouseover over arrows icon
-                            $scope.$apply(function () {
-                                gridsterElement.sizeY += diff;
-                                console.log('new height: ' + gridsterElement.sizeY);
-                            });
-                        }
-                        else {
-                            console.log('NO ENTRA --> altura tinymce: ' + tinymceHeight + ' altura gridster: ' + gridsterHeight);
-                        }
-                    }
-
-                });
-            }
-        };
-    });
-})();
- */
-
 
 (function () {
     'use strict';

@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Models\Language;
 use App\Models\LanguageKey;
@@ -12,24 +9,24 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Validator;
 
+
+/**
+ * This class manages language requests
+ */
 class MultilanguageController extends Controller
 {
-    
-    /*
-     * This function receives code data from front, and returns language keys and language text from the
-     * recieved code
-     */
-    /**
-     * @param $code
-     * @return mixed
+    /**getLanguage : receives lang code from front and returns associated language keys and text
+     *
+     * @param $code --> language coded sended by front
+     * @return array --> stringified array with keys and texts
      */
     public function getLanguage()
     {
+        // get language selected on front
         $code = Input::get('lang');
         // Extract the id of the selected language
         $id_language = DB::table('languages')->where('code', '=', $code)->pluck('id_language');
-
-        // Extract the id of the selected language
+        // Create json withs keys and text associated to selected language
         $languages = DB::table('languages_text')
             ->where('languages_text.id_language', '=', $id_language)
             ->join('languages', 'languages_text.id_language', '=', 'languages.id_language')

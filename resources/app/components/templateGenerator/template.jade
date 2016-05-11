@@ -6,18 +6,15 @@ div#templateGenerator
             form.form-horizontal
                 div.col-xs-1
                     a(ng-href='#/mailGenerator')
-                        // button.btn.btn-success(type='button') {{ 'back' | translate }}
                         span.fa.fa-arrow-circle-left.fa-2x(role='button' ng-click='newTemplate()' style='color: white')                
                 label.control-label.col-xs-3(for='lenguage') Lenguage:
                 div.col-xs-8.col-sm-6.col-lg-4
-                    select#lenguage.form-control(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.name  for language in data.languages track by language.value' ng-change='cambiarIdioma (data.selectedLanguage)')
+                    select#lenguage.form-control(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.name  for language in data.languages track by language.value' ng-change='changeLanguage (data.selectedLanguage)')
         div#title.col-xs-4
             h4#viewTitle.col-xs-7.col-xs-offset-2 {{ 'title_template' | translate }}            
         div#buttonsWrapper.col-xs-4
-            // button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}
-            // button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}
             span.fa.fa-trash.fa-2x(role='button' ng-click='newTemplate()')
-            span.fa.fa-save.fa-2x(role='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();")
+            span.fa.fa-save.fa-2x(role='button' data-toggle='modal' data-target='{{saveOrReplace}}' onfocus="$(this).blur();")
 
         // body    
       div#templateGeneratorBody.row    
@@ -64,8 +61,26 @@ div#saveTemplate.modal.fade(ng-keydown='saveOnEnter($event)')
                         input#nameTemplate.form-control(type='text' ng-model='name_template' name='name_template'  placeholder='Name of the Template' ng-pattern='/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9][a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,50}$/' autofocus=true required)
                         span.glyphicon.form-control-feedback(ng-class="{'glyphicon-ok' : saveTemplateForm.name_template.$valid, 'glyphicon-remove' : saveTemplateForm.name_template.$invalid && saveTemplateForm.name_template.$dirty}")
             div.modal-footer
+                span.spin.fa.fa-spinner.fa-spin(style='display:none')
                 button.btn.btn-warning(type='button' data-dismiss='modal') {{ 'close' | translate }}
                 button.btn.btn-success(type='button' ng-click='saveTemplate()' ng-disabled='validateTemForm()') {{ 'save' | translate }}
+
+// Modal window for replace a template
+div#replaceTemplate.modal.fade
+    div.modal-dialog.modal-lg
+        div.modal-content
+            div.modal-header
+                button.close(type='button' data-dismiss='modal' aria-label='close')
+                    span(aria-hidden='true') &times;
+                h4.modal-title {{ 'replace_template' | translate }}
+            div.modal-body
+                h3.modal-title {{ 'replace_template_question' | translate }}
+                button.btn.btn-warning(type='button' ng-click='updateTemplate()') {{ 'replace_template' | translate }}
+                button.btn.btn-success(type='button' data-dismiss='modal' ng-click='openSave()') {{ 'save_template' | translate }}
+            div.modal-footer
+                span.spin.fa.fa-spinner.fa-spin(style='display:none')
+                button.btn.btn-warning(type='button' data-dismiss='modal') {{ 'close' | translate }}
+
 
 // Modal window for asking for a image
 div#askForImg.modal.fade
@@ -96,4 +111,4 @@ div#setVariables.modal.fade
                         input#variableName.form-control(type='text' ng-model='variableName' name='variableName'  placeholder='Name of the Variable')
             div.modal-footer
                 button.btn.btn-warning(type='button' data-dismiss='modal') Close
-                button.btn.btn-success(type='button' ng-click='escribirVariable()') Set
+                button.btn.btn-success(type='button' ng-click='setVariable()') Set
