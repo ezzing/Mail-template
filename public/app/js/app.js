@@ -893,8 +893,8 @@
     angular
         .module('mailTemplate')
         .constant('BASEPATH', {
-            apiURL: '[your API URL]',
-            webURL: '[your WEB URL]'
+            'apiURL': '[your API URL]',
+            'webURL': '[your WEB URL]'
         });
 })();
 
@@ -923,31 +923,32 @@
      * @param helper
      * @constructor
      */
-    function URLConfig($stateProvider, $locationProvider, $urlRouterProvider, helper) {
+    function URLConfig ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         
         // Disabling HTML5
         $locationProvider.html5Mode(false);
 
-        // default 
+        // default
         $urlRouterProvider.otherwise('/mailGenerator');
 
         // Defining route to mailGenerator
         $stateProvider
             .state('mailGenerator', {
-                url: '/mailGenerator',
-                templateUrl: helper.basepath('components', 'mailGenerator'),
-                controller: 'mailGeneratorCtrl'
+                'url': '/mailGenerator',
+                'templateUrl': helper.basepath('components', 'mailGenerator'),
+                'controller': 'mailGeneratorCtrl'
             });
             
-        // Defining route to templateGenerator    
+        // Defining route to templateGenerator
         $stateProvider
             .state('templateGenerator', {
-                url: '/templateGenerator',
-                templateUrl: helper.basepath('components', 'templateGenerator'),
-                controller: 'templateGeneratorCtrl'
-            });            
+                'url': '/templateGenerator',
+                'templateUrl': helper.basepath('components', 'templateGenerator'),
+                'controller': 'templateGeneratorCtrl'
+            });
     }
 })();
+
 (function () {
     angular.module('mailTemplate').directive('ngResizable', function () {
         return {

@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\Template;
@@ -15,8 +13,9 @@ use Validator;
 class TemplateController extends Controller
 {
     /**
-     * getCreatedTemplates: returns all the created templates
-     * @return array --> stringified array with id template, name template and created at
+     * getCreatedTemplates : returns all the created templates
+     *
+     * @return array : stringified array with id template, name template and created at
      */
     public function getCreatedTemplates ()
     {
@@ -27,10 +26,12 @@ class TemplateController extends Controller
                         ], 200);
     }
 
+    
     /**
      * getTemplate: receives id template from front and returns the html of the selected template
-     * @param $id --> template id sended by front
-     * @return array --> stringified array with html
+     *
+     * @param $id : template id sended by front
+     * @return array : stringified array with html
      */
     public function getTemplate ($id)
     {
@@ -41,11 +42,13 @@ class TemplateController extends Controller
                         ], 200);
     }
     
+    
     /**
      * getTemplateToEdit: receives id template from front and returns the html_edit and gridster
      * of the selected template to edit it
-     * @param $id --> template id sended by front
-     * @return array --> stringified array with html_edit and gridster
+     *
+     * @param $id  : template id sended by front
+     * @return array  : stringified array with html_edit and gridster
      */
     public function getTemplateToEdit($id)
     {
@@ -54,13 +57,12 @@ class TemplateController extends Controller
         return $selectedHtml;
     }
     
-    /*
-     * This function receives template data from front, validates the data, and if it is correct, store in the database.
-     */
+    
     /**
-     * saveTemplate: receives data template from front and store it at Database
-     * @param $template --> template data sended by front
-     * @return array --> stringified array with status (fail or success)
+     * saveTemplate: receives template data from front, validates the data, and if it is correct, store in the database.
+     *
+     * @param $template : template data sended by front
+     * @return array  : stringified array with status (fail or success)
      */
     public function saveTemplate ()
     {
@@ -105,10 +107,12 @@ class TemplateController extends Controller
         }
     }
     
+    
     /**
      * updateTemplate: receives data template from front and update it at database
-     * @param $template --> template data sended by front
-     * @return array --> stringified array with status (fail or success)
+     * 
+     * @param $template  : template data sended by front
+     * @return array  : stringified array with status (fail or success)
      */
     public function updateTemplate ()
     {
@@ -157,8 +161,9 @@ class TemplateController extends Controller
     
     /**
      * deleteTemplate: receives id template from front and delete it from database
-     * @param $id --> id data sended by front
-     * @return array --> stringified array with status
+     *
+     * @param $id  : id data sended by front
+     * @return array  : stringified array with status
      */
     public function deleteTemplate ()
     {

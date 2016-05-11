@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Input;
 use Validator;
 
+
 /**
  * This class manages email sending
  */
@@ -13,8 +14,9 @@ class MailController extends Controller
 {      
     
 /**
- * sendEmail --> Sends received email to target
- * @return array --> asociative array with the final status of request
+ * sendEmail  : Sends received email to target
+ *
+ * @return array : asociative array with the final status of request
  */
     public function sendEmail ()
     {
@@ -57,11 +59,6 @@ class MailController extends Controller
             ], 200);
          }
     }
-    public function saveTemplate ()
-    {
-        return response()->json([
-            'templates' => 'Hola'
-        ], 200);
-    }
 }
+
 

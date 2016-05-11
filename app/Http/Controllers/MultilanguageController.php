@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Validator;
 
+
 /**
  * This class manages language requests
  */
 class MultilanguageController extends Controller
 {
-    /**getLanguage: receives lang code from front and returns associated language keys and text
+    /**getLanguage : receives lang code from front and returns associated language keys and text
+     *
      * @param $code --> language coded sended by front
      * @return array --> stringified array with keys and texts
      */
