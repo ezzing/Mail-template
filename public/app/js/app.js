@@ -654,7 +654,7 @@
         /**
          * onReaded: create a gridster img element, in which the image source is used
          * as background.
-         * @param {type} e --> QUE ES ESTO????
+         * @param {event} e --> event
          * @param {string} file --> src of the img
          */
         function onReaded (e, file) {
@@ -850,6 +850,13 @@
         function openSave () {
             $("#saveTemplate").modal('show');
         }
+
+        /**
+         * Resize Toolbar when template is resize
+         */
+        $("#templateGeneratorMain").resize(function () {
+            $("#templateGeneratorToolbar").css({"height":$("#templateGeneratorMain").height()});
+        });
     }
 })();
 

@@ -1,4 +1,7 @@
-#templateGenerator {
+body {
+  padding-right: 0px !important;
+}
+body #templateGenerator {
   @keyframes makeArrowVisible {
     0% {
       opacity: 0;
@@ -14,60 +17,60 @@
 }
 
 }
-#templateGenerator #templateGeneratorHeader {
+body #templateGenerator #templateGeneratorHeader {
   border: 1px solid grey;
   min-height: 10vh;
   background-color: #000066;
   color: white;
 }
-#templateGenerator #templateGeneratorHeader #lenguageSelector {
+body #templateGenerator #templateGeneratorHeader #lenguageSelector {
   margin-top: 5vh;
 }
-#templateGenerator #templateGeneratorHeader #title {
+body #templateGenerator #templateGeneratorHeader #title {
   margin-top: 4vh;
   white-space: nowrap;
   overflow: hidden;
 }
-#templateGenerator #templateGeneratorHeader #buttonsWrapper {
+body #templateGenerator #templateGeneratorHeader #buttonsWrapper {
   margin-top: 5vh;
 }
-#templateGenerator #templateGeneratorHeader #buttonsWrapper button, #templateGenerator #templateGeneratorHeader #buttonsWrapper span {
+body #templateGenerator #templateGeneratorHeader #buttonsWrapper button, body #templateGenerator #templateGeneratorHeader #buttonsWrapper span {
   float: right;
   margin-right: 10px;
 }
-#templateGenerator #templateGeneratorBody #templateGeneratorToolbar {
+body #templateGenerator #templateGeneratorBody #templateGeneratorToolbar {
   border: 2px solid grey;
   min-height: 90vh;
   background-color: #000066;
   padding-left: 5px;
 }
-#templateGenerator #templateGeneratorBody #templateGeneratorToolbar ul#mobileList {
+body #templateGenerator #templateGeneratorBody #templateGeneratorToolbar ul#mobileList {
   padding: 0px;
 }
-#templateGenerator #templateGeneratorBody #templateGeneratorToolbar ul#mobileList li {
+body #templateGenerator #templateGeneratorBody #templateGeneratorToolbar ul#mobileList li {
   list-style: none;
   margin: 20% 25%;
 }
-#templateGenerator #templateGeneratorBody #templateGeneratorToolbar ul#mobileList li button {
+body #templateGenerator #templateGeneratorBody #templateGeneratorToolbar ul#mobileList li button {
   height: 45px;
   width: 45px;
   padding: 0px;
   background-size: cover;
 }
-#templateGenerator #templateGeneratorBody #templateGeneratorMain {
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain {
   border: 1px solid grey;
   min-height: 90vh;
   padding: 0px;
   background-color: white;
 }
-#templateGenerator #templateGeneratorBody #templateGeneratorMain .trashIcon {
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .trashIcon {
   font-size: 20px;
   position: absolute;
   right: 0px;
   cursor: pointer;
   z-index: 10;
 }
-#templateGenerator #templateGeneratorBody #templateGeneratorMain .arrowIcon {
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .arrowIcon {
   z-index: 10;
   position: absolute;
   cursor: pointer;
@@ -75,30 +78,30 @@
   top: 40%;
   opacity: 0;
 }
-#templateGenerator #templateGeneratorBody #templateGeneratorMain .widgetContent {
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .widgetContent {
   margin: 0px;
 }
-#templateGenerator #templateGeneratorBody #templateGeneratorMain .imageOnWidget {
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .imageOnWidget {
   margin: 0px;
   width: 100%;
   height: 100%;
   background-size: cover;
 }
-#templateGenerator #templateGeneratorBody #templateGeneratorMain .widgetContainer {
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .widgetContainer {
   border: 1px dotted #009ecd;
 }
-#templateGenerator #templateGeneratorBody #templateGeneratorMain .widgetContainer:hover .arrowIcon {
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .widgetContainer:hover .arrowIcon {
   animation-name: makeArrowVisible;
   animation-duration: 1s;
   animation-fill-mode: forwards;
   color: grey;
 }
-#templateGenerator #templateGeneratorBody #templateGeneratorMain .tinymceWidget {
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .tinymceWidget {
   height: 99%;
   overflow: hidden;
   z-index: 0;
 }
-#templateGenerator .gridster-item-resizable-handler, #templateGenerator .handle-se {
+body #templateGenerator .gridster-item-resizable-handler, body #templateGenerator .handle-se {
   border-color: transparent transparent black;
 }
 
@@ -154,6 +157,7 @@
   background-color: #449d44 !important;
 }
 #emailGenerator #emailGeneratorBody #emailGeneratorToolbar .icono {
+  overflow: hidden;
   height: 100%;
   padding-left: 1px;
 }
@@ -209,7 +213,7 @@
   background-color: #5cb85c;
   bottom: 0;
   color: white !important;
-  height: 75px !important;
+  height: 12.5% !important;
   left: 0;
   width: 100%;
   color: black;
