@@ -4,21 +4,17 @@
   <div id="templateGeneratorHeader" class="row">
     <div id="lenguageSelector" class="col-xs-4">   
       <form class="form-horizontal">
-        <div class="col-xs-1"><a ng-href="#/mailGenerator">
-            <!-- button.btn.btn-success(type='button') {{ 'back' | translate }}--><span role="button" ng-click="newTemplate()" style="color: white" class="fa fa-arrow-circle-left fa-2x">               </span></a></div>
+        <div class="col-xs-1"><a ng-href="#/mailGenerator"><span role="button" ng-click="newTemplate()" style="color: white" class="fa fa-arrow-circle-left fa-2x">               </span></a></div>
         <label for="lenguage" class="control-label col-xs-3">Lenguage:</label>
         <div class="col-xs-8 col-sm-6 col-lg-4">
-          <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.name  for language in data.languages track by language.value" ng-change="cambiarIdioma (data.selectedLanguage)" class="form-control"></select>
+          <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.name  for language in data.languages track by language.value" ng-change="changeLanguage (data.selectedLanguage)" class="form-control"></select>
         </div>
       </form>
     </div>
     <div id="title" class="col-xs-4">
       <h4 id="viewTitle" class="col-xs-7 col-xs-offset-2">{{ 'title_template' | translate }}            </h4>
     </div>
-    <div id="buttonsWrapper" class="col-xs-4">
-      <!-- button.btn.btn-success(type='button' ng-click='newTemplate()'){{ 'new' | translate }}-->
-      <!-- button.btn.btn-success(type='button' data-toggle='modal' data-target='#saveTemplate' onfocus="$(this).blur();") {{ 'save' | translate }}--><span role="button" ng-click="newTemplate()" class="fa fa-trash fa-2x"></span><span role="button" data-toggle="modal" data-target="{{saveOrReplace}}" onfocus="$(this).blur();" class="fa fa-save fa-2x"></span>
-    </div>
+    <div id="buttonsWrapper" class="col-xs-4"><span role="button" ng-click="newTemplate()" class="fa fa-trash fa-2x"></span><span role="button" data-toggle="modal" data-target="{{saveOrReplace}}" onfocus="$(this).blur();" class="fa fa-save fa-2x"></span></div>
     <!-- body    -->
   </div>
   <div id="templateGeneratorBody" class="row">   
@@ -73,7 +69,7 @@
           </div>
         </div>
       </form>
-      <div class="modal-footer">
+      <div class="modal-footer"><span style="display:none" class="spin fa fa-spinner fa-spin"></span>
         <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
         <button type="button" ng-click="saveTemplate()" ng-disabled="validateTemForm()" class="btn btn-success">{{ 'save' | translate }}</button>
       </div>
@@ -93,7 +89,7 @@
         <button type="button" ng-click="updateTemplate()" class="btn btn-warning">{{ 'replace_template' | translate }}</button>
         <button type="button" data-dismiss="modal" ng-click="openSave()" class="btn btn-success">{{ 'save_template' | translate }}</button>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer"><span style="display:none" class="spin fa fa-spinner fa-spin"></span>
         <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
       </div>
     </div>

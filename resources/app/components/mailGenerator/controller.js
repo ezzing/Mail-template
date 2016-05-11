@@ -22,6 +22,7 @@
         // Declaring all scope properties
         $scope.selectedTemplate = null;
         $scope.templateVariables = [];
+        $scope.templateList = null;
         $scope.data = {
             'languages': [
                 {'value': 'en', 'name': 'english'},
@@ -126,6 +127,7 @@
          * sendEmail: sends current #actualTemplate content as an email to one or multiple targets
          */
         function sendEmail () {
+            $('#sendMail .spin').show();
             // Recovering mail data
             var emailData = {
                 'email': $scope.email,
@@ -138,6 +140,7 @@
             $http.post('email', {
                 'emailData': emailData
             }).then(function (response) {
+                $('#sendMail .spin').hide();
                 // If ajax call success but it returns a fail state
                 if (response.data.status === 'fail') {
                     swal({

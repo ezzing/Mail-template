@@ -17,7 +17,7 @@ div#emailGenerator(ng-init='loadTemplates()')
       div#emailGeneratorBody.row           
         //Toolbar
         div#emailGeneratorToolbar.col-xs-3
-            div.scroolTool
+            div.scroolTool(ng-hide="templateList.length < 1")
                 div(href='#' ng-repeat='template in templateList')
                     div.templateSelector.row
                         div.col-xs-5.icono(ng-click='loadTemplate(template.id_template)')
@@ -93,5 +93,6 @@ div#sendMail.modal.fade(ng-keydown='sendOnEnter($event)')
                         input#subjectInput.form-control(type='text' ng-model='subject'  placeholder='subject' name='subject' ng-pattern='/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9][a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,50}$/' required)                        
                         span.glyphicon.form-control-feedback(ng-class="{'glyphicon-ok' : sendMailForm.subject.$valid, 'glyphicon-remove' : sendMailForm.subject.$invalid && sendMailForm.subject.$dirty}")
             div.modal-footer
+                span.spin.fa.fa-spinner.fa-spin(style='display:none')                
                 button.btn.btn-warning(type='button' data-dismiss='modal') Close
                 button.btn.btn-success(type='button' ng-click='sendEmail()' ng-disabled='disableSendingButton()') {{ 'send' | translate }}

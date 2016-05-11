@@ -43,6 +43,7 @@
         // Declaring all scope properties
         $scope.selectedTemplate = null;
         $scope.templateVariables = [];
+        $scope.templateList = null;
         $scope.data = {
             'languages': [
                 {'value': 'en', 'name': 'english'},
@@ -147,6 +148,7 @@
          * sendEmail: sends current #actualTemplate content as an email to one or multiple targets
          */
         function sendEmail () {
+            $('#sendMail .spin').show();
             // Recovering mail data
             var emailData = {
                 'email': $scope.email,
@@ -159,6 +161,7 @@
             $http.post('email', {
                 'emailData': emailData
             }).then(function (response) {
+                $('#sendMail .spin').hide();
                 // If ajax call success but it returns a fail state
                 if (response.data.status === 'fail') {
                     swal({
@@ -271,7 +274,7 @@
         $scope.openSave = openSave;
         $scope.changeLanguage = changeLanguage;
 
-        // Declaring all scope properties   
+        // Declaring all scope properties
         $scope.variableName= '';
         $scope.texto = [];
         $scope.gridsterCont = 0;
@@ -511,6 +514,7 @@
          * saveTemplate: store the template at DataBase
          */
         function saveTemplate () {
+            $('#saveTemplate .spin').show();
             // Take a screenshot form the template for the icon
             var screenshot = document.getElementById('templateGeneratorMain');
             html2canvas(screenshot, {
@@ -531,7 +535,7 @@
 
                     // Parsing js object to string
                     templateData = JSON.stringify(templateData);
-
+                    
                     // Ajax request to sabe new template
                     $http.post('saveTemplate', {
                         'template': templateData
@@ -558,7 +562,7 @@
                             });
                             // Hide the modal
                             $('#saveTemplate').modal('hide');
-
+                             $('saveTemplate .spin').show();
                             // Clear the modal data
                             $scope.name_template = '';
                             $scope.icon_template = '';
@@ -708,11 +712,12 @@
                 $scope.saveTemplate();
             }
         }
-
+        
+        
         /**
          * Focus the first input on the modal window when a modal is open
          */
-        $("#setVariables, #saveTemplate").on('shown.bs.modal', function(){
+        $("#setVariables, #saveTemplate").on('shown.bs.modal', function () {
             $('input:text:visible:first', this).focus();
         });
 
@@ -737,7 +742,7 @@
                 }
                 $timeout(function(){
                     editHtml();
-                })
+                });
             });
         }
 
@@ -780,6 +785,7 @@
          * updateTemplate: update the template that has been edited
          */
         function updateTemplate () {
+              $('#replaceTemplate .spin').show();
             // Take a screenshot form the template for the icon
             var screenshot = document.getElementById('templateGeneratorMain');
             html2canvas(screenshot, {
@@ -827,7 +833,7 @@
                             });
                             // Hide the modal
                             $('#replaceTemplate').modal('hide');
-
+                            $('#replaceTemplate .spin').hide();
                             // This removes the has-error class added when the input data was removed setting the form state to pristine
                             $scope.saveTemplateForm.$setPristine();
 
@@ -1016,80 +1022,12 @@
                         if ($(element).children().first().html() === '<br>') {
                             $(element).children().first().html('&nbsp');
                         }
-                        
-     /*
-                        // We check if tinymce is smaller than gridster
-                        if (tinymceHeight + 40 < gridsterHeight) {
-                            
-                            console.log ('ahora se borraría --> tinymce: ' + tinymceHeight + ' gridster: ' + gridsterHeight);
-                            
-                            // we get id of li node where gridster is implemented
-                            var gridsterId = $(element).parent('li').attr('data-gridsterId');
-
-                            // we get gridster element we need to change its sizeY
-                            var gridsterElement = $scope.elementList[gridsterId];
-                            
-                           // HERE is where we need to trigger resize event on gridster widger so it only increases one time. It strangely triggers on mouseover over arrows icon
-                            $scope.$apply(function () {
-                                gridsterElement.sizeY -= 1;
-                                console.log('new height: ' + gridsterElement.sizeY);
-                            });
-                        }
-*/
                     }
                 });
             }
         };
     });
 })();
-
-
-/* This is how it was done watching keypress events. Problem was that we want to check adding or deleting br tags, not keypressing enter key
-(function () {
-    angular.module('mailTemplate').directive('ngResizable', function () {
-        return {
-            'restrict': 'A',
-            'link': function ($scope, element) {
-                element.bind('keydown', function (event) {
-              // We check if keypressed is enter
-                    if (event.keyCode === 13) {
-           
-                        // We get the tinymce height
-                        var tinymceHeight = $(element).children().first().height();
-                        // we get gridster height
-                        var gridsterHeight = $(element).parent('li').height();
-
-                        // We check if tinymce height is bigger than gridster height
-                        if (tinymceHeight > gridsterHeight) {
-                            console.log('SI ENTRA --> altura tinymce: ' + tinymceHeight + ' altura gridster: ' + gridsterHeight);
-
-                            // we get id of li node where gridster is implemented
-                            var gridsterId = $(element).parent('li').attr('data-gridsterId');
-
-                            // we get gridster element we need to change its sizeY
-                            var gridsterElement = $scope.elementList[gridsterId];
-
-                            // we increase gridster rows until its smaller or equal to tinymce height
-                            var diff = Math.ceil((tinymceHeight - gridsterHeight) / 100);
-
-                           // HERE is where we need to trigger resize event on gridster widger so it only increases one time. It strangely triggers on mouseover over arrows icon
-                            $scope.$apply(function () {
-                                gridsterElement.sizeY += diff;
-                                console.log('new height: ' + gridsterElement.sizeY);
-                            });
-                        }
-                        else {
-                            console.log('NO ENTRA --> altura tinymce: ' + tinymceHeight + ' altura gridster: ' + gridsterHeight);
-                        }
-                    }
-
-                });
-            }
-        };
-    });
-})();
- */
-
 
 (function () {
     'use strict';

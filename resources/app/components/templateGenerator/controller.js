@@ -24,7 +24,7 @@
         $scope.openSave = openSave;
         $scope.changeLanguage = changeLanguage;
 
-        // Declaring all scope properties   
+        // Declaring all scope properties
         $scope.variableName= '';
         $scope.texto = [];
         $scope.gridsterCont = 0;
@@ -264,6 +264,7 @@
          * saveTemplate: store the template at DataBase
          */
         function saveTemplate () {
+            $('#saveTemplate .spin').show();
             // Take a screenshot form the template for the icon
             var screenshot = document.getElementById('templateGeneratorMain');
             html2canvas(screenshot, {
@@ -284,7 +285,7 @@
 
                     // Parsing js object to string
                     templateData = JSON.stringify(templateData);
-
+                    
                     // Ajax request to sabe new template
                     $http.post('saveTemplate', {
                         'template': templateData
@@ -311,7 +312,7 @@
                             });
                             // Hide the modal
                             $('#saveTemplate').modal('hide');
-
+                             $('saveTemplate .spin').show();
                             // Clear the modal data
                             $scope.name_template = '';
                             $scope.icon_template = '';
@@ -461,11 +462,12 @@
                 $scope.saveTemplate();
             }
         }
-
+        
+        
         /**
          * Focus the first input on the modal window when a modal is open
          */
-        $("#setVariables, #saveTemplate").on('shown.bs.modal', function(){
+        $("#setVariables, #saveTemplate").on('shown.bs.modal', function () {
             $('input:text:visible:first', this).focus();
         });
 
@@ -490,7 +492,7 @@
                 }
                 $timeout(function(){
                     editHtml();
-                })
+                });
             });
         }
 
@@ -533,6 +535,7 @@
          * updateTemplate: update the template that has been edited
          */
         function updateTemplate () {
+              $('#replaceTemplate .spin').show();
             // Take a screenshot form the template for the icon
             var screenshot = document.getElementById('templateGeneratorMain');
             html2canvas(screenshot, {
@@ -580,7 +583,7 @@
                             });
                             // Hide the modal
                             $('#replaceTemplate').modal('hide');
-
+                            $('#replaceTemplate .spin').hide();
                             // This removes the has-error class added when the input data was removed setting the form state to pristine
                             $scope.saveTemplateForm.$setPristine();
 

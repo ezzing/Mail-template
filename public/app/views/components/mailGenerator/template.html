@@ -19,7 +19,7 @@
   <div id="emailGeneratorBody" class="row">          
     <!--Toolbar-->
     <div id="emailGeneratorToolbar" class="col-xs-3">
-      <div class="scroolTool">
+      <div ng-hide="templateList.length &lt; 1" class="scroolTool">
         <div href="#" ng-repeat="template in templateList">
           <div class="templateSelector row">
             <div ng-click="loadTemplate(template.id_template)" class="col-xs-5 icono">
@@ -95,7 +95,7 @@
           </div>
         </div>
       </form>
-      <div class="modal-footer">
+      <div class="modal-footer"><span style="display:none" class="spin fa fa-spinner fa-spin">               </span>
         <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
         <button type="button" ng-click="sendEmail()" ng-disabled="disableSendingButton()" class="btn btn-success">{{ 'send' | translate }}</button>
       </div>
