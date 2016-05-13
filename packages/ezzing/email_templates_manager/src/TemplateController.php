@@ -1,5 +1,6 @@
 <?php
-namespace App\Http\Controllers;
+namespace Ezzing\EmailTemplateManager;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\Template;

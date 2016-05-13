@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers;
+namespace Ezzing\EmailTemplateManager;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;

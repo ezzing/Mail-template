@@ -147,7 +147,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-	Ezzing\Email_templates_manager\EmailTemplatesManagerProvider::class,
+	Ezzing\EmailTemplateManager\EmailTemplatesManagerProvider::class,
 
         /*
          * Application Service Providers...

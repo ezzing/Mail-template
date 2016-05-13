@@ -1,5 +1,5 @@
 {
-    "name": "ezzing/email_templates_manager",
+    "name": "ezzing/email-template-manager",
     "description": "Email templates manager that allows users to create, store, edit and send styled emails",
     "license": "MIT",
     "authors": [

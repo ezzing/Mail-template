@@ -1,6 +1,6 @@
 <?php
 
-namespace Ezzing\Email_templates_manager;
+namespace Ezzing\EmailTemplateManager;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +13,7 @@ class EmailTemplatesManagerProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/views', 'email_templates_manager');
+        $this->loadViewsFrom(__DIR__.'/views', 'EmailTemplateManagerViews');
     }
 
     /**
@@ -24,6 +24,5 @@ class EmailTemplatesManagerProvider extends ServiceProvider
     public function register()
     {
         include __DIR__.'/routes.php';
-        $this->app->make('Ezzing\Email_templates_manager\EmailTemplatesManagerController');
     }
 }
