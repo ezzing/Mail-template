@@ -21,7 +21,8 @@
             "database"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+	    "Ezzing\\Email_templates_manager\\": "packages/ezzing/email_templates_manager/src"
         }
     },
     "autoload-dev": {
