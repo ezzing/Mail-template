@@ -38,7 +38,11 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title">Laravel 6</div>
+		<em style='font-size:2em'> Just imagine this is some laravel builded App </em>
+		</br>
+		</br>
+		<a href='http://mailtemplate.app:8000/ezzing' style='font-size: 2em; color:red'>Gestor de plantillas </a>
             </div>
         </div>
     </body>
