@@ -1,0 +1,286 @@
+body {
+  padding-right: 0px !important;
+}
+body #templateGenerator #templateGeneratorHeader {
+  border: 1px solid grey;
+  min-height: 10vh;
+  background-color: #000066;
+  color: white;
+}
+body #templateGenerator #templateGeneratorHeader #lenguageSelector {
+  margin-top: 5vh;
+}
+body #templateGenerator #templateGeneratorHeader #title {
+  margin-top: 4vh;
+  white-space: nowrap;
+  overflow: hidden;
+}
+body #templateGenerator #templateGeneratorHeader #buttonsWrapper {
+  margin-top: 5vh;
+}
+body #templateGenerator #templateGeneratorHeader #buttonsWrapper button, body #templateGenerator #templateGeneratorHeader #buttonsWrapper span {
+  float: right;
+  margin-right: 10px;
+}
+body #templateGenerator #templateGeneratorBody #templateGeneratorToolbar {
+  border: 2px solid grey;
+  min-height: 90vh;
+  background-color: #000066;
+  padding-left: 5px;
+}
+body #templateGenerator #templateGeneratorBody #templateGeneratorToolbar ul#mobileList {
+  padding: 0px;
+}
+body #templateGenerator #templateGeneratorBody #templateGeneratorToolbar ul#mobileList li {
+  list-style: none;
+  margin: 20% 25%;
+}
+body #templateGenerator #templateGeneratorBody #templateGeneratorToolbar ul#mobileList li button {
+  height: 45px;
+  width: 45px;
+  padding: 0px;
+  background-size: cover;
+}
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain {
+  border: 1px solid grey;
+  min-height: 90vh;
+  padding: 0px;
+  background-color: white;
+}
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .trashIcon {
+  font-size: 20px;
+  position: absolute;
+  right: 0px;
+  cursor: pointer;
+  z-index: 10;
+}
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .arrowIcon {
+  z-index: 10;
+  position: absolute;
+  cursor: pointer;
+  left: 45%;
+  top: 40%;
+  opacity: 0;
+}
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .widgetContent {
+  margin: 0px;
+}
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .imageOnWidget {
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+}
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .widgetContainer {
+  border: 1px dotted #009ecd;
+}
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .widgetContainer:hover .arrowIcon {
+  animation-name: makeArrowVisible;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  color: grey;
+}
+body #templateGenerator #templateGeneratorBody #templateGeneratorMain .tinymceWidget {
+  height: 99%;
+  overflow: hidden;
+  z-index: 0;
+}
+body #templateGenerator .gridster-item-resizable-handler, body #templateGenerator .handle-se {
+  border-color: transparent transparent black;
+}
+@keyframes makeArrowVisible {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+#emailGenerator #emailGeneratorHeader {
+  background-color: #000066;
+  color: white;
+  border: 1px solid grey;
+  min-height: 10vh;
+}
+#emailGenerator #emailGeneratorHeader #lenguageSelector {
+  margin-top: 5vh;
+}
+#emailGenerator #emailGeneratorHeader #title {
+  margin-top: 4vh;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#emailGenerator #emailGeneratorHeader button#sendButton {
+  float: right;
+  margin-top: 5vh;
+  width: 40%;
+  white-space: nowrap;
+}
+#emailGenerator #emailGeneratorHeader #buttonsWrapper {
+  margin-top: 5vh;
+}
+#emailGenerator #emailGeneratorHeader #buttonsWrapper button, #emailGenerator #emailGeneratorHeader #buttonsWrapper span {
+  float: right;
+  margin-right: 10px;
+}
+#emailGenerator #emailGeneratorBody {
+  border: 1px solid grey;
+  min-height: 90vh;
+  padding: 0px;
+  background-color: #f2f2f2;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar {
+  background-color: #000066 !important;
+  border: 1px solid grey;
+  min-height: 90vh;
+  background-color: #e6e6e6;
+  position: relative;
+  padding: 0;
+  padding-left: 1%;
+  font-size: 0.9em;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar div#createTemplate:hover {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #449d44 !important;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar div#createTemplate:hover table {
+  background-color: #449d44 !important;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar .icono {
+  overflow: hidden;
+  height: 100%;
+  padding-left: 1px;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar .icono table {
+  background-color: whitesmoke;
+  height: 100%;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar .templateSelector {
+  color: white;
+  border: 2px solid #925E5E;
+  height: 100px;
+  margin: 0px;
+  width: 100%;
+  cursor: pointer;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar .templateSelector .iconsContainer {
+  z-index: 100;
+  margin: 10px;
+  position: absolute;
+  right: 0px;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar .templateSelector .iconsContainer span {
+  color: white;
+  margin-right: 5px;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar .templateSelector .textTemplSel {
+  padding-top: 5%;
+}
+@media screen and (max-width: 767px) {
+  #emailGenerator #emailGeneratorBody #emailGeneratorToolbar .textTemplSel {
+    padding-left: 40px;
+    padding-top: 13px;
+    padding-left: 18px;
+  }
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar .scroolTool {
+  background-color: #000066;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow-y: scroll;
+  height: 87.5%;
+}
+@media screen and (max-width: 767px) {
+  #emailGenerator #emailGeneratorBody #emailGeneratorToolbar .scroolTool {
+    height: 200px;
+    padding-left: 28px;
+    position: inherit;
+  }
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar #createTemplate {
+  position: absolute;
+  background-color: #5cb85c;
+  bottom: 0;
+  color: white !important;
+  height: 12.5% !important;
+  left: 0;
+  width: 100%;
+  color: black;
+  border: 2px solid #925E5E;
+  height: 17%;
+  margin-bottom: 0%;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar #createTemplate table {
+  background-color: #5cb85c;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbar #createTemplate img#newTemplateImg {
+  height: 50%;
+}
+@media screen and (max-width: 767px) {
+  #emailGenerator #emailGeneratorBody #emailGeneratorToolbar {
+    display: none;
+  }
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbarButton {
+  float: left;
+  margin: 0px;
+  padding: 0px;
+  border: none;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbarButton .scroolTool {
+  padding: 0px;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbarButton #templatesButton {
+  background-color: #5cb85c;
+  color: white;
+  border: 1px solid grey;
+  min-width: 100%;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbarButton .templateSelector {
+  background-color: #000066;
+  color: white;
+  border: 1px solid #925E5E;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorToolbarButton #newTemplateBtn {
+  background-color: #5cb85c;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorMain {
+  margin: 0px;
+  padding: 0px;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorMain #variables {
+  padding: 0px;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorMain #variables #variablesButton {
+  background-color: #5cb85c;
+  border: 1px solid grey;
+  color: white;
+  min-width: 100%;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorMain #variables #variablesForm {
+  min-width: 100%;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorMain #variables #variablesForm label {
+  float: left;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorMain #variables #variablesForm input {
+  margin-bottom: 1%;
+}
+@media screen and (max-width: 767px) {
+  #emailGenerator #emailGeneratorBody #emailGeneratorMain #variables {
+    padding: 0px;
+  }
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorMain #actualTemplate {
+  height: 90vh;
+  background-color: white;
+}
+#emailGenerator #emailGeneratorBody #emailGeneratorMain #actualTemplate ul {
+  overflow-y: scroll;
+}

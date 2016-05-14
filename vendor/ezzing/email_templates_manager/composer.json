@@ -1,0 +1,17 @@
+{
+    "name": "ezzing/email-template-manager",
+    "description": "Email templates manager that allows users to create, store, edit and send styled emails",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrian Lopez Martinez",
+            "email": "adrian.lopez@ezzing.com"
+        }
+	{
+	    "name": "Rubén Rodriguez",
+	    "email": "ruben.rodriguez@ezzing.com"
+	}
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
