@@ -10,7 +10,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Language extends Model
+class Ezz_language extends Model
 {
 
 // MASS ASSIGNMENT -------------------------------------------------------
@@ -18,7 +18,7 @@ class Language extends Model
 // we only want these 3 attributes able to be filled
 protected $fillable = array('code', 'language');
     
-    protected $table = 'languages';
+    protected $table = 'ezz_languages';
 
 }
 

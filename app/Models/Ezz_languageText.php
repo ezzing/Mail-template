@@ -10,15 +10,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Template extends Model
+class Ezz_languageText extends Model
 {
 
 // MASS ASSIGNMENT -------------------------------------------------------
 // define which attributes are mass assignable (for security)
 // we only want these 3 attributes able to be filled
-protected $fillable = array('name_template', 'html', 'icon', 'html_edit', 'gridster');
+protected $fillable = array('id_language', 'id_key', 'text');
     
-    protected $table = 'templates';
+    protected $table = 'ezz_languages_text';
 
 }
 
