@@ -69,7 +69,7 @@ div#emailGenerator(ng-init='loadTemplates()')
                         div.col-xs-10
                             input.form-control(ng-model='variable[1]' id='{{variable[0]}}' ng-change='changeVariables()')
             // Div that contains the preview of the email
-            #actualTemplate
+            #actualTemplate(ng-bind-html="actualTemplate")
 
 // Modal window for sending an email
 div#sendMail.modal.fade(ng-keydown='sendOnEnter($event)')

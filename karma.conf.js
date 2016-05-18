@@ -15,9 +15,28 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/angular/angular.min.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'public/app/js/*.js',
+        'public/app/js/base.js',
+        'bower_components/angular/angular.js',
+        'bower_components/angular-cookies/angular-cookies.js',
+        'bower_components/angular-gridster/src/angular-gridster.js',
+        'bower_components/angular-mocks/angular-mocks.js',
+        'resources/tests/unit/components/**/*.js',
+        'bower_components/angular-route/angular-route.js',
+        'bower_components/angular-translate/angular-translate.js',
+        'bower_components/angular-translate-loader-url/angular-translate-loader-url.js',
+        'bower_components/angular-ui-router/src/*.js',
+        'bower_components/angular-ui-tinymce/src/tinymce.js',
+        'bower_components/bootstrap/js/*.js',
+        'bower_components/html2canvas/src/*.js',
+        'bower_components/html2canvas/src/renderers/*.js',
+        'bower_components/javascript-detect-element-resize/detect-element-resize.js',
+        'bower_components/jquery/dist/jquery.js',
+        'bower_components/ng-lodash/build/ng-lodash.js',
+        'bower_components/ngFileReader/src/ngFileReader.js',
+        "bower_components/sweetalert/dist/sweetalert.min.js",
+        'bower_components/tinymce/tinymce.js',
+        'bower_components/tinymce-dist/tinymce.js',
+        'public/app/js/app.js'
     ],
 
 
