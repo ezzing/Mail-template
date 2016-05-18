@@ -1,6 +1,7 @@
 /node_modules
 /bower_components
-/vendor
+/vendor/*
+!/vendor/ezzing
 /nbproject
 /.env
 /config.json

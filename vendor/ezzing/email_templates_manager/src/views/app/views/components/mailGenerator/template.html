@@ -1,0 +1,104 @@
+
+<div id="emailGenerator" ng-init="loadTemplates()">
+  <!-- Header-->
+  <div id="emailGeneratorHeader" class="row">
+    <div id="lenguageSelector" class="col-xs-4">
+      <form class="form-horizontal">
+        <label for="lenguage" class="control-label col-xs-4">Lenguage:</label>
+        <div class="col-xs-8 col-sm-6 col-lg-4">
+          <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.name  for language in data.languages track by language.value" ng-change="changeLanguage(data.selectedLanguage)" class="form-control"></select>
+        </div>
+      </form>
+    </div>
+    <div id="title" class="col-xs-4">
+      <h4 id="viewTitle" class="col-xs-7 col-xs-offset-2">{{ 'title_mail' | translate }}            </h4>
+    </div>
+    <div id="buttonsWrapper" class="col-xs-4"><span role="button" ng-click="deleteTemplate(selectedTemplate)" class="fa fa-trash fa-2x"></span><span role="button" data-toggle="modal" data-target="#sendMail" onfocus="$(this).blur();" class="fa fa-envelope fa-2x"></span><a ng-href="#/templateGenerator?id={{selectedTemplate}}"><span role="button" style="color: white;" class="fa fa-edit fa-2x"></span></a></div>
+  </div>
+  <!-- Body      -->
+  <div id="emailGeneratorBody" class="row">          
+    <!--Toolbar-->
+    <div id="emailGeneratorToolbar" class="col-xs-3">
+      <div ng-hide="templateList.length &lt; 1" class="scroolTool">
+        <div href="#" ng-repeat="template in templateList">
+          <div class="templateSelector row">
+            <div ng-click="loadTemplate(template.id_template)" class="col-xs-5 icono">
+              <table>
+                <tr>
+                  <td><img ng-src="{{template.icon}}" class="img-responsive"/></td>
+                </tr>
+              </table>
+            </div>
+            <div class="iconsContainer"><a ng-href="#/templateGenerator?id={{template.id_template}}"><span role="button" class="fa fa-edit">                      </span></a><span role="button" ng-click="deleteTemplate(template.id_template)" class="fa fa-trash"></span></div>
+            <div ng-click="loadTemplate(template.id_template)" class="col-xs-7 textTemplSel">{{template.name_template}}<br/>{{ 'date' | translate }}: {{template.created_at}}</div>
+          </div>
+        </div>
+      </div><a id="refTemplateGenerator" href="#/templateGenerator">
+        <div id="createTemplate" class="templateSelector row">
+          <div class="col-xs-5 icono">
+            <table>
+              <tr>
+                <tdresources><img id="newTemplateImg" src="resources/EmailTemplateManager/app/img/plantilla.png" class="img-responsive"/></tdresources>
+              </tr>
+            </table>
+          </div>
+          <div class="col-xs-7 textTemplSel">{{ 'new_template' | translate }}</div>
+        </div></a>
+    </div>
+    <!--main section-->
+    <div id="emailGeneratorMain" class="col-xs-12 col-sm-9 row">
+      <div id="emailGeneratorToolbarButton" class="navbar-toggle collapsed col-xs-3">
+        <div class="dropdown">
+          <button id="templatesButton" type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Templates<span class="caret"></span></button>
+          <div class="scroolTool dropdown-menu"><a href="#" ng-repeat="template in templateList">
+              <div ng-click="loadTemplate(template.id_template)" class="col-xs-12 textTemplSel templateSelector">{{template.name_template}}<br/>Date:<br/>{{template.created_at}}</div></a><a href="#/templateGenerator">
+              <div id="newTemplateBtn" class="col-xs-12 textTemplSel templateSelector">{{ 'new_template' | translate }}        </div></a></div>
+        </div>
+      </div>
+      <!--Dropdown menu for variables-->
+      <div id="variables" ng-keydown="closeDropdown($event)" class="dropdown col-xs-9 col-sm-12">
+        <button id="variablesButton" type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ 'variables' | translate }}<span class="caret"></span></button>
+        <form id="variablesForm" class="dropdown-menu form-horizontal">
+          <div ng-repeat="variable in templateVariables" class="form-group">
+            <label for="{{variable[0]}}" class="col-xs-1 control-label">{{variable[0]}}</label>
+            <div class="col-xs-10">
+              <input ng-model="variable[1]" id="{{variable[0]}}" ng-change="changeVariables()" class="form-control"/>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Div that contains the preview of the email-->
+      <div id="actualTemplate"></div>
+    </div>
+  </div>
+</div>
+<!-- Modal window for sending an email-->
+<div id="sendMail" ng-keydown="sendOnEnter($event)" class="modal fade">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ 'email_settings' | translate }}</h4>
+      </div>
+      <div class="modal-body"></div>
+      <form name="sendMailForm" class="form-horizontal">
+        <div ng-class=" { 'has-error' : sendMailForm.email.$invalid &amp;&amp; sendMailForm.email.$dirty, 'has-success' : sendMailForm.email.$valid} " class="form-group has-feedback">
+          <label for="email" class="col-sm-2 control-label">{{ 'email' | translate }}:</label>
+          <div class="col-sm-8">
+            <input id="emailInput" type="text" ng-model="email" name="email" placeholder="&lt;name&gt;mail@example.com,&lt;name&gt;other@example.com" ng-pattern="/^((&lt;[a-z]+&gt;)?[.a-zA-ZáéíóúÁÉÍÓÚñÑ_0-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12})(,((&lt;[a-z]+&gt;)?[.a-zA-ZáéíóúÁÉÍÓÚñÑ_0-9]+@[a-zA-ZáéíóúÁÉÍÓÚñÑ_-]+\.[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,12}))*$/" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : sendMailForm.email.$valid, 'glyphicon-remove' : sendMailForm.email.$invalid &amp;&amp; sendMailForm.email.$dirty}" class="glyphicon form-control-feedback"></span>
+          </div>
+        </div>
+        <div ng-class=" { 'has-error' : sendMailForm.subject.$invalid &amp;&amp; sendMailForm.subject.$dirty, 'has-success': sendMailForm.subject.$valid} " class="form-group has-feedback">
+          <label for="subjectInput" class="col-sm-2 control-label">{{ 'subject' | translate }}:</label>
+          <div class="col-sm-8">
+            <input id="subjectInput" type="text" ng-model="subject" placeholder="subject" name="subject" ng-pattern="/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9][a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,50}$/" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : sendMailForm.subject.$valid, 'glyphicon-remove' : sendMailForm.subject.$invalid &amp;&amp; sendMailForm.subject.$dirty}" class="glyphicon form-control-feedback"></span>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer"><span style="display:none" class="spin fa fa-spinner fa-spin">               </span>
+        <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
+        <button type="button" ng-click="sendEmail()" ng-disabled="disableSendingButton()" class="btn btn-success">{{ 'send' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
