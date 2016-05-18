@@ -13,7 +13,7 @@ class CreateTemplatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('templates', function (Blueprint $table) {
+        Schema::create('ezz_templates', function (Blueprint $table) {
             $table->increments('id_template')->primary;
             $table->string('name_template');
             $table->longText('html');

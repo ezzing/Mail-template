@@ -310,7 +310,7 @@
                                 'confirmButtomText': 'cool'
                             }, function () {
                                 // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
-                                $window.location.href = 'http://mailtemplate.app:8000/#/mailGenerator';
+                                $window.location.href = '#/mailGenerator';
                             });
                             // Hide the modal
                             $('#saveTemplate').modal('hide');
@@ -593,7 +593,7 @@
                                 'confirmButtomText': 'cool'
                             }, function () {
                                 // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
-                                $window.location.href = 'http://mailtemplate.app:8000/#/mailGenerator';
+                                $window.location.href = '#/mailGenerator';
                             });
                             // Hide the modal
                             $('#replaceTemplate').modal('hide');

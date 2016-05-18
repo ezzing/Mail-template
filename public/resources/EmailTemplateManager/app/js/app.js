@@ -18,7 +18,6 @@
 })();
 
 
-
 (function () {
     'use strict';
     angular.module('mailTemplate').controller('mailGeneratorCtrl', mailGeneratorCtrl);
@@ -566,7 +565,7 @@
                                 'confirmButtomText': 'cool'
                             }, function () {
                                 // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
-                                $window.location.href = 'http://mailtemplate.app:8000/#/mailGenerator';
+                                $window.location.href = '#/mailGenerator';
                             });
                             // Hide the modal
                             $('#saveTemplate').modal('hide');
@@ -849,7 +848,7 @@
                                 'confirmButtomText': 'cool'
                             }, function () {
                                 // This returns to sendEmail page (previous lines should be removed if this functionality is finally implemented)
-                                $window.location.href = 'http://mailtemplate.app:8000/#/mailGenerator';
+                                $window.location.href = '#/mailGenerator';
                             });
                             // Hide the modal
                             $('#replaceTemplate').modal('hide');
@@ -935,7 +934,7 @@
         $stateProvider
             .state('mailGenerator', {
                 'url': '/mailGenerator',
-                'templateUrl': helper.basepath('components', 'mailGenerator'),
+                'templateUrl': '/resources/EmailTemplateManager/app/views/components/mailGenerator/template.html',
                 'controller': 'mailGeneratorCtrl'
             });
             
@@ -943,7 +942,7 @@
         $stateProvider
             .state('templateGenerator', {
                 'url': '/templateGenerator',
-                'templateUrl': helper.basepath('components', 'templateGenerator'),
+                'templateUrl': '/resources/EmailTemplateManager/app/views/components/templateGenerator/template.html',
                 'controller': 'templateGeneratorCtrl'
             });
     }

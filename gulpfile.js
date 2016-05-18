@@ -27,6 +27,8 @@ var expectFile = require ('gulp-expect-file');
 var changed = require ('gulp-changed');
 var fs = require ('fs');
 var replace = require('gulp-replace-task');
+var ext_replace = require('gulp-ext-replace');
+var shell = require('gulp-shell');
 
 
 // Setting configuration variables
@@ -40,7 +42,7 @@ var environmentSettings = './config.json';
 // Setting main paths
 
 var paths = {
-    public: 'public/app/',
+    public: 'vendor/ezzing/email_templates_manager/src/views/app/',
     code: 'resources/app/',
 };
 
@@ -83,7 +85,7 @@ var build = {
     scripts: paths.public + 'js',
     styles: paths.public + 'css',
     templates: {
-        index: 'public',
+        index: 'vendor/ezzing/email_templates_manager/src/views/',
         views: paths.public + 'views'
     }
 };
@@ -94,7 +96,7 @@ var build = {
 var vendor = {
     base: {
         source: require('./vendor.base.json'),
-        dest: 'public/app/js',
+        dest: 'vendor/ezzing/email_templates_manager/src/views/app/js',
         name: 'base.js'
     }
 };
@@ -187,6 +189,7 @@ gulp.task('templates:index', function () {
         .pipe(changed(build.templates.index, {extension: '.html'}))
         .pipe(jade({pretty:true}))
         .on('error', handleError)
+	.pipe(rename('index.php'))
         .pipe(gulp.dest(build.templates.index));
 });
 
@@ -234,6 +237,9 @@ gulp.task('usesources', function () {
     useSourceMaps = true;
 });
 
+// publishing package
+gulp.task('publish', shell.task(['php artisan vendor:publish']))
+
 
 /*
  |--------------------------------------------------------------------------|
@@ -245,10 +251,10 @@ gulp.task('usesources', function () {
 
 gulp.task('watch', function () {
     util.log('Starting watch...');
-    gulp.watch(source.scripts, ['scripts:app']);
-    gulp.watch(source.styles.watch, ['styles:app']);
-    gulp.watch(source.templates.views, ['templates:views']);
-    gulp.watch(source.templates.index, ['templates:index']);
+    gulp.watch(source.scripts, ['scripts:app', 'publish']);
+    gulp.watch(source.styles.watch, ['styles:app', 'publish']);
+    gulp.watch(source.templates.views, ['templates:views', 'publish']);
+    gulp.watch(source.templates.index, ['templates:index', 'publish']);
 });
 
 
@@ -295,6 +301,7 @@ function replaceEnvironmentVars() {
 gulp.task('default', gulpsync.sync([
     'vendor:base',
     'assets',
+    'publish',
     'watch',
 ]), function () {
     util.log('************');

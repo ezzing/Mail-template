@@ -13,7 +13,7 @@ class CreateLanguagesKeysTable extends Migration
      */
     public function up()
     {
-        Schema::create('languages_keys', function (Blueprint $table) {
+        Schema::create('ezz_languages_keys', function (Blueprint $table) {
             $table->increments('id_key')->primary;
             $table->string('key');
             $table->timestamp('created_at');

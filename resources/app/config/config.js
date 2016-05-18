@@ -34,7 +34,7 @@
         $stateProvider
             .state('mailGenerator', {
                 'url': '/mailGenerator',
-                'templateUrl': helper.basepath('components', 'mailGenerator'),
+                'templateUrl': '/resources/EmailTemplateManager/app/views/components/mailGenerator/template.html',
                 'controller': 'mailGeneratorCtrl'
             });
             
@@ -42,7 +42,7 @@
         $stateProvider
             .state('templateGenerator', {
                 'url': '/templateGenerator',
-                'templateUrl': helper.basepath('components', 'templateGenerator'),
+                'templateUrl': '/resources/EmailTemplateManager/app/views/components/templateGenerator/template.html',
                 'controller': 'templateGeneratorCtrl'
             });
     }
