@@ -16,7 +16,6 @@
         $scope.closeDropdown = closeDropdown;
         $scope.sendOnEnter = sendOnEnter;
 
-
         // Declaring all scope properties
         $scope.selectedTemplate = null;
         $scope.templateVariables = null;
@@ -77,7 +76,7 @@
                     } while (htmlTemplate.search('{{') !== -1);
                 }
                 // Loads template content on #actualTemplate container
-                $('#actualTemplate').html(htmlTemplate);
+                $scope.actualTemplate = $sce.trustAsHtml(htmlTemplate);
             });
         }
         

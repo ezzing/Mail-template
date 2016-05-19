@@ -1,5 +1,15 @@
 <?php
 
+use app\Models\Language;
+use app\Models\LanguageKey;
+use app\Models\LanguageText;
+use app\Models\Template;
+use app\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Filesystem\ClassFinder;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Hashing\BcryptHasher;
+
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     /**

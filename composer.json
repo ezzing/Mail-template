@@ -30,6 +30,10 @@
         ]
     },
     "scripts": {
+        "test": [
+            "php artisan migrate:refresh --database=test --seed",
+            "./vendor/bin/phpunit"
+        ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
         ],
