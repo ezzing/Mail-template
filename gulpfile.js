@@ -42,7 +42,7 @@ var environmentSettings = './config.json';
 // Setting main paths
 
 var paths = {
-    public: 'vendor/ezzing/email_templates_manager/src/views/app/',
+    public: 'vendor/ezzing/email_template_manager/src/views/app/',
     code: 'resources/app/',
 };
 
@@ -85,7 +85,7 @@ var build = {
     scripts: paths.public + 'js',
     styles: paths.public + 'css',
     templates: {
-        index: 'vendor/ezzing/email_templates_manager/src/views/',
+        index: 'vendor/ezzing/email_template_manager/src/views/',
         views: paths.public + 'views'
     }
 };
@@ -96,7 +96,7 @@ var build = {
 var vendor = {
     base: {
         source: require('./vendor.base.json'),
-        dest: 'vendor/ezzing/email_templates_manager/src/views/app/js',
+        dest: 'vendor/ezzing/email_template_manager/src/views/app/js',
         name: 'base.js'
     }
 };
@@ -237,6 +237,12 @@ gulp.task('usesources', function () {
     useSourceMaps = true;
 });
 
+// copying created package into /resources/ezzing
+gulp.task('copyToResources', function () {
+gulp.src(['vendor/ezzing/**/*', '!vendor/ezzing/email_template_manager/.git/**/*']).pipe(gulp.dest('resources/ezzing'));
+
+})
+
 // publishing package
 gulp.task('publish', shell.task(['php artisan vendor:publish']))
 
@@ -251,10 +257,10 @@ gulp.task('publish', shell.task(['php artisan vendor:publish']))
 
 gulp.task('watch', function () {
     util.log('Starting watch...');
-    gulp.watch(source.scripts, ['scripts:app', 'publish']);
-    gulp.watch(source.styles.watch, ['styles:app', 'publish']);
-    gulp.watch(source.templates.views, ['templates:views', 'publish']);
-    gulp.watch(source.templates.index, ['templates:index', 'publish']);
+    gulp.watch(source.scripts, ['scripts:app', 'copyToResources', 'publish']);
+    gulp.watch(source.styles.watch, ['styles:app','copyToResources',  'publish']);
+    gulp.watch(source.templates.views, ['templates:views','copyToResources',  'publish']);
+    gulp.watch(source.templates.index, ['templates:index', 'copyToResources', 'publish']);
 });
 
 
@@ -301,6 +307,7 @@ function replaceEnvironmentVars() {
 gulp.task('default', gulpsync.sync([
     'vendor:base',
     'assets',
+    'copyToResources',
     'publish',
     'watch',
 ]), function () {

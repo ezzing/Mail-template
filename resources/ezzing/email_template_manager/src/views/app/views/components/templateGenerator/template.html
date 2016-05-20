@@ -1,0 +1,138 @@
+
+<div id="templateGenerator">
+  <!--header-->
+  <div id="templateGeneratorHeader" class="row">
+    <div id="lenguageSelector" class="col-xs-4">   
+      <form class="form-horizontal">
+        <div class="col-xs-1"><a ng-href="#/mailGenerator"><span role="button" ng-click="newTemplate()" style="color: white" class="fa fa-arrow-circle-left fa-2x">               </span></a></div>
+        <label for="lenguage" class="control-label col-xs-3">Lenguage:</label>
+        <div class="col-xs-8 col-sm-6 col-lg-4">
+          <select id="lenguage" name="lenguage" ng-model="data.selectedLanguage" ng-options="language.name  for language in data.languages track by language.value" ng-change="changeLanguage (data.selectedLanguage)" class="form-control"></select>
+        </div>
+      </form>
+    </div>
+    <div id="title" class="col-xs-4">
+      <h4 id="viewTitle" class="col-xs-7 col-xs-offset-2">{{ 'title_template' | translate }}            </h4>
+    </div>
+    <div id="buttonsWrapper" class="col-xs-4"><span role="button" ng-click="newTemplate()" class="fa fa-trash fa-2x"></span><span role="button" data-toggle="modal" data-target="{{saveOrReplace}}" onfocus="$(this).blur();" class="fa fa-save fa-2x"></span></div>
+    <!-- body    -->
+  </div>
+  <div id="templateGeneratorBody" class="row">   
+    <div id="templateGeneratorToolbar" class="col-xs-2 col-sm-1">
+      <ul id="mobileList">
+        <li>
+          <button type="button" ng-click="createTextElement(&quot;h1&quot;)" class="btn btn-success">H1</button>
+        </li>
+        <li>
+          <button type="button" ng-click="createTextElement(&quot;h2&quot;)" class="btn btn-success">H2</button>
+        </li>
+        <li>
+          <button type="button" ng-click="createTextElement(&quot;h3&quot;)" class="btn btn-success">H3</button>
+        </li>
+        <li>
+          <button type="button" ng-click="createTextElement(&quot;p&quot;)" class="btn btn-success">Text</button>
+        </li>
+        <li>
+          <button type="button" onclick="$('#askForImg').modal('show')" class="btn btn-success">Img</button>
+        </li>
+      </ul>
+    </div>
+    <div id="templateGeneratorMain" gridster="gridsterOpts" class="col-xs-10 col-sm-11">
+      <input id="img" type="file" style="display: none;"/>
+      <ul>
+        <li gridster-item="element" ng-repeat="element in elementList" data-gridsterId="{{element.gridsterId}}" data-innerBrNodes="{{element.innerBrNodes}}" class="widgetContainer"><span ng-click="deleteItem($index)" class="fa fa-trash trashIcon"></span><span ng-mousedown="gridsterOpts.draggable.enabled = true" ng-mouseup="gridsterOpts.draggable.enabled = false" ng-mouseleave="gridsterOpts.draggable.enabled = false" class="fa fa-arrows fa-lg arrowIcon"></span>
+          <div ng-click="openTinymce($event)" ng-resizable="ng-resizable" class="tinymceContainer"> 
+            <h1 ng-if="element.type === &quot;h1&quot; " class="widgetContent">{{ 'big_title' | translate }}</h1>
+            <h2 ng-if="element.type === &quot;h2&quot;" class="widgetContent">{{ 'middle_title' | translate }}</h2>
+            <h3 ng-if="element.type === &quot;h3&quot;" ng-init="implementTinymce(tinyMceTextOpts)" ng-blur="destroyTinyMce()" class="widgetContent">{{ 'small_title' | translate }}</h3>
+            <p ng-if="element.type === &quot;p&quot;" ng-init="implementTinymce(tinyMceTextOpts)" ng-blur="destroyTinyMce()" class="widgetContent">{{ 'paragraph' | translate }}</p>
+          </div><img ng-if="element.type === &quot;img&quot;" style="background-image: url({{element.src}});" class="widgetContent imageOnWidget"/><a ng-if="element.type === &quot;a&quot;" ng-href="{{element.href}}" class="widgetContent">{{element.text}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- Modal window for save a template-->
+<div id="saveTemplate" ng-keydown="saveOnEnter($event)" class="modal fade">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ 'save_template' | translate }}</h4>
+      </div>
+      <div class="modal-body"></div>
+      <form name="saveTemplateForm" class="form-horizontal">
+        <div ng-class=" { 'has-error' : saveTemplateForm.name_template.$invalid &amp;&amp; saveTemplateForm.name_template.$dirty, 'has-success' : saveTemplateForm.name_template.$valid} " class="form-group has-feedback">
+          <label for="nameTemplate" class="col-sm-2 control-label">{{ 'template_name' | translate }}:</label>
+          <div class="col-sm-8">
+            <input id="nameTemplate" type="text" ng-model="name_template" name="name_template" placeholder="Name of the Template" ng-pattern="/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9][a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,50}$/" autofocus="autofocus" required="required" class="form-control"/><span ng-class="{'glyphicon-ok' : saveTemplateForm.name_template.$valid, 'glyphicon-remove' : saveTemplateForm.name_template.$invalid &amp;&amp; saveTemplateForm.name_template.$dirty}" class="glyphicon form-control-feedback"></span>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer"><span style="display:none" class="spin fa fa-spinner fa-spin"></span>
+        <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
+        <button type="button" ng-click="saveTemplate()" ng-disabled="validateTemForm()" class="btn btn-success">{{ 'save' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal window for replace a template-->
+<div id="replaceTemplate" class="modal fade">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ 'replace_template' | translate }}</h4>
+      </div>
+      <div class="modal-body">
+        <h3 class="modal-title">{{ 'replace_template_question' | translate }}</h3>
+        <button type="button" ng-click="updateTemplate()" class="btn btn-warning">{{ 'replace_template' | translate }}</button>
+        <button type="button" data-dismiss="modal" ng-click="openSave()" class="btn btn-success">{{ 'save_template' | translate }}</button>
+      </div>
+      <div class="modal-footer"><span style="display:none" class="spin fa fa-spinner fa-spin"></span>
+        <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal window for asking for a image-->
+<div id="askForImg" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ 'image_settings' | translate }}</h4>
+      </div>
+      <div class="modal-body">
+        <div ng-file-reader="ng-file-reader" on-readed="onReaded(event, file)" read-method="readMethod" multiple="multiple"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-warning">{{ 'close' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal window for a new variable-->
+<div id="setVariables" class="modal fade">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" aria-label="close" class="close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Set Variable</h4>
+      </div>
+      <div class="modal-body"></div>
+      <form name="setVariableForm" class="form-horizontal">
+        <div class="form-group">
+          <label for="variableName" class="col-sm-2 control-label">Variable Name:</label>
+          <div class="col-sm-8">
+            <input id="variableName" type="text" ng-model="variableName" name="variableName" placeholder="Name of the Variable" class="form-control"/>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-warning">Close</button>
+        <button type="button" ng-click="setVariable()" class="btn btn-success">Set</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -22,7 +22,7 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "Ezzing\\EmailTemplateManager\\":"vendor/ezzing/email_template_manager/src"
+            "Ezzing\\EmailTemplateManager\\":"resources/ezzing/email_template_manager/src"
         }
     },
     "autoload-dev": {
