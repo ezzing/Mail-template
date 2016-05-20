@@ -29,17 +29,13 @@ describe('mailGeneratorCtrl', function () {
 
     var controller = null;
     var $scope = null;
-    var $urlRouterProvider = null;
-    var mailJSON = mockedMailJSON;
-    var languageJSON = mockedLanguageJSON;
+    var allTemplatesJSON = mockedAllTemplatesJSON;
+    var templateJSON = mockedTempJSON;
 
     beforeEach(inject(function ($controller, $rootScope) {
         $scope = $rootScope.$new();
         controller = $controller('mailGeneratorCtrl', {
             $scope: $scope
-        });
-        $controller('URLConfig', {
-            $urlRouterProvider: $urlRouterProvider
         });
     }));
 
@@ -54,45 +50,20 @@ describe('mailGeneratorCtrl', function () {
         expect($scope.data.selectedLanguage.value).toBe(selectedLanguage);
     });
 
-/**
-    it('When we select a template, variables will be charge', function () {
-        $urlRouterProvider.otherwise('/mailGenerator');
-        var response = mailJSON;
-        var selectedTemplate = '1';
-        $scope.loadTemplate(selectedTemplate);
-        expect($scope.templateVariables[0]).toBe('name1');
-        expect($scope.templateVariables[1]).toBe('surname1');
-        expect($scope.templateVariables[2]).toBe('email1');
-    });
- */
+    it('When we select a template, variables will be charge', inject(function ($sce) {
+        var response = templateJSON;
+        $scope.actualTemplate = response.templates;
+        $scope.chargeVariables(response.templates);
+        expect($scope.templateVariables[0][0]).toBe('name1');
+        expect($scope.templateVariables[1][0]).toBe('surname1');
+        expect($scope.templateVariables[2][0]).toBe('email1');
+    }));
 
-    /**
     it('When we select a template, it must be show on the screen', function () {
-        var response = mailJSON;
+        var response = allTemplatesJSON;
         var selectedTemplate = '1';
-        var template = response.data.templates;
-        console.log(template);
         $scope.loadTemplate(selectedTemplate);
-        expect($scope.actualTemplate).toBe(template);
+        expect($scope.selectedTemplate).toBe(selectedTemplate);
+        expect(response.templates[selectedTemplate]).toBe(response.templates[$scope.selectedTemplate]);
     });
-     */
-
-    /**
-     it('When we send an email, ....an email', function () {
-         $scope.email = "ejemplo@ejemplo.com";
-         $scope.subject = "Subject";
-         $scope.sendEmail();
-         expect($scope.email).toBeUndefined();
-         expect($scope.subject).toBeUndefined();
-    });
-     */
-     /**
-    it('When we select a language, language value must change', function () {
-        var response = languageJSON;
-        var selectedLanguage = 'es';
-        var language = response.data.templates;
-        $scope.loadTemplate(selectedLanguage);
-        expect($("#actualTemplate").html()).toBe(template);
-    });
-      */
 });

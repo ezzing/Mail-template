@@ -8,7 +8,6 @@ describe('templateGeneratorCtrl', function () {
 
     var controller = null;
     var $scope = null;
-    var templateJSON = mockedTemplateJSON;
 
     beforeEach(inject(function ($controller, $rootScope) {
         $scope = $rootScope.$new();
