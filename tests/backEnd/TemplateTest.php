@@ -61,17 +61,23 @@ class TemplateTest extends TestCase
      */
     public function testSaveCreatedTemplate()
     {
-        $response = $this->call('POST', '/saveTemplate', [
-            json_encode('template')=>[
-                'name_template' => 'foo',
-                'html'          => 'foo',
-                'html_edit'     => 'foo',
-                'icon'          => 'foo',
-                'gridster'      => 'foo'
-                ]
-        ]);
+        $data = [
+            'name_template' => 'fooo',
+            'html'          => 'foo',
+            'html_edit'     => 'foo',
+            'icon'          => 'foo',
+            'gridster'      => 'foo'
+        ];
+        $data = json_encode($data);
+        $data = 'template=' . $data;
 
-        $this->assertEquals(200, $response->status(), $mensaje = 'Invalid data to save');
+        $response = $this->call('POST', '/saveTemplate?' . $data);
+
+        $this->assertEquals(200, $response->status(), $mensaje = 'Fail conexion to save');
+
+        $data = json_decode($response->getContent(), true);
+
+        $this->assertEquals(array_get($data, 'status'), "success", $mensaje = 'Invalid data to save');
     }
 
     /**
@@ -81,7 +87,23 @@ class TemplateTest extends TestCase
      */
     public function testUpdateSelectedTemplate()
     {
-        $this->assertTrue(true);
+        $data = [
+            'id' => '2',
+            'html'          => 'foo',
+            'html_edit'     => 'foo',
+            'icon'          => 'foo',
+            'gridster'      => 'foo'
+        ];
+        $data = json_encode($data);
+        $data = 'template=' . $data;
+
+        $response = $this->call('POST', '/updateTemplate?' . $data);
+
+        $this->assertEquals(200, $response->status(), $mensaje = 'Fail conexion to update');
+
+        $data = json_decode($response->getContent(), true);
+
+        $this->assertEquals(array_get($data, 'status'), "success", $mensaje = 'Invalid data to save');
     }
 
     /**
@@ -91,15 +113,14 @@ class TemplateTest extends TestCase
      */
     public function testDeleteTheSelectedTemplate()
     {
-        $data = ['data' => 1];
-        $data = json_encode($data);
+        $response = $this->call('POST', '/deleteTemplate?data=1');
 
-        $response = $this->call('POST', '/deleteTemplate', [
-            $data
-        ]);
+        $this->assertEquals(200, $response->status(), $mensaje = 'Delete Fail');
 
-        //$this->assertEquals($data, "rr", $mensaje = 'Invalid data to delete');
+        $data = json_decode($response->getContent(), true);
 
-        $this->assertEquals(200, $response->status(), $mensaje = 'Invalid data to delete');
+        $this->assertEquals(array_get($data, 'status'), "success", $mensaje = 'Invalid data to delete');
+
+        $this->assertEquals(array_get($data, 'borradas'), 1, $mensaje = 'Invalid data to delete');
     }
 }

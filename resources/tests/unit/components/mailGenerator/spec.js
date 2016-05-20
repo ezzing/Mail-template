@@ -43,6 +43,18 @@ describe('mailGeneratorCtrl', function () {
         });
     }));
 
+    it('When we select a language, language value must change', function () {
+        // Test Spanish
+        var selectedLanguage = 'es';
+        $scope.changeLanguage(selectedLanguage);
+        expect($scope.data.selectedLanguage.value).toBe(selectedLanguage);
+        // Test English
+        var selectedLanguage = 'en';
+        $scope.changeLanguage(selectedLanguage);
+        expect($scope.data.selectedLanguage.value).toBe(selectedLanguage);
+    });
+
+/**
     it('When we select a template, variables will be charge', function () {
         $urlRouterProvider.otherwise('/mailGenerator');
         var response = mailJSON;
@@ -52,12 +64,14 @@ describe('mailGeneratorCtrl', function () {
         expect($scope.templateVariables[1]).toBe('surname1');
         expect($scope.templateVariables[2]).toBe('email1');
     });
+ */
 
     /**
     it('When we select a template, it must be show on the screen', function () {
         var response = mailJSON;
         var selectedTemplate = '1';
         var template = response.data.templates;
+        console.log(template);
         $scope.loadTemplate(selectedTemplate);
         expect($scope.actualTemplate).toBe(template);
     });

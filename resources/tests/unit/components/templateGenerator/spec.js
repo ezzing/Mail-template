@@ -52,21 +52,14 @@ describe('templateGeneratorCtrl', function () {
         expect($scope.gridsterCont).toBe(0);
     });
 
-    /**
-    it('When we save the template, actual template will be store at database', function () {
-        // Create some elements in the template
-        var gridsterType = "h1";
-        $scope.createTextElement(gridsterType);
-        gridsterType = "h2";
-        $scope.createTextElement(gridsterType);
-        gridsterType = "h3";
-        $scope.createTextElement(gridsterType);
-        gridsterType = "p";
-        $scope.createTextElement(gridsterType);
-        // Define the name of the template
-        $scope.name_template = "TestTemplate";
-        $scope.saveTemplate();
-        expect($scope.name_template).toBeUndefined();
+    it('When we select a language, language value must change', function () {
+        // Test Spanish
+        var selectedLanguage = 'es';
+        $scope.changeLanguage(selectedLanguage);
+        expect($scope.data.selectedLanguage.value).toBe(selectedLanguage);
+        // Test English
+        var selectedLanguage = 'en';
+        $scope.changeLanguage(selectedLanguage);
+        expect($scope.data.selectedLanguage.value).toBe(selectedLanguage);
     });
-     */
 });

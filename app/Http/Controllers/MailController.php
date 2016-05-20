@@ -57,11 +57,5 @@ class MailController extends Controller
             ], 200);
          }
     }
-    public function saveTemplate ()
-    {
-        return response()->json([
-            'templates' => 'Hola'
-        ], 200);
-    }
 }
 

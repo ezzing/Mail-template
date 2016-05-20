@@ -53,7 +53,6 @@
                 // Stores template content
                 var htmlTemplate = response.data.templates || '<h1> No template received from server</h1>';
                 // Remove possible variables saved from previous template
-                console.log(JSON.stringify(response));
                 $scope.templateVariables = [];
                 /*
                  * Searchs for '{{' on template content, because this is how variables are identified. If some result
