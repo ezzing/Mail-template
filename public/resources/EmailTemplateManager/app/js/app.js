@@ -18,6 +18,7 @@
 })();
 
 
+
 (function () {
     'use strict';
     angular.module('mailTemplate').controller('mailGeneratorCtrl', mailGeneratorCtrl);
