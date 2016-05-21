@@ -29,6 +29,7 @@ var fs = require ('fs');
 var replace = require('gulp-replace-task');
 var ext_replace = require('gulp-ext-replace');
 var shell = require('gulp-shell');
+var clean = require('gulp-clean');
 
 
 // Setting configuration variables
@@ -42,7 +43,7 @@ var environmentSettings = './config.json';
 // Setting main paths
 
 var paths = {
-    public: 'vendor/ezzing/email_template_manager/src/views/app/',
+    public: 'vendor/ezzing/email-template-manager/src/views/app/',
     code: 'resources/app/',
 };
 
@@ -85,7 +86,7 @@ var build = {
     scripts: paths.public + 'js',
     styles: paths.public + 'css',
     templates: {
-        index: 'vendor/ezzing/email_template_manager/src/views/',
+        index: 'vendor/ezzing/email-template-manager/src/views/',
         views: paths.public + 'views'
     }
 };
@@ -96,7 +97,7 @@ var build = {
 var vendor = {
     base: {
         source: require('./vendor.base.json'),
-        dest: 'vendor/ezzing/email_template_manager/src/views/app/js',
+        dest: 'vendor/ezzing/email-template-manager/src/views/app/js',
         name: 'base.js'
     }
 };
@@ -205,6 +206,22 @@ gulp.task('templates:views', function () {
         .pipe(gulp.dest(build.templates.views));
 });
 
+// Moving app assets into plugin directory
+gulp.task('others', function () {
+util.log('moving assets...');
+gulp.src('resources/app/assets/img/**/*').
+pipe(gulp.dest('vendor/ezzing/email-template-manager/src/views/app/img'));
+
+gulp.src('resources/app/assets/js/**/*').
+pipe(gulp.dest('vendor/ezzing/email-template-manager/src/views/app/js'));
+
+gulp.src('resources/app/assets/js/**/*').
+pipe(gulp.dest('vendor/ezzing/email-template-manager/src/views/app/js'));
+
+gulp.src('resources/app/assets/styles/**/*').
+pipe(gulp.dest('vendor/ezzing/email-template-manager/src/views/app/css/styles'));
+});
+
 
 // Building public JS, HTML and CSS files.
 
@@ -212,7 +229,8 @@ gulp.task('assets', [
     'scripts:app',
     'styles:app',
     'templates:index',
-    'templates:views'
+    'templates:views',
+    'others'
 ]);
 
 
@@ -239,9 +257,15 @@ gulp.task('usesources', function () {
 
 // copying created package into /resources/ezzing
 gulp.task('copyToResources', function () {
-gulp.src(['vendor/ezzing/**/*', '!vendor/ezzing/email_template_manager/.git/**/*']).pipe(gulp.dest('resources/ezzing'));
+// gulp.src(['vendor/ezzing/**/*', '!vendor/ezzing/email_template_manager/.git/**/*']).pipe(gulp.dest('resources/ezzing'));
 
 })
+
+
+gulp.task('removePreviousPublish', function () {
+gulp.src(['public/resources']).pipe(clean());
+})
+
 
 // publishing package
 gulp.task('publish', shell.task(['php artisan vendor:publish']))
@@ -257,10 +281,10 @@ gulp.task('publish', shell.task(['php artisan vendor:publish']))
 
 gulp.task('watch', function () {
     util.log('Starting watch...');
-    gulp.watch(source.scripts, ['scripts:app', 'copyToResources', 'publish']);
-    gulp.watch(source.styles.watch, ['styles:app','copyToResources',  'publish']);
-    gulp.watch(source.templates.views, ['templates:views','copyToResources',  'publish']);
-    gulp.watch(source.templates.index, ['templates:index', 'copyToResources', 'publish']);
+    gulp.watch(source.scripts, ['default']);
+    gulp.watch(source.styles.watch, ['default']);
+    gulp.watch(source.templates.views, ['default']);
+    gulp.watch(source.templates.index, ['default']);
 });
 
 
@@ -307,7 +331,7 @@ function replaceEnvironmentVars() {
 gulp.task('default', gulpsync.sync([
     'vendor:base',
     'assets',
-    'copyToResources',
+    'removePreviousPublish',
     'publish',
     'watch',
 ]), function () {

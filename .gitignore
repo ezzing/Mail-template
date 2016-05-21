@@ -2,14 +2,13 @@
 /bower_components
 /vendor/*
 !/vendor/ezzing
+/vendor/ezzing/email-template-manager/src/views
 /nbproject
 /.env
 /config.json
 /package.json
 /.gitignore
 /.sass-cache
-/public/app/js
-/public/app/views
-/public/app/css/main.css
+/public/resources
 *~
 

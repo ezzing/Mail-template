@@ -25,7 +25,8 @@
     "gulp-util": "^3.0.1",
     "path": "~0.12.7",
     "gulp-ext-replace": "~0.3.0",
-    "gulp-shell": "~0.5.2"
+    "gulp-shell": "~0.5.2",
+    "gulp-clean": "~0.3.2"
   },
   "dependencies": {
     "tinymce": "^4.3.10"
