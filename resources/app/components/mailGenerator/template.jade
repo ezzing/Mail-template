@@ -3,7 +3,7 @@ div#emailGenerator(ng-init='loadTemplates()')
       div#emailGeneratorHeader.row
         div#lenguageSelector.col-xs-4
             form.form-horizontal
-                label.control-label.col-xs-4(for='lenguage') Language:
+                label.control-label.col-xs-4(for='lenguage') Languagesss:
                 div.col-xs-8.col-sm-6.col-lg-4
                     select#lenguage.form-control(name='lenguage'  ng-model='data.selectedLanguage' ng-options= 'language.name  for language in data.languages track by language.value' ng-change='changeLanguage(data.selectedLanguage)')
         div#title.col-xs-4
