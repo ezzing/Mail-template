@@ -1,17 +1,19 @@
 {
     "name": "ezzing/email-template-manager",
-    "description": "Email templates manager that allows users to create, store, edit and send styled emails",
+    "description": "Create, save, and edit your own email templates, and then send them to anybody whenever you need it",
+    "homepage": "https://github.com/ezzing/email-template-manager",
+    "keywords": ["email", "template", "email template", "template manager"],
     "license": "MIT",
     "authors": [
         {
-            "name": "Adrian Lopez Martinez",
+            "name": "Adrián López Martínez",
             "email": "adrian.lopez@ezzing.com"
-        }
+        },
 	{
-	    "name": "Rubén Rodriguez",
-	    "email": "ruben.rodriguez@ezzing.com"
+	    "name": "Rubén Rodríguez Fernández",
+	    "email": "rubenrodriguezfdz@gmail.com"
 	}
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {}
 }

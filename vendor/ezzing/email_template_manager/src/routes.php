@@ -11,7 +11,7 @@
 |
 */
 
-Route::get ('/ezzing', function () {return view ('EmailTemplateManagerViews::index');});
+Route::get ('/template_manager', function () {return view ('EmailTemplateManagerViews::index');});
 
 Route::post('/email', 'Ezzing\EmailTemplateManager\MailController@sendEmail');
 
