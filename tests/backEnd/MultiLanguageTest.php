@@ -16,7 +16,7 @@ class MultiLanguageTest extends TestCase
         // Testing Spanish Language
         $response = $this->call('GET', '/getLanguage?lang=es');
 
-        $this->assertEquals(200, $response->status(), $mensaje = 'Invalid Id');
+        $this->assertEquals(200, $response->status(), $mensaje = 'Fail calling get Language');
 
         $data = json_decode($response->getContent(), true);
 
@@ -26,7 +26,7 @@ class MultiLanguageTest extends TestCase
         // Testing English Language
         $response = $this->call('GET', '/getLanguage?lang=en');
 
-        $this->assertEquals(200, $response->status(), $mensaje = 'Invalid Id');
+        $this->assertEquals(200, $response->status(), $mensaje = 'Fail calling get Language');
 
         $data = json_decode($response->getContent(), true);
 

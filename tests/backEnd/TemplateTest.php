@@ -15,7 +15,7 @@ class TemplateTest extends TestCase
     {
         $response = $this->call('GET', '/getCreatedTemplates');
 
-        $this->assertEquals(200, $response->status());
+        $this->assertEquals(200, $response->status(), $mensaje = 'Fail calling getCreatedTemplates');
 
         $this->assertNotEmpty($response);
     }
@@ -29,7 +29,7 @@ class TemplateTest extends TestCase
     {
         $response = $this->call('GET', '/getTemplate/1');
 
-        $this->assertEquals(200, $response->status(), $mensaje = 'Invalid Id');
+        $this->assertEquals(200, $response->status(), $mensaje = 'Fail calling getSelectedTemplate');
 
         $data = json_decode($response->getContent(), true);
 
@@ -45,7 +45,7 @@ class TemplateTest extends TestCase
     {
         $response = $this->call('GET', '/getTemplateToEdit/1');
 
-        $this->assertEquals(200, $response->status(), $mensaje = 'Invalid Id');
+        $this->assertEquals(200, $response->status(), $mensaje = 'Fail calling getTemplateToEdit');
 
         $data = json_decode($response->getContent(), true);
 
@@ -73,7 +73,7 @@ class TemplateTest extends TestCase
 
         $response = $this->call('POST', '/saveTemplate?' . $data);
 
-        $this->assertEquals(200, $response->status(), $mensaje = 'Fail conexion to save');
+        $this->assertEquals(200, $response->status(), $mensaje = 'Fail calling saveTemplate');
 
         $data = json_decode($response->getContent(), true);
 
@@ -99,7 +99,7 @@ class TemplateTest extends TestCase
 
         $response = $this->call('POST', '/updateTemplate?' . $data);
 
-        $this->assertEquals(200, $response->status(), $mensaje = 'Fail conexion to update');
+        $this->assertEquals(200, $response->status(), $mensaje = 'Fail calling updateTemplate');
 
         $data = json_decode($response->getContent(), true);
 
@@ -115,7 +115,7 @@ class TemplateTest extends TestCase
     {
         $response = $this->call('POST', '/deleteTemplate?data=1');
 
-        $this->assertEquals(200, $response->status(), $mensaje = 'Delete Fail');
+        $this->assertEquals(200, $response->status(), $mensaje = 'Fail calling deleteTemplate');
 
         $data = json_decode($response->getContent(), true);
 
