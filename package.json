@@ -28,7 +28,10 @@
     "karma": "^0.12.31",
     "karma-chrome-launcher": "^0.1.12",
     "karma-jasmine": "^0.3.5",
-    "path": "~0.12.7"
+    "path": "~0.12.7",
+    "gulp-ext-replace": "~0.3.0",
+    "gulp-shell": "~0.5.2",
+    "gulp-clean": "~0.3.2"
   },
   "dependencies": {
     "tinymce": "^4.3.10"

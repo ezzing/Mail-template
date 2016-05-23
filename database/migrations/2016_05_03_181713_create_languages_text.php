@@ -13,12 +13,12 @@ class CreateLanguagesText extends Migration
      */
     public function up()
     {
-        Schema::create('languages_text', function (Blueprint $table) {
+        Schema::create('ezz_languages_text', function (Blueprint $table) {
             $table->increments('id_text')->primary;
             $table->integer('id_language')->unsigned();
-            $table->foreign('id_language')->references('id_language')->on('languages');
+            $table->foreign('id_language')->references('id_language')->on('ezz_languages');
             $table->integer('id_key')->unsigned();
-            $table->foreign('id_key')->references('id_key')->on('languages_keys');
+            $table->foreign('id_key')->references('id_key')->on('ezz_languages_keys');
             $table->string('text');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
@@ -32,6 +32,6 @@ class CreateLanguagesText extends Migration
      */
     public function down()
     {
-        Schema::drop('languages_text');
+        Schema::drop('ezz_languages_text');
     }
 }

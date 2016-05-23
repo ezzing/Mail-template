@@ -22,28 +22,28 @@
      * @param helper
      * @constructor
      */
-    function URLConfig($stateProvider, $locationProvider, $urlRouterProvider, helper) {
+    function URLConfig ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         
         // Disabling HTML5
         $locationProvider.html5Mode(false);
 
-        // default 
+        // default
         $urlRouterProvider.otherwise('/mailGenerator');
 
         // Defining route to mailGenerator
         $stateProvider
             .state('mailGenerator', {
-                url: '/mailGenerator',
-                templateUrl: helper.basepath('components', 'mailGenerator'),
-                controller: 'mailGeneratorCtrl'
+                'url': '/mailGenerator',
+                'templateUrl': '/resources/EmailTemplateManager/app/views/components/mailGenerator/template.html',
+                'controller': 'mailGeneratorCtrl'
             });
             
-        // Defining route to templateGenerator    
+        // Defining route to templateGenerator
         $stateProvider
             .state('templateGenerator', {
-                url: '/templateGenerator',
-                templateUrl: helper.basepath('components', 'templateGenerator'),
-                controller: 'templateGeneratorCtrl'
-            });            
+                'url': '/templateGenerator',
+                'templateUrl': '/resources/EmailTemplateManager/app/views/components/templateGenerator/template.html',
+                'controller': 'templateGeneratorCtrl'
+            });
     }
 })();

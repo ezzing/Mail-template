@@ -4,7 +4,6 @@
     mailGeneratorCtrl.$inject = ['$scope', '$http', '$translate', '$sce'];
 
     function mailGeneratorCtrl ($scope, $http, $translate, $sce) {
-
         // Declaring all scope methods
         $scope.loadTemplates = loadTemplates;
         $scope.loadTemplate = loadTemplate;
@@ -15,7 +14,7 @@
         $scope.changeVariables = changeVariables;
         $scope.closeDropdown = closeDropdown;
         $scope.sendOnEnter = sendOnEnter;
-        $scope.chargeVariables = chargeVariables;
+        $scope.loadVariables = loadVariables;
 
         // Declaring all scope properties
         $scope.selectedTemplate = null;
@@ -50,7 +49,7 @@
          * 
          * @return {string} htmlTemplate: html of the selected template with the setted variables
          */
-        function chargeVariables (htmlTemplate) {
+        function loadVariables (htmlTemplate) {
 
             // Remove possible variables saved from previous template
             $scope.templateVariables = [];
@@ -85,7 +84,7 @@
                 // Stores template content
                 var htmlTemplate = response.data.templates || '<h1> No template received from server</h1>';
 
-                htmlTemplate = chargeVariables(htmlTemplate);
+                htmlTemplate = loadVariables(htmlTemplate);
 
                 // Loads template content on #actualTemplate container
                 $scope.actualTemplate = $sce.trustAsHtml(htmlTemplate);

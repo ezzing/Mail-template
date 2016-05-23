@@ -39,6 +39,7 @@
         <div class="container">
             <div class="content">
                 <div class="title">Laravel 5</div>
+		<a href='http://mailtemplate.app:8000/template_manager'> Go to template manager</a>
             </div>
         </div>
     </body>

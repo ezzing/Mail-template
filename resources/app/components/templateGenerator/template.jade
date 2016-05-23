@@ -61,6 +61,7 @@ div#saveTemplate.modal.fade(ng-keydown='saveOnEnter($event)')
                         input#nameTemplate.form-control(type='text' ng-model='name_template' name='name_template'  placeholder='Name of the Template' ng-pattern='/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9][a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,50}$/' autofocus=true required)
                         span.glyphicon.form-control-feedback(ng-class="{'glyphicon-ok' : saveTemplateForm.name_template.$valid, 'glyphicon-remove' : saveTemplateForm.name_template.$invalid && saveTemplateForm.name_template.$dirty}")
             div.modal-footer
+                span.spin.fa.fa-spinner.fa-spin(style='display:none')
                 button.btn.btn-warning(type='button' data-dismiss='modal') {{ 'close' | translate }}
                 button.btn.btn-success(type='button' ng-click='saveTemplate()' ng-disabled='validateTemForm()') {{ 'save' | translate }}
 
@@ -77,6 +78,7 @@ div#replaceTemplate.modal.fade
                 button.btn.btn-warning(type='button' ng-click='updateTemplate()') {{ 'replace_template' | translate }}
                 button.btn.btn-success(type='button' data-dismiss='modal' ng-click='openSave()') {{ 'save_template' | translate }}
             div.modal-footer
+                span.spin.fa.fa-spinner.fa-spin(style='display:none')
                 button.btn.btn-warning(type='button' data-dismiss='modal') {{ 'close' | translate }}
 
 

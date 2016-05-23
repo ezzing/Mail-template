@@ -21,7 +21,8 @@
             "database"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+    	    "Ezzing\\EmailTemplateManager\\":"vendor/ezzing/email-template-manager/src"
         }
     },
     "autoload-dev": {
@@ -31,7 +32,8 @@
     },
     "scripts": {
         "test": [
-            "php artisan migrate:refresh --database=test --seed",
+            "php artisan migrate --database=test",
+            "php artisan db:seed --class=MailTemplateManagerSeeder --database=test",
             "./vendor/bin/phpunit"
         ],
         "post-root-package-install": [
