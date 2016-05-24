@@ -9,13 +9,16 @@ describe('mailGeneratorCtrl', function () {
 
     var controller = null;
     var $scope = null;
+    var $translate = null;
     var allTemplatesJSON = mockedAllTemplatesJSON;
     var templateJSON = mockedTempJSON;
 
-    beforeEach(inject(function ($controller, $rootScope) {
+    beforeEach(inject(function ($controller, $rootScope, $translate) {
         $scope = $rootScope.$new();
+        $translate = $translate.use();
         controller = $controller('mailGeneratorCtrl', {
-            $scope: $scope
+            $scope: $scope,
+            $translate: $translate
         });
     }));
 
@@ -23,7 +26,7 @@ describe('mailGeneratorCtrl', function () {
         // Test Spanish
         var selectedLanguage = 'es';
         $scope.changeLanguage(selectedLanguage);
-        expect($scope.data.selectedLanguage.value).toBe(selectedLanguage);
+        expect($translate).toBe(selectedLanguage);
         // Test English
         var selectedLanguage = 'en';
         $scope.changeLanguage(selectedLanguage);

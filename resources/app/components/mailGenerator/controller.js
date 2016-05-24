@@ -121,7 +121,6 @@
          */
         function changeLanguage (lang) {
             $translate.use(lang.value);
-            $scope.data.selectedLanguage.value = lang;
         }
         
         
